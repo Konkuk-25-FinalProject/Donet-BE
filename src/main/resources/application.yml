@@ -2,14 +2,44 @@ spring:
   application:
     name:
       donet
+  profiles:
+    group:
+      local: local-db, common
+      prod: prod-db, common
+    active: local
 
+---
+# 개발용 DB 설정
+spring:
+  config:
+    activate:
+      on-profile: local-db
   datasource:
-    url: ${DATASOURCE_URL_LOCAL}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+    driver-class-name: org.h2.Driver
+
+---
+# 배포용 DB 설정
+spring:
+  config:
+    activate:
+      on-profile: prod-db
+  datasource:
+    url: ${PROD_DB_URL}
+    username: ${PROD_DB_USERNAME}
+    password: ${PROD_DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     dbcp2:
       validation-query: select 1
     sql:
       init:
         platform: mysql
+
+---
+# 공통 속성
+spring:
+  config:
+    activate:
+      on-profile: common
