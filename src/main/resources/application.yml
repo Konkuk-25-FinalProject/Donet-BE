@@ -43,3 +43,14 @@ spring:
   config:
     activate:
       on-profile: common
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+  endpoint:
+    health:
+      show-details: "always"  # 상세 정보 포함
+  server:
+    port: 8080
