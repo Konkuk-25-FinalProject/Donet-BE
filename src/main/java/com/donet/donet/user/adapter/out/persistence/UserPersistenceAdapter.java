@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
-public class UserPersistenceAdapter implements FindUserPort {
+public class UserPersistenceAdapter implements FindUserPort, CreateUserPort {
     private final UserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
 
@@ -21,5 +21,12 @@ public class UserPersistenceAdapter implements FindUserPort {
                     return Optional.of(userEntityMapper.mapToDomainEntity(userJpaEntity));
                 })
                 .orElseGet(() -> Optional.empty());
+    }
+
+    @Override
+    public User save(User user) {
+        UserJpaEntity jpaEntity = userEntityMapper.mapToJpaEntity(user);
+        UserJpaEntity save = userRepository.save(jpaEntity);
+        return userEntityMapper.mapToDomainEntity(save);
     }
 }
