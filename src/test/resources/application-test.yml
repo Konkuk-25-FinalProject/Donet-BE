@@ -4,3 +4,21 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        highlight_sql: true
+
+app:
+  kakao:
+    auth:
+      client: asdf1234asdf1234asdf1234asdf1234asdf1234
+      redirect: http://localhost:8080/auth/login/kakao
+  jwt:
+    access-expire-ms: 360000
+    refresh-expire-ms : 3600000
+    secret-key: asdf1234asdf1234asdf1234asdf1234asdf1234
