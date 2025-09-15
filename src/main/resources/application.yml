@@ -44,6 +44,16 @@ spring:
     activate:
       on-profile: common
 
+app:
+  kakao:
+    auth:
+      client: ${KAKAO_APP_KEY}
+      redirect: ${KAKAO_REDIRECT_URL}
+  jwt:
+    access-expire-ms: ${JWT_ACCESS_EXPIRE_MS}
+    refresh-expire-ms : ${JWT_REFRESH_EXPIRE_MS}
+    secret-key: ${JWT_SECRET_KEY}
+
 management:
   endpoints:
     web:
