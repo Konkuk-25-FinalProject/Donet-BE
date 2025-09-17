@@ -16,7 +16,10 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), 1006, "서버 내부 오류입니다."),
     INVALID_JWT(HttpStatus.UNAUTHORIZED.value(), 1007, "올바르지 않은 토큰입니다."),
     EXPIRED_JWT(HttpStatus.UNAUTHORIZED.value(), 1008, "만료된 토큰입니다"),
-    JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), 1009, "토큰을 찾을 수 없습니다");
+    JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), 1009, "토큰을 찾을 수 없습니다"),
+
+    // 2000 : Auth 관련 에러
+    OAUTH_SERVER_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE.value(), 2001, "OAuth 제공자 서버로 인해 요청을 처리할 수 없습니다");
 
     private final int status;
     private final int code;
