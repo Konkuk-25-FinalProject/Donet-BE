@@ -27,14 +27,13 @@ public class LoginService implements LoginUsecase {
     public LoginResponse login(LoginCommand loginCommand) {
         String code = loginCommand.code();
         KakaoOAuthToken oAuthToken = kakaoAuthPort.requestToken(code);
-        log.info("access_token = {}", oAuthToken.access_token() );
-
         KakaoUserProfile userProfile = kakaoAuthPort.requestUserProfile(oAuthToken);
-        log.info("kakaoId = {}", userProfile.id());
 
         // 신규 회원이면 가입시킨다
         User user = findUserUsecase.findByLoginId(userProfile.id())
                 .orElseGet(()-> registerUser(userProfile));
+
+        log.info("[login] userId = {}인 사용자가 조회됨", user.getId());
 
         String accessToken = tokenIssuerPort.createAccessToken(user.getId());
         String refreshToken = tokenIssuerPort.createRefreshToken(user.getId());
@@ -42,7 +41,7 @@ public class LoginService implements LoginUsecase {
     }
 
     private User registerUser(KakaoUserProfile userProfile){
-        log.info("User not found. Create a new User");
+        log.info("[registerUser] 첫 로그인 사용자를 새로운 유저로 등록");
         User newUser = new User(null,
                 userProfile.properties().nickname(),
                 userProfile.kakao_account().profile().thumbnail_image_url(),
