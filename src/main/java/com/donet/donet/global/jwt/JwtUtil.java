@@ -33,7 +33,7 @@ public class JwtUtil implements TokenIssuerPort {
     @Override
     public String createAccessToken(Long userId) {
         return Jwts.builder()
-                .claim("user_id", userId)
+                .subject(String.valueOf(userId))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpireMs))
                 .signWith(secretKey)
@@ -43,7 +43,7 @@ public class JwtUtil implements TokenIssuerPort {
     @Override
     public String createRefreshToken(Long userId) {
         return Jwts.builder()
-                .claim("user_id", userId)
+                .subject(String.valueOf(userId))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpireMs))
                 .signWith(secretKey)
