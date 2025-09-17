@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserJpaEntity user = userRepository.findByLoginId(username).orElseThrow(() -> {
-            throw new UsernameNotFoundException(username + "와 일치하는 사용자가 없습니다");
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        UserJpaEntity user = userRepository.findById(Long.parseLong(userId)).orElseThrow(() -> {
+            throw new UsernameNotFoundException("userId " + userId + "와 일치하는 사용자가 없습니다");
         });
         return new CustomUserDetails(user);
     }
