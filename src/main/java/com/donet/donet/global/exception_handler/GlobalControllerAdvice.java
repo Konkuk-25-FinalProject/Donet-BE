@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
 
@@ -36,9 +36,9 @@ public class GlobalControllerAdvice {
      * 존재하지 않는 API 경로로 요청했을 때 발생 (404 Not Found)
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(NoHandlerFoundException.class)
-    public BaseErrorResponse handle_NoHandlerFoundException(NoHandlerFoundException e){
-        log.error("[handle_NoHandlerFoundException]", e);
+    @ExceptionHandler(NoResourceFoundException.class) // Spring 6 전용 예외 (404 발생 시)
+    public BaseErrorResponse handle_NoResourceFoundException(NoResourceFoundException e) {
+        log.error("[handle_NoResourceFoundException] {} {} ", e.getHttpMethod(), e.getResourcePath());
         return new BaseErrorResponse(API_NOT_FOUND);
     }
 
