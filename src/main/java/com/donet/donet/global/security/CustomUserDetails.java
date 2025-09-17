@@ -11,7 +11,7 @@ public class CustomUserDetails implements UserDetails {
     private final String username;
 
     public CustomUserDetails(UserJpaEntity user) {
-        this.username = user.getLoginId();
+        this.username = String.valueOf(user.getId());
     }
 
     @Override
