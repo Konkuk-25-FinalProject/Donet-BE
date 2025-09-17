@@ -1,16 +1,22 @@
 package com.donet.donet.global.config;
 
+import com.donet.donet.global.security.CustomAuthenticationEntryPoint;
+import com.donet.donet.global.security.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
@@ -24,6 +30,15 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(request ->
                         request.requestMatchers("/auth/**").permitAll());
+
+        // JWT 인증 필터 추가
+        http
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // 예외 핸들러 추가
+        http
+                .exceptionHandling(
+                        configurer -> configurer.authenticationEntryPoint(customAuthenticationEntryPoint));
 
         return http.build();
     }
