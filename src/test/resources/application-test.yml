@@ -21,4 +21,4 @@ app:
   jwt:
     access-expire-ms: 360000
     refresh-expire-ms : 3600000
-    secret-key: asdf1234asdf1234asdf1234asdf1234asdf1234
+    secret-key: asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234
