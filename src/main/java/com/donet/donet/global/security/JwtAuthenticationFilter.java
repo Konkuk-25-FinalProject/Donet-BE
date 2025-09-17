@@ -37,8 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 Claims claims = jwtUtil.validateToken(token);
 
                 // userDetails 조회
-                String email = claims.get("email" ,String.class);
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+                String userId = claims.getSubject();
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(userId);
 
                 // 인증토큰을 생성하고 시큐리티 컨텍스트홀더에 저장
                 Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
