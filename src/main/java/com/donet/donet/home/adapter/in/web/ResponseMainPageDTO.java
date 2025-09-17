@@ -1,4 +1,4 @@
-package com.donet.donet.dto;
+package com.donet.donet.home.adapter.in.web;
 
 import java.util.List;
 
