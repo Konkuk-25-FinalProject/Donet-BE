@@ -12,6 +12,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -95,9 +96,19 @@ public class GlobalControllerAdvice {
     }
 
     /**
-     * 프로젝트 내부에서 발생한 CustomException 처리
-     * 각 예외가 담고 있는 커스텀 응답 코드와 메시지를 그대로 반환
+     * @RequestParam, @PathVariable, @RequestHeader, @ModelAttribute 등에 붙인
+     * Bean Validation(@NotBlank, @Min 등)이 실패했을 때
      */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public BaseErrorResponse handle_HandlerMethodValidationException(HandlerMethodValidationException e) {
+        log.error("[handle_HandlerMethodValidationException]", e);
+        return new BaseErrorResponse(BAD_REQUEST);
+    }
+        /**
+         * 프로젝트 내부에서 발생한 CustomException 처리
+         * 각 예외가 담고 있는 커스텀 응답 코드와 메시지를 그대로 반환
+         */
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<BaseErrorResponse> handle_CustomException(CustomException e) {
         log.error("[handle_CustomException]", e);
