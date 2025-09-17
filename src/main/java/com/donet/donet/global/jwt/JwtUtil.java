@@ -5,12 +5,13 @@ import com.donet.donet.global.jwt.exception.InvalidJwtException;
 import com.donet.donet.global.jwt.exception.JwtExpiredException;
 import com.donet.donet.global.jwt.exception.JwtNotFoundException;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecurityException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
@@ -24,7 +25,7 @@ public class JwtUtil implements TokenIssuerPort {
     public JwtUtil(@Value("${app.jwt.secret-key}") String secret,
                    @Value("${app.jwt.access-expire-ms}") long accessTokenExpireMs,
                    @Value("${app.jwt.refresh-expire-ms}") long refreshTokenExpireMs) {
-        this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+        this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.accessTokenExpireMs = accessTokenExpireMs;
         this.refreshTokenExpireMs = refreshTokenExpireMs;
     }
@@ -52,15 +53,14 @@ public class JwtUtil implements TokenIssuerPort {
     public Claims validateToken(String token){
         try{
             return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
-        } catch (MalformedJwtException e) {
-            throw new InvalidJwtException(INVALID_JWT);
-        } catch (ExpiredJwtException e) {
+        }
+        catch (ExpiredJwtException e) {
             throw new JwtExpiredException(EXPIRED_JWT);
-        } catch (UnsupportedJwtException e) {
+        }
+        catch (MalformedJwtException | UnsupportedJwtException | SecurityException e) {
             throw new InvalidJwtException(INVALID_JWT);
-        } catch (SecurityException e) {
-            throw new InvalidJwtException(INVALID_JWT);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new JwtNotFoundException(JWT_NOT_FOUND);
         }
     }
