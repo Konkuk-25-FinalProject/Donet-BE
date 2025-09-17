@@ -17,6 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final String[] PERMIT_URL = {
+            "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
+            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html"
+    };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
@@ -28,8 +32,11 @@ public class SecurityConfig {
 
         // 엔드포인트별 인증 인가 설정
         http
-                .authorizeHttpRequests(request ->
-                        request.requestMatchers("/auth/**").permitAll());
+                .authorizeHttpRequests(request -> request
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers(PERMIT_URL).permitAll()
+                        .anyRequest().authenticated());
+
 
         // JWT 인증 필터 추가
         http
