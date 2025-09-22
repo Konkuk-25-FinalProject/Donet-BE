@@ -8,6 +8,7 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
 
+@Slf4j
 @Component
 public class JwtUtil implements TokenIssuerPort {
     private final SecretKey secretKey;
@@ -48,6 +50,31 @@ public class JwtUtil implements TokenIssuerPort {
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpireMs))
                 .signWith(secretKey)
                 .compact();
+    }
+
+
+
+    @Override
+    public boolean validate(String token) {
+        try{
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+            return true;
+        }
+        catch (ExpiredJwtException e) {
+            log.warn("만료된 JWT 토큰입니다");
+        }
+        catch (MalformedJwtException | UnsupportedJwtException | SecurityException e) {
+            log.warn("잘못된 JWT 서명입니다");
+        }
+        catch (IllegalArgumentException e) {
+            log.warn("잘못된 JWT 토큰입니다");
+        }
+        return false;
+    }
+
+    @Override
+    public Long resolveUserId(String token) {
+        return Long.parseLong(validateToken(token).getSubject());
     }
 
     public Claims validateToken(String token){
