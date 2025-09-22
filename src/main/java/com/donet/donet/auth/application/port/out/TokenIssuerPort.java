@@ -4,4 +4,6 @@ public interface TokenIssuerPort {
     String createAccessToken(Long userId);
 
     String createRefreshToken(Long userId);
+
+    boolean validate(String token);
 }
