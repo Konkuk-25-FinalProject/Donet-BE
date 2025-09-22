@@ -3,10 +3,7 @@ package com.donet.donet.auth.application;
 import com.donet.donet.auth.application.port.in.LoginCommand;
 import com.donet.donet.auth.application.port.in.LoginResponse;
 import com.donet.donet.auth.application.port.in.LoginUsecase;
-import com.donet.donet.auth.application.port.out.KakaoAuthPort;
-import com.donet.donet.auth.application.port.out.KakaoOAuthToken;
-import com.donet.donet.auth.application.port.out.KakaoUserProfile;
-import com.donet.donet.auth.application.port.out.TokenIssuerPort;
+import com.donet.donet.auth.application.port.out.*;
 import com.donet.donet.user.application.port.in.CreateUserUsecase;
 import com.donet.donet.user.application.port.in.FindUserUsecase;
 import com.donet.donet.user.domain.User;
@@ -22,6 +19,7 @@ public class LoginService implements LoginUsecase {
     private final FindUserUsecase findUserUsecase;
     private final CreateUserUsecase createUserUsecase;
     private final TokenIssuerPort tokenIssuerPort;
+    private final CacheRefreshTokenPort cacheRefreshTokenPort;
 
     @Override
     public LoginResponse login(LoginCommand loginCommand) {
@@ -37,6 +35,10 @@ public class LoginService implements LoginUsecase {
 
         String accessToken = tokenIssuerPort.createAccessToken(user.getId());
         String refreshToken = tokenIssuerPort.createRefreshToken(user.getId());
+
+        // 레디스에 토큰 저장
+        cacheRefreshTokenPort.save(user.getId(), refreshToken);
+
         return new LoginResponse(accessToken, refreshToken);
     }
 
