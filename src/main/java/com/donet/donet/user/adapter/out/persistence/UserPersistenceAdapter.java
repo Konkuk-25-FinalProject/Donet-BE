@@ -17,9 +17,14 @@ public class UserPersistenceAdapter implements FindUserPort, CreateUserPort {
     @Override
     public Optional<User> findByLoginId(String loginId) {
         return userRepository.findByLoginId(loginId)
-                .map(userJpaEntity -> {
-                    return Optional.of(userEntityMapper.mapToDomainEntity(userJpaEntity));
-                })
+                .map(userJpaEntity -> Optional.of(userEntityMapper.mapToDomainEntity(userJpaEntity)))
+                .orElseGet(() -> Optional.empty());
+    }
+
+    @Override
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId)
+                .map(jpaEntity -> Optional.of(userEntityMapper.mapToDomainEntity(jpaEntity)))
                 .orElseGet(() -> Optional.empty());
     }
 
