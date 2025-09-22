@@ -6,4 +6,6 @@ public interface TokenIssuerPort {
     String createRefreshToken(Long userId);
 
     boolean validate(String token);
+
+    Long resolveUserId(String token);
 }
