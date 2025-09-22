@@ -11,6 +11,7 @@ public class Donation {
     private LocalDate endDate;
     private Long targetAmount;
     private Long currentAmount;
+    private Long views;
     private Long userId;
     private Long partnerId;
 }
