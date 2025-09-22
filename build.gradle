@@ -40,6 +40,7 @@ dependencies {
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// devtools
@@ -54,6 +55,8 @@ dependencies {
 
 	// Actuator
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	runtimeOnly 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java:8.0.33'
 
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
