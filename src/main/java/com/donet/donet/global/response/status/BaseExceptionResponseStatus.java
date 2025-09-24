@@ -23,7 +23,9 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 2002, "일치하는 리프레시 토큰이 존재하지 않습니다"),
 
     // 4000 : User 관련 에러
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다.");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),
+    USER_DOMAIN_RULE_VIOLATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), 4002, "유저 도메인 규칙 위반입니다."),
+    PROFILE_IMG_UPLOADING_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 4003, "일시적 오류로 사용자 프로필 이미지 업로드에 실패했습니다.");
 
     private final int status;
     private final int code;
