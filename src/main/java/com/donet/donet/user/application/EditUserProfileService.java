@@ -2,6 +2,7 @@ package com.donet.donet.user.application;
 
 import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.infra.aws.FileUploadingFailedException;
+import com.donet.donet.user.application.out.CreateUserPort;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import com.donet.donet.user.application.port.dto.EditUserProfileCommand;
@@ -19,6 +20,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @Service
 public class EditUserProfileService implements EditUserProfileUsecase {
     private final FindUserPort findUserPort;
+    private final CreateUserPort createUserPort;
     private final ImageUploaderPort imageUploaderPort;
     @Override
     public void editProfile(EditUserProfileCommand command) {
@@ -38,5 +40,7 @@ public class EditUserProfileService implements EditUserProfileUsecase {
             }
         }
         user.editProfileData(command.getNickname(), command.getWalletAddress());
+
+        createUserPort.save(user);
     }
 }
