@@ -62,6 +62,17 @@ spring:
 springdoc:
   default-produces-media-type: application/json
 
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2 # 서울 리전
+    credentials:
+      access-key: ${AWS_ACCESS_KEY_ID}
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+    s3:
+      bucket: ${S3_BUCKET_NAME}
+      base-url: ${S3_BASE_URL}
+
 app:
   kakao:
     auth:
