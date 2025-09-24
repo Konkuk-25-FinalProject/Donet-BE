@@ -50,7 +50,8 @@ public class LoginService implements LoginUsecase {
                 userProfile.nickname(),
                 userProfile.thumbnail_image_url(),
                 "KAKAO",
-                userProfile.id());
+                userProfile.id(),
+                null);
         return createUserUsecase.save(newUser);
     }
 }
