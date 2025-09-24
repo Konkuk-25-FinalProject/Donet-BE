@@ -2,11 +2,10 @@ package com.donet.donet.user.application;
 
 import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.infra.aws.FileUploadingFailedException;
-import com.donet.donet.user.application.out.CreateUserPort;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
-import com.donet.donet.user.application.port.out.FindUserPort;
+import com.donet.donet.user.application.port.out.UserRepositoryPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +18,13 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @RequiredArgsConstructor
 @Service
 public class EditUserProfileService implements EditUserProfileUsecase {
-    private final FindUserPort findUserPort;
-    private final CreateUserPort createUserPort;
+    private final UserRepositoryPort userRepositoryPort;
     private final ImageUploaderPort imageUploaderPort;
     @Override
     public void editProfile(EditUserProfileCommand command) {
         log.info("[editProfile] userId = {}", command.getUserId());
 
-        User user = findUserPort.findById(command.getUserId())
+        User user = userRepositoryPort.findById(command.getUserId())
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         if(command.getProfileImage() != null){
@@ -41,6 +39,6 @@ public class EditUserProfileService implements EditUserProfileUsecase {
         }
         user.editProfileData(command.getNickname(), command.getWalletAddress());
 
-        createUserPort.save(user);
+        userRepositoryPort.save(user);
     }
 }
