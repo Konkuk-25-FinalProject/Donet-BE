@@ -18,7 +18,7 @@ public class EditUserProfileController {
     private final EditUserProfileUsecase editUserProfileUsecase;
     @PostMapping("/users/me")
     public BaseResponse<Void> getUserProfile(@CurrentUserId Long userId,
-                                                                @RequestPart MultipartFile profileImage,
+                                                                @RequestPart(required = false) MultipartFile profileImage,
                                                                 @Validated @RequestPart EditUserProfileRequest request){
         editUserProfileUsecase.editProfile(new EditUserProfileCommand(userId, profileImage, request.nickname(), request.walletAddress()));
         return new BaseResponse<>(null);
