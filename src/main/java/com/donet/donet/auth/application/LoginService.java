@@ -45,8 +45,8 @@ public class LoginService implements LoginUsecase {
     private User registerUser(KakaoUserProfile userProfile){
         log.info("[registerUser] 첫 로그인 사용자를 새로운 유저로 등록");
         User newUser = new User(null,
-                userProfile.properties().nickname(),
-                userProfile.kakao_account().profile().thumbnail_image_url(),
+                userProfile.nickname(),
+                userProfile.thumbnail_image_url(),
                 "KAKAO",
                 userProfile.id());
         return createUserUsecase.save(newUser);
