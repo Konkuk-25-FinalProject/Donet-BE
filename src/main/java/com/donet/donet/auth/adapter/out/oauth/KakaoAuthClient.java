@@ -47,21 +47,22 @@ public class KakaoAuthClient implements KakaoAuthPort {
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
 
-        ResponseEntity<KakaoOAuthToken> response = restTemplate.exchange(
+        ResponseEntity<KakaoOAuthTokenResponse> response = restTemplate.exchange(
                 "https://kauth.kakao.com/oauth/token",
                 HttpMethod.POST,
                 kakaoTokenRequest,
-                KakaoOAuthToken.class);
+                KakaoOAuthTokenResponse.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new CustomException(OAUTH_SERVER_UNAVAILABLE);
         }
 
-        KakaoOAuthToken body = response.getBody();
+        KakaoOAuthTokenResponse body = response.getBody();
         if(body == null){
             throw new CustomException(OAUTH_SERVER_UNAVAILABLE);
         }
-        return body;
+
+        return new KakaoOAuthToken(body.access_token());
     }
 
     @Override
@@ -75,20 +76,23 @@ public class KakaoAuthClient implements KakaoAuthPort {
 
         HttpEntity<MultiValueMap<String,String>> kakaoProfileRequest = new HttpEntity <>(headers);
 
-        ResponseEntity<KakaoUserProfile> response = restTemplate.exchange(
+        ResponseEntity<KakaoUserProfileResponse> response = restTemplate.exchange(
                 "https://kapi.kakao.com/v2/user/me",
                 HttpMethod.GET,
                 kakaoProfileRequest,
-                KakaoUserProfile.class);
+                KakaoUserProfileResponse.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
             throw new CustomException(OAUTH_SERVER_UNAVAILABLE);
         }
 
-        KakaoUserProfile body = response.getBody();
+        KakaoUserProfileResponse body = response.getBody();
         if(body == null){
             throw new CustomException(OAUTH_SERVER_UNAVAILABLE);
         }
-        return body;
+        return new KakaoUserProfile(body.id(),
+                body.kakao_account().profile().nickname(),
+                body.kakao_account().email(),
+                body.kakao_account().profile().thumbnail_image_url());
     }
 }
