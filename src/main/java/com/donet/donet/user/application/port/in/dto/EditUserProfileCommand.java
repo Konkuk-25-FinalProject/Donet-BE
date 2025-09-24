@@ -1,4 +1,4 @@
-package com.donet.donet.user.application.port.dto;
+package com.donet.donet.user.application.port.in.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
