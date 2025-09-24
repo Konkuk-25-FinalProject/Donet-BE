@@ -27,4 +27,7 @@ public class UserJpaEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String loginId;
+
+    @Column
+    private String walletAddress;
 }
