@@ -1,8 +1,8 @@
 package com.donet.donet.auth.adapter.out.oauth;
 
 import com.donet.donet.auth.application.port.out.KakaoAuthPort;
-import com.donet.donet.auth.application.port.out.KakaoOAuthToken;
-import com.donet.donet.auth.application.port.out.KakaoUserProfile;
+import com.donet.donet.auth.application.port.out.dto.KakaoOAuthToken;
+import com.donet.donet.auth.application.port.out.dto.KakaoUserProfile;
 import com.donet.donet.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

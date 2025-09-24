@@ -4,6 +4,8 @@ import com.donet.donet.auth.application.port.in.dto.LoginCommand;
 import com.donet.donet.auth.application.port.in.dto.LoginResponse;
 import com.donet.donet.auth.application.port.in.LoginUsecase;
 import com.donet.donet.auth.application.port.out.*;
+import com.donet.donet.auth.application.port.out.dto.KakaoOAuthToken;
+import com.donet.donet.auth.application.port.out.dto.KakaoUserProfile;
 import com.donet.donet.user.application.port.in.CreateUserUsecase;
 import com.donet.donet.user.application.port.in.FindUserUsecase;
 import com.donet.donet.user.domain.User;
