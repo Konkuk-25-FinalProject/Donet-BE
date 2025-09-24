@@ -5,7 +5,7 @@ import com.donet.donet.global.infra.aws.FileUploadingFailedException;
 import com.donet.donet.user.application.out.CreateUserPort;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
-import com.donet.donet.user.application.port.dto.EditUserProfileCommand;
+import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
 import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;

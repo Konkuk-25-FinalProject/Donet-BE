@@ -4,7 +4,7 @@ import com.donet.donet.global.annotation.CurrentUserId;
 import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.adapter.in.web.dto.EditUserProfileRequest;
-import com.donet.donet.user.application.port.dto.EditUserProfileCommand;
+import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
