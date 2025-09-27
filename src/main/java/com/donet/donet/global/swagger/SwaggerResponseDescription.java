@@ -11,7 +11,13 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 
 @Getter
 public enum SwaggerResponseDescription {
-    DEFAULT(new LinkedHashSet<>());
+    DEFAULT(new LinkedHashSet<>()),
+
+    REISSUE_TOKEN(new LinkedHashSet<>(Set.of(
+            INVALID_JWT,
+            USER_NOT_FOUND,
+            REFRESH_TOKEN_NOT_FOUND
+    )));
 
     private final Set<BaseExceptionResponseStatus> exceptionResponseStatusSet;
 
