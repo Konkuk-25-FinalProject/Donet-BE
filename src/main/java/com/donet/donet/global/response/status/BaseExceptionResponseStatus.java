@@ -19,7 +19,11 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     JWT_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), 1009, "토큰을 찾을 수 없습니다"),
 
     // 2000 : Auth 관련 에러
-    OAUTH_SERVER_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE.value(), 2001, "OAuth 제공자 서버로 인해 요청을 처리할 수 없습니다");
+    OAUTH_SERVER_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE.value(), 2001, "OAuth 제공자 서버로 인해 요청을 처리할 수 없습니다"),
+    REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 2002, "일치하는 리프레시 토큰이 존재하지 않습니다"),
+
+    // 4000 : User 관련 에러
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다.");
 
     private final int status;
     private final int code;
