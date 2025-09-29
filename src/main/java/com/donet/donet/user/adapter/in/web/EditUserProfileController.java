@@ -5,6 +5,8 @@ import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.adapter.in.web.dto.EditUserProfileRequest;
 import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -12,15 +14,23 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequiredArgsConstructor
 @RestController
+@RequiredArgsConstructor
 public class EditUserProfileController implements UserController{
     private final EditUserProfileUsecase editUserProfileUsecase;
 
-    @PatchMapping("/users/me")
-    public BaseResponse<Void> editUserProfile(@CurrentUserId Long userId,
-                                                                @RequestPart(required = false) MultipartFile profileImage,
-                                                                @Validated @RequestPart EditUserProfileRequest request){
+    @Operation(
+            summary = "유저 프로필 수정 API",
+            description = """
+                    유저의 프로필 이미지, 닉네임, 지갑주소를 수정할 수 있다. 
+                    프로필 이미지를 변경하지 않으려면 요청에 포함하지 않아야 한다. 
+                    닉네임과 지갑주소는 필수 값이라서 기존 값을 그대로 보내야 한다
+                    """
+    )
+    @PatchMapping(value = "/users/me", consumes = {"multipart/form-data"})
+    public BaseResponse<Void> editUserProfile(@Parameter(hidden = true) @CurrentUserId Long userId,
+                                              @Parameter(name = "변경할 프로필 이미지", required = false) @RequestPart(required = false) MultipartFile profileImage,
+                                              @Validated @RequestPart EditUserProfileRequest request){
         editUserProfileUsecase.editProfile(new EditUserProfileCommand(userId, profileImage, request.nickname(), request.walletAddress()));
         return new BaseResponse<>(null);
     }
