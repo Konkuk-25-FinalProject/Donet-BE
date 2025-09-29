@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
 
@@ -36,6 +38,7 @@ public class JwtUtil implements TokenIssuerPort {
     public String createAccessToken(Long userId) {
         return Jwts.builder()
                 .subject(String.valueOf(userId))
+                .id(UUID.randomUUID().toString())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpireMs))
                 .signWith(secretKey)
@@ -91,4 +94,14 @@ public class JwtUtil implements TokenIssuerPort {
             throw new JwtNotFoundException(JWT_NOT_FOUND);
         }
     }
+
+    public String resolveJti(String accessToken) {
+        return validateToken(accessToken).getId();
+    }
+
+    public Instant resolveExpireTime(String accessToken) {
+        return validateToken(accessToken).getExpiration().toInstant();
+    }
+
+
 }
