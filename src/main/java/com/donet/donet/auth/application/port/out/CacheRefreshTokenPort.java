@@ -8,4 +8,6 @@ public interface CacheRefreshTokenPort {
     Optional<String> findById(Long userId);
 
     void save(Long userId, String refreshToken);
+
+    void delete(Long userId);
 }
