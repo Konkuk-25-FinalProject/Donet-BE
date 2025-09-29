@@ -1,7 +1,10 @@
 package com.donet.donet.donation.domain;
 
+import lombok.Getter;
+
 import java.time.LocalDate;
 
+@Getter
 public class Donation {
     private Long id;
     private String title;
@@ -12,6 +15,7 @@ public class Donation {
     private Long targetAmount;
     private Long currentAmount;
     private Long views;
+    private String imageUrl;
     private Long userId;
     private Long partnerId;
 }
