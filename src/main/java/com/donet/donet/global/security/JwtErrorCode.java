@@ -1,5 +1,5 @@
 package com.donet.donet.global.security;
 
 public enum JwtErrorCode {
-    INVALID_JWT_ERROR, EXPIRED_JWT_ERROR, JWT_NOT_FOUND_ERROR;
+    INVALID_JWT_ERROR, EXPIRED_JWT_ERROR, JWT_NOT_FOUND_ERROR, LOGOUTED_JWT;
 }
