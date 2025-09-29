@@ -3,12 +3,11 @@ package com.donet.donet.user.adapter.in.web;
 import com.donet.donet.global.annotation.CurrentUserId;
 import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
-import com.donet.donet.user.adapter.in.web.dto.EditUserProfileRequest;
 import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +29,10 @@ public class EditUserProfileController implements UserController{
     @PatchMapping(value = "/users/me", consumes = {"multipart/form-data"})
     public BaseResponse<Void> editUserProfile(@Parameter(hidden = true) @CurrentUserId Long userId,
                                               @Parameter(name = "변경할 프로필 이미지", required = false) @RequestPart(required = false) MultipartFile profileImage,
-                                              @Validated @RequestPart EditUserProfileRequest request){
-        editUserProfileUsecase.editProfile(new EditUserProfileCommand(userId, profileImage, request.nickname(), request.walletAddress()));
+                                              @Parameter(name = "변경하거나 유지할 닉네임", required = true) @NotBlank String nickname,
+                                              @Parameter(name= "변경하거나 유지할 지갑주소", required = true) @NotBlank String walletAddress
+                                              ){
+        editUserProfileUsecase.editProfile(new EditUserProfileCommand(userId, profileImage, nickname, walletAddress));
         return new BaseResponse<>(null);
     }
 }
