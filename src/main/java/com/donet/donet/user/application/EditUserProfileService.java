@@ -3,13 +3,14 @@ package com.donet.donet.user.application;
 import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.infra.aws.FileUploadingFailedException;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
-import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
+import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import com.donet.donet.user.application.port.out.UserRepositoryPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.PROFILE_IMG_UPLOADING_FAILED;
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.USER_NOT_FOUND;
@@ -20,6 +21,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 public class EditUserProfileService implements EditUserProfileUsecase {
     private final UserRepositoryPort userRepositoryPort;
     private final ImageUploaderPort imageUploaderPort;
+
     @Override
     public void editProfile(EditUserProfileCommand command) {
         log.info("[editProfile] userId = {}", command.getUserId());
@@ -37,7 +39,50 @@ public class EditUserProfileService implements EditUserProfileUsecase {
                 throw new CustomException(PROFILE_IMG_UPLOADING_FAILED);
             }
         }
-        user.editProfileData(command.getNickname(), command.getWalletAddress());
+        user.editNickname(command.getNickname());
+        user.editWalletAddress(command.getWalletAddress());
+
+        userRepositoryPort.save(user);
+    }
+
+    @Override
+    public void editProfileImage(Long userId, MultipartFile profileImage) {
+        log.info("[editProfileImage] userId = {}", userId);
+
+        User user = userRepositoryPort.findById(userId)
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        try{
+            String profileImageUrl = imageUploaderPort.upload(profileImage);
+            user.editProfileImage(profileImageUrl);
+        }
+        catch (FileUploadingFailedException e){
+            throw new CustomException(PROFILE_IMG_UPLOADING_FAILED);
+        }
+
+        userRepositoryPort.save(user);
+    }
+
+    @Override
+    public void editNickname(Long userId, String nickname) {
+        log.info("[editNickname] userId = {}", userId);
+
+        User user = userRepositoryPort.findById(userId)
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        user.editNickname(nickname);
+
+        userRepositoryPort.save(user);
+    }
+
+    @Override
+    public void editWalletAddress(Long userId, String walletAddress) {
+        log.info("[editWalletAddress] userId = {}", userId);
+
+        User user = userRepositoryPort.findById(userId)
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        user.editWalletAddress(walletAddress);
 
         userRepositoryPort.save(user);
     }
