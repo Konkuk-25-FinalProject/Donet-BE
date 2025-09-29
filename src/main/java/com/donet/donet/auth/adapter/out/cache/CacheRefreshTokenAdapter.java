@@ -13,7 +13,7 @@ public class CacheRefreshTokenAdapter implements CacheRefreshTokenPort {
 
     @Override
     public void update(Long userId, String refreshToken) {
-        refreshTokenRepository.findByUserId(userId).ifPresent(refresh ->{
+        refreshTokenRepository.findById(userId).ifPresent(refresh ->{
             refresh.changeToken(refreshToken);
             refreshTokenRepository.save(refresh);
         });
@@ -21,7 +21,7 @@ public class CacheRefreshTokenAdapter implements CacheRefreshTokenPort {
 
     @Override
     public Optional<String> findById(Long userId) {
-        return refreshTokenRepository.findByUserId(userId)
+        return refreshTokenRepository.findById(userId)
                 .map(refresh -> Optional.of(refresh.getToken()))
                 .orElseGet(() -> Optional.empty());
     }
@@ -29,5 +29,10 @@ public class CacheRefreshTokenAdapter implements CacheRefreshTokenPort {
     @Override
     public void save(Long userId, String refreshToken) {
         refreshTokenRepository.save(new RefreshToken(userId, refreshToken));
+    }
+
+    @Override
+    public void delete(Long userId) {
+        refreshTokenRepository.deleteById(userId);
     }
 }
