@@ -63,6 +63,13 @@ dependencies {
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.security:spring-security-test")
+
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // AWS
+    implementation platform('software.amazon.awssdk:bom:2.25.8')
+    implementation 'software.amazon.awssdk:s3'
 }
 
 tasks.named('test') {

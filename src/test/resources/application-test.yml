@@ -13,6 +13,17 @@ spring:
         show_sql: true
         highlight_sql: true
 
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2 # 서울 리전
+    credentials:
+      access-key: asdf
+      secret-key: asdf
+    s3:
+      bucket: asdf
+      base-url: asdf
+
 app:
   kakao:
     auth:
