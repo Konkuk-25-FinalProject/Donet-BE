@@ -41,6 +41,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                 case INVALID_JWT_ERROR -> writeErrorResponse(response, INVALID_JWT);
                 case EXPIRED_JWT_ERROR -> writeErrorResponse(response, EXPIRED_JWT);
                 case JWT_NOT_FOUND_ERROR -> writeErrorResponse(response, JWT_NOT_FOUND);
+                case LOGOUTED_JWT -> writeErrorResponse(response, LOGOUTED_USER);
                 default ->  writeErrorResponse(response, UNAUTHORIZED);
             }
         }
