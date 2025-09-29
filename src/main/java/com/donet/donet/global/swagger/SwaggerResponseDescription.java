@@ -22,6 +22,11 @@ public enum SwaggerResponseDescription {
     EDIT_USER_PROFILE(new LinkedHashSet<>(Set.of(
             USER_NOT_FOUND,
             PROFILE_IMG_UPLOADING_FAILED
+    ))),
+
+    LOGOUT(new LinkedHashSet<>(Set.of(
+            LOGOUTED_USER,
+            USER_NOT_FOUND
     )));
 
     private final Set<BaseExceptionResponseStatus> exceptionResponseStatusSet;
