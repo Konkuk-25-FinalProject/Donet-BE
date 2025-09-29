@@ -17,17 +17,23 @@ public class User {
     private String walletAddress;
 
     public void editProfileImage(String profileImage) {
-        if(profileImage == null){
+        if(profileImage == null || profileImage.isBlank()){
             throw new CustomException(USER_DOMAIN_RULE_VIOLATION);
         }
         this.profileImage = profileImage;
     }
 
-    public void editProfileData(String nickname, String walletAddress) {
-        if(nickname == null || nickname.isBlank() || walletAddress == null || walletAddress.isBlank()){
+    public void editNickname(String nickname) {
+        if(nickname == null || nickname.isBlank()){
             throw new CustomException(USER_DOMAIN_RULE_VIOLATION);
         }
         this.nickname = nickname;
+    }
+
+    public void editWalletAddress(String walletAddress) {
+        if(walletAddress == null || walletAddress.isBlank()){
+            throw new CustomException(USER_DOMAIN_RULE_VIOLATION);
+        }
         this.walletAddress = walletAddress;
     }
 }
