@@ -7,7 +7,7 @@ import java.util.List;
 
 public record GetFilteredDonationCommand(
         Long userId,
-        List<Category> categories,
+        List<String> categories,
         Pageable pageable
 ) {
 }
