@@ -1,7 +1,7 @@
-package com.donet.donet.donation.adapter.out.persistence;
+package com.donet.donet.donation.adapter.out.persistence.category;
 
 import com.donet.donet.donation.application.port.out.GetInterestedCategoriesPort;
-import com.donet.donet.global.enums.Category;
+import com.donet.donet.donation.domain.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,14 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class GetInterestedCategoriesAdapter implements GetInterestedCategoriesPort {
-    private final
+    private final CategoriesRepository categoriesRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public List<Category> findInterestedCategories(Long userId) {
-        return List.of();
+        return categoriesRepository.findInterestedCategories(userId)
+                .stream()
+                .map(categoryMapper::mapToDomainEntity)
+                .toList();
     }
 }
