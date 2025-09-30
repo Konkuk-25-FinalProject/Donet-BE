@@ -5,5 +5,5 @@ import com.donet.donet.global.enums.Category;
 import java.util.List;
 
 public interface GetInterestedCategoriesPort {
-    List<Category> getInterestedCategories(Long userId);
+    List<Category> findInterestedCategories(Long userId);
 }
