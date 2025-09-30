@@ -1,9 +1,10 @@
-package com.donet.donet.donation.adapter.out.persistence;
+package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.application.port.out.FindDonationPort;
+import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
-import com.donet.donet.global.enums.Category;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -17,21 +18,36 @@ public class DonationPersistenceAdapter implements FindDonationPort {
 
     @Override
     public List<Donation> findFilterDonationPage(List<Category> categories, Pageable pageable) {
-        return List.of();
+        List<Long> categoryIds = categories.stream()
+                .map(Category::getId)
+                .toList();
+
+        Page<DonationJpaEntity> filteredDonations = donationRepository.findDonationWithCategoriesAndPagination(categoryIds, categoryIds.size(), pageable);
+
+        return filteredDonations.getContent().stream()
+                .map(donationMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override
     public Donation findImminentDonation() {
-        return null;
+        return donationMapper.mapToDomainEntity(donationRepository.findImminentDonation());
     }
 
     @Override
     public Donation findPopularDonation() {
-        return null;
+        return donationMapper.mapToDomainEntity(donationRepository.findPopularDonation());
     }
 
     @Override
     public Donation findRecommandedDonation(List<Category> categories) {
-        return null;
+        List<Long> categoryIds = categories.stream()
+                .map(Category::getId)
+                .toList();
+
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size())
+                .orElse(donationRepository.findAnyDonation());
+
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
     }
 }
