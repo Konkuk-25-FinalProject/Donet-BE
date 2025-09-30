@@ -1,6 +1,6 @@
 package com.donet.donet.donation.application.port.out;
 
-import com.donet.donet.global.enums.Category;
+import com.donet.donet.donation.domain.Category;
 
 import java.util.List;
 

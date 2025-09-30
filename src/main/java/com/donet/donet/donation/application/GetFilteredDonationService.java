@@ -5,7 +5,7 @@ import com.donet.donet.donation.application.port.in.GetFilteredDonationUsecase;
 import com.donet.donet.donation.application.port.in.command.GetFilteredDonationCommand;
 import com.donet.donet.donation.application.port.out.*;
 import com.donet.donet.donation.domain.Donation;
-import com.donet.donet.global.enums.Category;
+import com.donet.donet.donation.domain.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
