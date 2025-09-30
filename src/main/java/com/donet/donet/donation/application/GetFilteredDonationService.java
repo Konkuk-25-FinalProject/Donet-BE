@@ -23,7 +23,11 @@ public class GetFilteredDonationService implements GetFilteredDonationUsecase {
         Donation recommendedDonation = findDonationPort.findRecommandedDonation(interestedCategories);
         Donation imminentDonation = findDonationPort.findImminentDonation();
         Donation popularDonation = findDonationPort.findPopularDonation();
-        List<Donation> filteredDonations = findDonationPort.findFilterDonationPage(command.categories(), command.pageable());
+
+        List<Category> categories = command.categories().stream()
+                .map(Category::of)
+                .toList();
+        List<Donation> filteredDonations = findDonationPort.findFilterDonationPage(categories, command.pageable());
 
         return GetFilteredDonationResponse.of(recommendedDonation, imminentDonation, popularDonation, filteredDonations);
     }
