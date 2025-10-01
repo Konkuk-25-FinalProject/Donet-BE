@@ -8,14 +8,18 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
 
+@Slf4j
 @Component
 public class JwtUtil implements TokenIssuerPort {
     private final SecretKey secretKey;
@@ -34,6 +38,7 @@ public class JwtUtil implements TokenIssuerPort {
     public String createAccessToken(Long userId) {
         return Jwts.builder()
                 .subject(String.valueOf(userId))
+                .id(UUID.randomUUID().toString())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpireMs))
                 .signWith(secretKey)
@@ -50,6 +55,31 @@ public class JwtUtil implements TokenIssuerPort {
                 .compact();
     }
 
+
+
+    @Override
+    public boolean validate(String token) {
+        try{
+            Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
+            return true;
+        }
+        catch (ExpiredJwtException e) {
+            log.warn("만료된 JWT 토큰입니다");
+        }
+        catch (MalformedJwtException | UnsupportedJwtException | SecurityException e) {
+            log.warn("잘못된 JWT 서명입니다");
+        }
+        catch (IllegalArgumentException e) {
+            log.warn("잘못된 JWT 토큰입니다");
+        }
+        return false;
+    }
+
+    @Override
+    public Long resolveUserId(String token) {
+        return Long.parseLong(validateToken(token).getSubject());
+    }
+
     public Claims validateToken(String token){
         try{
             return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload();
@@ -64,4 +94,14 @@ public class JwtUtil implements TokenIssuerPort {
             throw new JwtNotFoundException(JWT_NOT_FOUND);
         }
     }
+
+    public String resolveJti(String accessToken) {
+        return validateToken(accessToken).getId();
+    }
+
+    public Instant resolveExpireTime(String accessToken) {
+        return validateToken(accessToken).getExpiration().toInstant();
+    }
+
+
 }
