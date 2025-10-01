@@ -25,7 +25,6 @@ public enum SwaggerResponseDescription {
     ))),
 
     LOGOUT(new LinkedHashSet<>(Set.of(
-            LOGOUTED_USER,
             USER_NOT_FOUND
     )));
 
@@ -38,7 +37,8 @@ public enum SwaggerResponseDescription {
                 FORBIDDEN,
                 API_NOT_FOUND,
                 METHOD_NOT_ALLOWED,
-                INTERNAL_SERVER_ERROR
+                INTERNAL_SERVER_ERROR,
+                LOGOUTED_USER
         )));
 
         this.exceptionResponseStatusSet = exceptionResponseStatusSet;
