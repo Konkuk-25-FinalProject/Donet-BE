@@ -20,4 +20,12 @@ public class GetInterestedCategoriesAdapter implements GetInterestedCategoriesPo
                 .map(categoryMapper::mapToDomainEntity)
                 .toList();
     }
+
+    @Override
+    public List<Category> findCategoriesByName(List<String> names) {
+        return categoriesRepository.findCategoriesByName(names)
+                .stream()
+                .map(categoryMapper::mapToDomainEntity)
+                .toList();
+    }
 }

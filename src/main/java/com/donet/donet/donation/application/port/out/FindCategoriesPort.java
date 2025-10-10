@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface GetInterestedCategoriesPort {
     List<Category> findInterestedCategories(Long userId);
+    List<Category> findCategoriesByName(List<String> names);
 }
