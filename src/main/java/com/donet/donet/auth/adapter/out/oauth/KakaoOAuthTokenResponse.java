@@ -1,6 +1,6 @@
-package com.donet.donet.auth.application.port.out;
+package com.donet.donet.auth.adapter.out.oauth;
 
-public record KakaoOAuthToken(
+public record KakaoOAuthTokenResponse(
         String access_token,
         String token_type,
         String refresh_token,

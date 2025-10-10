@@ -1,6 +1,6 @@
-package com.donet.donet.auth.application.port.out;
+package com.donet.donet.auth.adapter.out.oauth;
 
-public record KakaoUserProfile(
+public record KakaoUserProfileResponse(
         String id,
         String connected_at,
         Properties properties,
