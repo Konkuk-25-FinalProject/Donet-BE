@@ -6,7 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "users")
+@Table(
+        name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UniqueLoginProviderAndLoginId", columnNames = { "loginProvider", "loginId" })
+        }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -27,4 +32,7 @@ public class UserJpaEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String loginId;
+
+    @Column
+    private String walletAddress;
 }

@@ -10,14 +10,16 @@ public class UserEntityMapper {
                 jpaEntity.getNickname(),
                 jpaEntity.getProfileImage(),
                 jpaEntity.getLoginProvider(),
-                jpaEntity.getLoginId());
+                jpaEntity.getLoginId(),
+                jpaEntity.getWalletAddress());
     }
 
     public UserJpaEntity mapToJpaEntity(User entity){
-        return new UserJpaEntity(null,
+        return new UserJpaEntity(entity.getId(),
                 entity.getNickname(),
                 entity.getProfileImage(),
                 entity.getLoginProvider(),
-                entity.getLoginId());
+                entity.getLoginId(),
+                entity.getWalletAddress());
     }
 }

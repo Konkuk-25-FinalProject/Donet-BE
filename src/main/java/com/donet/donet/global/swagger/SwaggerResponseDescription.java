@@ -17,6 +17,11 @@ public enum SwaggerResponseDescription {
             INVALID_JWT,
             USER_NOT_FOUND,
             REFRESH_TOKEN_NOT_FOUND
+    ))),
+
+    EDIT_USER_PROFILE(new LinkedHashSet<>(Set.of(
+            USER_NOT_FOUND,
+            PROFILE_IMG_UPLOADING_FAILED
     )));
 
     private final Set<BaseExceptionResponseStatus> exceptionResponseStatusSet;
