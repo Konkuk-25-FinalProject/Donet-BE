@@ -26,7 +26,7 @@ public class LoginController implements AuthController{
     )
     @CustomExceptionDescription(DEFAULT)
     @PostMapping("/auth/login/kakao")
-    public BaseResponse<LoginResponse> kakaoLogin(@Parameter(name = "카카오 인가코드") @RequestParam("code") @NotBlank String code){
+    public BaseResponse<LoginResponse> kakaoLogin(@Parameter(description = "카카오 인가 코드") @RequestParam("code") @NotBlank String code){
         return new BaseResponse<>(loginUsecase.login(new LoginCommand(code)));
     }
 }
