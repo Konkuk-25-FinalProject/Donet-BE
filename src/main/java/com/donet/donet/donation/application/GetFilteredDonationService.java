@@ -15,18 +15,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetFilteredDonationService implements GetFilteredDonationUsecase {
     private final FindDonationPort findDonationPort;
-    private final GetInterestedCategoriesPort getInterestedCategoriesPort;
+    private final FindCategoriesPort findCategoriesPort;
 
     @Override
     public GetFilteredDonationResponse getFilteredDonation(GetFilteredDonationCommand command) {
-        List<Category> interestedCategories = getInterestedCategoriesPort.findInterestedCategories(command.userId());
+        List<Category> interestedCategories = findCategoriesPort.findInterestedCategories(command.userId());
         Donation recommendedDonation = findDonationPort.findRecommandedDonation(interestedCategories);
         Donation imminentDonation = findDonationPort.findImminentDonation();
         Donation popularDonation = findDonationPort.findPopularDonation();
 
-        List<Category> categories = command.categories().stream()
-                .map(Category::of)
-                .toList();
+        List<Category> categories = findCategoriesPort.findCategoriesByName(command.categories());
         List<Donation> filteredDonations = findDonationPort.findFilterDonationPage(categories, command.pageable());
 
         return GetFilteredDonationResponse.of(recommendedDonation, imminentDonation, popularDonation, filteredDonations);
