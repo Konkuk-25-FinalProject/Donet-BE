@@ -15,7 +15,7 @@ public class UserEntityMapper {
     }
 
     public UserJpaEntity mapToJpaEntity(User entity){
-        return new UserJpaEntity(null,
+        return new UserJpaEntity(entity.getId(),
                 entity.getNickname(),
                 entity.getProfileImage(),
                 entity.getLoginProvider(),
