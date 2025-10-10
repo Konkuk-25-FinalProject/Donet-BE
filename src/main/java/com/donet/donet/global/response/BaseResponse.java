@@ -1,6 +1,8 @@
 package com.donet.donet.global.response;
 
 import com.donet.donet.global.response.status.ResponseStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -21,6 +23,7 @@ public class BaseResponse<T> implements ResponseStatus {
     @Schema(example = "요청에 성공하였습니다.")
     private final String message;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T data;
 
     public BaseResponse(T data) {
