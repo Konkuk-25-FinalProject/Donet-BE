@@ -33,9 +33,9 @@ public class EditUserProfileController implements UserController{
     )
     @PostMapping(value = "/users/me", consumes = {"multipart/form-data"})
     public BaseResponse<Void> editUserProfile(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                              @Parameter(name = "변경할 프로필 이미지", required = false) @RequestPart(required = false) MultipartFile profileImage,
-                                              @Parameter(name = "변경하거나 유지할 닉네임", required = true) @NotBlank String nickname,
-                                              @Parameter(name= "변경하거나 유지할 지갑주소", required = true) @NotBlank String walletAddress
+                                              @Parameter(description = "변경할 프로필 이미지", required = false) @RequestPart(required = false) MultipartFile profileImage,
+                                              @Parameter(description = "변경하거나 유지할 닉네임", required = true) @NotBlank String nickname,
+                                              @Parameter(description= "변경하거나 유지할 지갑주소", required = true) @NotBlank String walletAddress
     ){
         editUserProfileUsecase.editProfile(new EditUserProfileCommand(userId, profileImage, nickname, walletAddress));
         return new BaseResponse<>(null);
@@ -50,7 +50,7 @@ public class EditUserProfileController implements UserController{
     @CustomExceptionDescription(EDIT_USER_PROFILE)
     @PatchMapping(value = "/users/me/profile-image", consumes = {"multipart/form-data"})
     public BaseResponse<Void> editUserProfileImage(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                                   @Parameter(name = "변경할 프로필 이미지") @RequestPart MultipartFile profileImage
+                                                   @Parameter(description = "변경할 프로필 이미지") @RequestPart MultipartFile profileImage
     ){
         editUserProfileUsecase.editProfileImage(userId, profileImage);
         return new BaseResponse<>(null);
@@ -65,7 +65,7 @@ public class EditUserProfileController implements UserController{
     @CustomExceptionDescription(DEFAULT)
     @PatchMapping(value = "/users/me/nickname")
     public BaseResponse<Void> editUserNickname(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                               @Parameter(name = "변경할 닉네임", required = true) @NotBlank String nickname
+                                               @Parameter(description = "변경할 닉네임", required = true) @NotBlank String nickname
     ){
         editUserProfileUsecase.editNickname(userId, nickname);
         return new BaseResponse<>(null);
@@ -80,7 +80,7 @@ public class EditUserProfileController implements UserController{
     @CustomExceptionDescription(DEFAULT)
     @PatchMapping(value = "/users/me/wallet-address")
     public BaseResponse<Void> editUserWalletAddress(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                                    @Parameter(name= "변경할 지갑주소", required = true) @NotBlank String walletAddress
+                                                    @Parameter(description = "변경할 지갑주소", required = true) @NotBlank String walletAddress
     ){
         editUserProfileUsecase.editWalletAddress(userId, walletAddress);
         return new BaseResponse<>(null);
