@@ -12,4 +12,10 @@ public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, L
             nativeQuery = true
     )
     List<CategoryJpaEntity> findInterestedCategories(@Param("userId") Long userId);
+
+    @Query(
+            value = "SELECT * FROM category c WHERE c.name IN :names",
+            nativeQuery = true
+    )
+    List<CategoryJpaEntity> findCategoriesByName(@Param("names") List<String> names);
 }
