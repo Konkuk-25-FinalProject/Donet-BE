@@ -19,7 +19,8 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final String[] PERMIT_URL = {
             "/swagger-ui/**", "/api-docs", "/swagger-ui-custom.html",
-            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html"
+            "/v3/api-docs/**", "/api-docs/**", "/swagger-ui.html", "/swagger-ui/index.html",
+            "/actuator/health"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
