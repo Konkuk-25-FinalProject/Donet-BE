@@ -21,6 +21,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     // 2000 : Auth 관련 에러
     OAUTH_SERVER_UNAVAILABLE(HttpStatus.SERVICE_UNAVAILABLE.value(), 2001, "OAuth 제공자 서버로 인해 요청을 처리할 수 없습니다"),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 2002, "일치하는 리프레시 토큰이 존재하지 않습니다"),
+    LOGOUTED_USER(HttpStatus.UNAUTHORIZED.value(), 2003, "로그아웃된 사용자입니다."),
 
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),

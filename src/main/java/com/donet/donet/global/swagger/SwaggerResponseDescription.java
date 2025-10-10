@@ -22,6 +22,10 @@ public enum SwaggerResponseDescription {
     EDIT_USER_PROFILE(new LinkedHashSet<>(Set.of(
             USER_NOT_FOUND,
             PROFILE_IMG_UPLOADING_FAILED
+    ))),
+
+    LOGOUT(new LinkedHashSet<>(Set.of(
+            USER_NOT_FOUND
     )));
 
     private final Set<BaseExceptionResponseStatus> exceptionResponseStatusSet;
@@ -33,7 +37,8 @@ public enum SwaggerResponseDescription {
                 FORBIDDEN,
                 API_NOT_FOUND,
                 METHOD_NOT_ALLOWED,
-                INTERNAL_SERVER_ERROR
+                INTERNAL_SERVER_ERROR,
+                LOGOUTED_USER
         )));
 
         this.exceptionResponseStatusSet = exceptionResponseStatusSet;

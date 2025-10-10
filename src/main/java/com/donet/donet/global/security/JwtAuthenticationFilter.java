@@ -1,5 +1,6 @@
 package com.donet.donet.global.security;
 
+import com.donet.donet.auth.adapter.out.cache.LogoutedTokenManager;
 import com.donet.donet.global.jwt.JwtUtil;
 import com.donet.donet.global.jwt.exception.InvalidJwtException;
 import com.donet.donet.global.jwt.exception.JwtExpiredException;
@@ -29,12 +30,20 @@ import static com.donet.donet.global.security.JwtErrorCode.*;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final CustomUserDetailsService customUserDetailsService;
+    private final LogoutedTokenManager LogoutedtokenManager;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = resolveToken(request);
         if(token != null){
             try{
                 Claims claims = jwtUtil.validateToken(token);
+
+                // 엑세스 토큰이 블랙리스트에 포함되어 있는지 확인
+                if(LogoutedtokenManager.isLogouted(token)){
+                    throw new LogoutedTokenException();
+                }
+
+                request.setAttribute("access_token", token);
 
                 // userDetails 조회
                 String userId = claims.getSubject();
@@ -61,6 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             catch(UsernameNotFoundException e){
                 log.info("[doFilterInternal] JWT subject/email과 일치하는 유저가 없습니다", e);
                 request.setAttribute("jwt_error_code", INVALID_JWT_ERROR);
+            }
+            catch(LogoutedTokenException e){
+                log.info("[doFilterInternal] 로그아웃 처리된 JWT입니다", e);
+                request.setAttribute("jwt_error_code", LOGOUTED_JWT);
             }
         }
 
