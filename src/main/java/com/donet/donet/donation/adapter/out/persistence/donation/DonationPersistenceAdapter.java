@@ -1,6 +1,7 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.application.port.out.FindDonationPort;
+import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class DonationPersistenceAdapter implements FindDonationPort {
+public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonationPort {
     private final DonationRepository donationRepository;
     private final DonationMapper donationMapper;
 
@@ -49,5 +50,15 @@ public class DonationPersistenceAdapter implements FindDonationPort {
                 .orElse(donationRepository.findAnyDonation());
 
         return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
+    public Donation findDonationById(long id) {
+        return null;
+    }
+
+    @Override
+    public void increaseDonationView(Long donationId) {
+
     }
 }
