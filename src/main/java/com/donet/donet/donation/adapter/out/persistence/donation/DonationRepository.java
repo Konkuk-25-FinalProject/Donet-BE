@@ -45,4 +45,6 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
                     "HAVING COUNT(DISTINCT dc.category_id) = :size ",
             nativeQuery = true)
     Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, Pageable pageable);
+
+    Optional<DonationJpaEntity> findDonationById(Long id);
 }
