@@ -4,12 +4,15 @@ import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.global.exception.DonationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.NO_MATCH_DONATION;
 
 @Component
 @RequiredArgsConstructor
@@ -59,6 +62,10 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
     @Override
     public void increaseDonationView(Long donationId) {
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationId)
+                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
 
+        donationJpaEntity.increaseView();
+        donationRepository.save(donationJpaEntity);
     }
 }
