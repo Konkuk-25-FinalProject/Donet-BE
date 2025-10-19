@@ -64,11 +64,11 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public void increaseDonationView(Long donationId) {
+    public Donation increaseDonationView(Long donationId) {
         DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationId)
                 .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
 
         donationJpaEntity.increaseView();
-        donationRepository.save(donationJpaEntity);
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
     }
 }

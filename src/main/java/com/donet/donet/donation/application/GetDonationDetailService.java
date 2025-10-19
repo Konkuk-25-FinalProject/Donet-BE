@@ -21,8 +21,7 @@ public class GetDonationDetailService implements GetDonationDetailUsecase {
     public GetDonationDetailResponse getDonationDetail(Long donationId) {
         Donation donation;
         try{
-            updateDonationPort.increaseDonationView(donationId);
-            donation = findDonationPort.findDonationById(donationId);
+            donation = updateDonationPort.increaseDonationView(donationId);
         }catch (DonationException e){
             throw new DonationException(FAIL_TO_LOAD_DONATION_DETAIL);
         }
