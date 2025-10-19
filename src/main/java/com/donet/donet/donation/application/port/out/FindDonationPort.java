@@ -11,4 +11,5 @@ public interface FindDonationPort {
     Donation findImminentDonation();
     Donation findPopularDonation();
     Donation findRecommandedDonation(List<Category> categories);
+    Donation findDonationById(long id);
 }

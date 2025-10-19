@@ -1,6 +1,6 @@
 package com.donet.donet.donation.application;
 
-import com.donet.donet.donation.adapter.in.web.dto.GetFilteredDonationResponse;
+import com.donet.donet.donation.application.port.in.response.GetFilteredDonationResponse;
 import com.donet.donet.donation.application.port.in.GetFilteredDonationUsecase;
 import com.donet.donet.donation.application.port.in.command.GetFilteredDonationCommand;
 import com.donet.donet.donation.application.port.out.*;
