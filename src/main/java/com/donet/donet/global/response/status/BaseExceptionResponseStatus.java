@@ -23,6 +23,9 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 2002, "일치하는 리프레시 토큰이 존재하지 않습니다"),
     LOGOUTED_USER(HttpStatus.UNAUTHORIZED.value(), 2003, "로그아웃된 사용자입니다."),
 
+    //3000 : Donation 관련 에러
+    NO_MATCH_DONATION(HttpStatus.NOT_FOUND.value(), 3000, "id에 일치하는 기부가 없습니다."),
+
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),
     USER_DOMAIN_RULE_VIOLATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), 4002, "유저 도메인 규칙 위반입니다."),
