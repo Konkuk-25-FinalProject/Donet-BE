@@ -57,7 +57,10 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
     @Override
     public Donation findDonationById(long id) {
-        return null;
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(id)
+                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
+
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
     }
 
     @Override
