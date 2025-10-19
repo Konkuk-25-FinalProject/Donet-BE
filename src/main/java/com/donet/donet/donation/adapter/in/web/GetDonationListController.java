@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/donation")
-public class GetDonationListController {
+public class GetDonationListController implements DonationController{
     private final GetFilteredDonationUsecase getFilteredDonationUsecase;
 
     @GetMapping("")

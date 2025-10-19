@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/donation")
-public class GetDonationController {
+public class GetDonationController implements DonationController{
     private final GetDonationDetailUsecase getDonationDetailUsecase;
 
     @GetMapping("/{donationId}/detail")
