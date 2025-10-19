@@ -1,4 +1,4 @@
-package com.donet.donet.donation.adapter.in.web.dto;
+package com.donet.donet.donation.application.port.in.response;
 
 import com.donet.donet.donation.domain.Donation;
 
