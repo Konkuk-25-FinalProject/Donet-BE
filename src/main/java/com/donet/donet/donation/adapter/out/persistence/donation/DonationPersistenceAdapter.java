@@ -1,8 +1,10 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.application.port.out.FindDonationPort;
+import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.global.exception.DonationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,9 +12,11 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.NO_MATCH_DONATION;
+
 @Component
 @RequiredArgsConstructor
-public class DonationPersistenceAdapter implements FindDonationPort {
+public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonationPort {
     private final DonationRepository donationRepository;
     private final DonationMapper donationMapper;
 
@@ -48,6 +52,23 @@ public class DonationPersistenceAdapter implements FindDonationPort {
         DonationJpaEntity donationJpaEntity = donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size())
                 .orElse(donationRepository.findAnyDonation());
 
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
+    public Donation findDonationById(long id) {
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(id)
+                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
+
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
+    public Donation increaseDonationView(Long donationId) {
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationId)
+                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
+
+        donationJpaEntity.increaseView();
         return donationMapper.mapToDomainEntity(donationJpaEntity);
     }
 }
