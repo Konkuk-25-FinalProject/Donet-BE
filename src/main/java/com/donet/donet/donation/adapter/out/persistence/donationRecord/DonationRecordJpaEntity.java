@@ -4,6 +4,7 @@ import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEnti
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @Entity
+@Builder
 public class DonationRecordJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
