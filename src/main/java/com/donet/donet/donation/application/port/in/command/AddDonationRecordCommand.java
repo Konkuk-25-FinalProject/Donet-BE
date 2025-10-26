@@ -1,6 +1,6 @@
 package com.donet.donet.donation.application.port.in.command;
 
-public record CreateDonationCommand (
+public record AddDonationRecordCommand(
         Long userId,
         Long donationId,
         Long donationAmount,
