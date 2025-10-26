@@ -1,5 +1,8 @@
 package com.donet.donet.donation.domain;
 
+import lombok.Builder;
+
+@Builder
 public class DonationRecord {
     private Long id;
     private Long donationAmount;
