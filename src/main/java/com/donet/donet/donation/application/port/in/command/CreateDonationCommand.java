@@ -4,6 +4,7 @@ public record CreateDonationCommand (
         Long userId,
         Long donationId,
         Long donationAmount,
-        boolean isAnonymous
+        boolean isAnonymous,
+        String walletAddress
 ){
 }
