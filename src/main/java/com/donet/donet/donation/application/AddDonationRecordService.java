@@ -14,7 +14,7 @@ public class AddDonationRecordService implements AddDonationRecordUsecase {
     private final CreateDonationRecordPort createDonationRecordPort;
 
     @Override
-    public void addDonationRecord(AddDonationRecordCommand command) {
+    public Object addDonationRecord(AddDonationRecordCommand command) {
         DonationRecord donationRecord = DonationRecord.builder()
                 .userId(command.userId())
                 .donationAmount(command.donationAmount())
@@ -23,5 +23,6 @@ public class AddDonationRecordService implements AddDonationRecordUsecase {
                 .build();
 
         createDonationRecordPort.createDonationRecord(donationRecord);
+        return null;
     }
 }
