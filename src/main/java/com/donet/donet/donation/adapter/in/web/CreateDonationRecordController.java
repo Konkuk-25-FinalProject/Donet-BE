@@ -38,6 +38,7 @@ public class CreateDonationRecordController implements DonationController{
                 createDonationRecordRequest.walletAddress()
         );
 
-        return new BaseResponse<>(addDonationRecordUsecase.addDonationRecord(command));
+        addDonationRecordUsecase.addDonationRecord(command);
+        return new BaseResponse<>(null);
     }
 }
