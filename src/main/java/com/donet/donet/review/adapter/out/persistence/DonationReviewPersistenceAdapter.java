@@ -1,4 +1,4 @@
-package com.donet.donet.review.adapter.persistence;
+package com.donet.donet.review.adapter.out.persistence;
 
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
