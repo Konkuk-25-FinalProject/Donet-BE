@@ -6,7 +6,9 @@ import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class CreateDonationReviewService implements CreateDonationReviewUsecase {
     private final ImageUploaderPort imageUploaderPort;
