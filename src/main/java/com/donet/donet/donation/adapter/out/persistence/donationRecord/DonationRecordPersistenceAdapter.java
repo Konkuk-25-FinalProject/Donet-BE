@@ -16,7 +16,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 
 @Component
 @RequiredArgsConstructor
-public class DonationRecordAdapter implements CreateDonationRecordPort {
+public class DonationRecordPersistenceAdapter implements CreateDonationRecordPort {
     private final DonationRecordRepository donationRecordRepository;
     private final DonationRecordMapper donationRecordMapper;
     private final UserRepository userRepository;
