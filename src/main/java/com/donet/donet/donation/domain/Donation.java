@@ -24,4 +24,5 @@ public class Donation {
     private Long userId;
     private Long partnerId;
     private List<DonationItem> donationItems;
+    private List<Category> categories;
 }
