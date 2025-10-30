@@ -29,7 +29,7 @@ public class CreateDonationRecordController implements DonationController{
     )
     @CustomExceptionDescription(DEFAULT)
     @GetMapping("/donate")
-    public BaseResponse<Object> createDonationRecord(@CurrentUserId Long userId, @RequestBody CreateDonationRecordRequest createDonationRecordRequest) {
+    public BaseResponse<Void> createDonationRecord(@CurrentUserId Long userId, @RequestBody CreateDonationRecordRequest createDonationRecordRequest) {
         AddDonationRecordCommand command = new AddDonationRecordCommand(
                 userId,
                 createDonationRecordRequest.donationId(),
