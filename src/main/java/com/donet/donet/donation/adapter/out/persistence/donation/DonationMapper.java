@@ -1,6 +1,8 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +35,24 @@ public class DonationMapper {
                 donationJpaEntity.getPartnerJpaEntity().getId(),
                 null
         );
+    }
+
+    public DonationJpaEntity mapToJpaEntity(
+            Donation donation,
+            UserJpaEntity userJpaEntity,
+            PartnerJpaEntity partnerJpaEntity
+    ) {
+        return DonationJpaEntity.builder()
+                .title(donation.getTitle())
+                .anonymous(donation.getAnonymous())
+                .startDate(donation.getStartDate())
+                .endDate(donation.getEndDate())
+                .description(donation.getDescription())
+                .targetAmount(donation.getTargetAmount())
+                .currentAmount(donation.getCurrentAmount())
+                .views(donation.getViews())
+                .userJpaEntity(userJpaEntity)
+                .partnerJpaEntity(partnerJpaEntity)
+                .build();
     }
 }
