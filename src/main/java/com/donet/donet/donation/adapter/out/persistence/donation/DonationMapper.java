@@ -12,11 +12,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class DonationMapper {
-    //TODO: 의존성 없애기 --> Adapter에서 조회해서 인자로 넘겨주는 방식으로 변경할 것
-    private final DonationImageRepository donationImageRepository;
 
     public Donation mapToDomainEntity(DonationJpaEntity donationJpaEntity) {
-        List<String> imageUrl = donationImageRepository.findByDonationJpaEntity(donationJpaEntity)
+        List<String> imageUrl = donationJpaEntity.getDonationImageJpaEntities()
                 .stream()
                 .map(DonationImageJpaEntity::getImageUrl)
                 .toList();
