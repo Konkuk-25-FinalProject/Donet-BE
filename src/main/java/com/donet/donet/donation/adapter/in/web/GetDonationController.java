@@ -20,7 +20,7 @@ public class GetDonationController implements DonationController{
     private final GetDonationDetailUsecase getDonationDetailUsecase;
 
     @Operation(
-            summary = "기부 상세 페이 조회 API",
+            summary = "기부 상세 조회 API",
             description = """
                     기부 상세 정보를 조회할 수 있습니다.
                     """
