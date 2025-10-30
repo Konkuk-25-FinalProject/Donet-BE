@@ -9,7 +9,6 @@ import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
-import com.donet.donet.donation.domain.DonationItem;
 import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.exception.UserException;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
