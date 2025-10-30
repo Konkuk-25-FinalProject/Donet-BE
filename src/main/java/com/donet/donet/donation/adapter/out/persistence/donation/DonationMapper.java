@@ -29,7 +29,8 @@ public class DonationMapper {
                 donationJpaEntity.getViews(),
                 imageUrl,
                 donationJpaEntity.getUserJpaEntity().getId(),
-                donationJpaEntity.getPartnerJpaEntity().getId()
+                donationJpaEntity.getPartnerJpaEntity().getId(),
+                null
         );
     }
 }
