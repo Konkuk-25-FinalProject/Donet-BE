@@ -17,7 +17,7 @@ public class CreateDonationReviewController {
     private final CreateDonationReviewUsecase createDonationReviewUsecase;
     @PostMapping
     public BaseResponse<Void> createDonationReview(@RequestPart CreateDonationReviewRequest reviewRequest,
-                                                   @RequestPart MultipartFile reviewImage){
+                                                   @RequestPart(required = false) MultipartFile reviewImage){
         createDonationReviewUsecase.create(reviewRequest.toCommand(reviewImage));
         return new BaseResponse<>(null);
     }
