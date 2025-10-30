@@ -57,6 +57,9 @@ public class DonationJpaEntity extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private List<DonationItemJpaEntity> donationItemJpaEntities;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<DonationImageJpaEntity> donationImageJpaEntities;
+
     public void increaseView(){
         if(this.views == null) this.views = 0L;
         this.views++;
