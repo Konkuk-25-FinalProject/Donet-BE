@@ -1,7 +1,7 @@
 package com.donet.donet.donation.application;
 
 import com.donet.donet.donation.application.port.in.AddDonationRecordUsecase;
-import com.donet.donet.donation.application.port.in.command.AddDonationRecordCommand;
+import com.donet.donet.donation.application.port.in.dto.command.AddDonationRecordCommand;
 import com.donet.donet.donation.application.port.out.CreateDonationRecordPort;
 import com.donet.donet.donation.domain.DonationRecord;
 import lombok.RequiredArgsConstructor;

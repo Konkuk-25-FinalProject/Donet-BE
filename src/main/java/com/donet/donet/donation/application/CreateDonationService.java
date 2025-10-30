@@ -1,7 +1,7 @@
 package com.donet.donet.donation.application;
 
 import com.donet.donet.donation.application.port.in.CreateDonationUsecase;
-import com.donet.donet.donation.application.port.in.command.CreateDonationCommand;
+import com.donet.donet.donation.application.port.in.dto.command.CreateDonationCommand;
 import com.donet.donet.donation.application.port.out.CreateDonationPort;
 import com.donet.donet.donation.domain.Donation;
 import com.donet.donet.donation.domain.DonationItem;

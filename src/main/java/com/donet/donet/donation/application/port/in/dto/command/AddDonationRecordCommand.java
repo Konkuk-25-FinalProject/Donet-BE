@@ -1,4 +1,4 @@
-package com.donet.donet.donation.application.port.in.command;
+package com.donet.donet.donation.application.port.in.dto.command;
 
 public record AddDonationRecordCommand(
         Long userId,
