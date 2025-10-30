@@ -4,14 +4,18 @@ import com.donet.donet.donation.domain.Donation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class DonationMapper {
     private final DonationImageRepository donationImageRepository;
 
     public Donation mapToDomainEntity(DonationJpaEntity donationJpaEntity) {
-        String imageUrl = donationImageRepository.findByDonationJpaEntity(donationJpaEntity)
-                .getImageUrl();
+        List<String> imageUrl = donationImageRepository.findByDonationJpaEntity(donationJpaEntity)
+                .stream()
+                .map(DonationImageJpaEntity::getImageUrl)
+                .toList();
 
         return new Donation(
                 donationJpaEntity.getId(),

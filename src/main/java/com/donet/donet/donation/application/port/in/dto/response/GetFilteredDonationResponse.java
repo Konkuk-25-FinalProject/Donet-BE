@@ -1,4 +1,4 @@
-package com.donet.donet.donation.adapter.in.web.dto;
+package com.donet.donet.donation.application.port.in.dto.response;
 
 import com.donet.donet.donation.domain.Donation;
 
@@ -21,7 +21,7 @@ public record GetFilteredDonationResponse(
             return new DonationSummary(
                     donation.getId(),
                     donation.getTitle(),
-                    donation.getImageUrl(),
+                    donation.getImageUrl().get(0),
                     donation.getDescription(),
                     donation.getCurrentAmount().toString()
             );
@@ -31,7 +31,7 @@ public record GetFilteredDonationResponse(
     public record DonationListItem(
             Long donationId,
             String title,
-            String imageUrl,
+            List<String> imageUrl,
             String description,
             String amount,
             String raised

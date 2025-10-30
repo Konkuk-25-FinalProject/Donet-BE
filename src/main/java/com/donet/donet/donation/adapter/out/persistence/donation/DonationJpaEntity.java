@@ -49,4 +49,9 @@ public class DonationJpaEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private PartnerJpaEntity partnerJpaEntity;
+
+    public void increaseView(){
+        if(this.views == null) this.views = 0L;
+        this.views++;
+    }
 }
