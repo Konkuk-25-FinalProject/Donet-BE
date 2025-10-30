@@ -18,6 +18,8 @@ public class DonationReviewJpaEntity {
 
     private String summary;
 
+    private String tags;
+
     @Lob
     private String content;
 
