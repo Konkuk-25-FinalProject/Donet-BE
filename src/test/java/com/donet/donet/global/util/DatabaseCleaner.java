@@ -32,6 +32,10 @@ public class DatabaseCleaner {
         entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
         for (String tableName : tableNames) {
             entityManager.createNativeQuery(String.format("TRUNCATE TABLE %s", tableName)).executeUpdate();
+            // H2에서는 AUTO_INCREMENT를 명시적으로 초기화
+            entityManager.createNativeQuery(
+                    String.format("ALTER TABLE %s ALTER COLUMN ID RESTART WITH 1", tableName)
+            ).executeUpdate();
         }
         entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
     }
