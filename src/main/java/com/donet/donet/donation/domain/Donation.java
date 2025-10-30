@@ -23,4 +23,5 @@ public class Donation {
     private List<String> imageUrl;
     private Long userId;
     private Long partnerId;
+    private List<DonationItem> donationItems;
 }
