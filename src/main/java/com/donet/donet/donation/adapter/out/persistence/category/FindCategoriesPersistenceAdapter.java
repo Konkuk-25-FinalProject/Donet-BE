@@ -9,7 +9,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class FindCategoriesAdapter implements FindCategoriesPort {
+public class FindCategoriesPersistenceAdapter implements FindCategoriesPort {
     private final CategoriesRepository categoriesRepository;
     private final CategoryMapper categoryMapper;
 
