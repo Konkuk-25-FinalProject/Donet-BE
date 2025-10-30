@@ -53,7 +53,7 @@ class CreateDonationReviewControllerTest {
         UserJpaEntity userJpaEntity = testDataFactory.createUser();
         String accessToken = jwtUtil.createAccessToken(userJpaEntity.getId());
 
-        CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest("제목", "요약", List.of("태그"), "내용");
+        CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"), "내용");
         byte[] fakeImage = "fake image data".getBytes(StandardCharsets.UTF_8);
 
         BDDMockito.given(imageUploaderPort.upload(Mockito.any())).willReturn("image");
@@ -79,7 +79,7 @@ class CreateDonationReviewControllerTest {
         UserJpaEntity userJpaEntity = testDataFactory.createUser();
         String accessToken = jwtUtil.createAccessToken(userJpaEntity.getId());
 
-        CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest("제목", "요약", List.of("태그"),"내용");
+        CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"),"내용");
 
         given()
                 .header("Authorization", "Bearer " + accessToken)
