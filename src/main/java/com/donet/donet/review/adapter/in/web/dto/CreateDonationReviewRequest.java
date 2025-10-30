@@ -7,12 +7,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public record CreateDonationReviewRequest (
+        Long donationId,
         String title,
         String summary,
         List<String> tags,
         String content
 ){
-    public CreateDonationReviewCommand toCommand(MultipartFile reviewImage) {
-        return new CreateDonationReviewCommand(title, summary, tags, content, reviewImage);
+    public CreateDonationReviewCommand toCommand(Long userId, MultipartFile reviewImage) {
+        return new CreateDonationReviewCommand(userId, donationId, title, summary, tags, content, reviewImage);
     }
 }
