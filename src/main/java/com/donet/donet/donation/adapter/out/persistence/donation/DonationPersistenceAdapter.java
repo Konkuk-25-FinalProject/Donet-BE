@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.category.CategoriesRepository;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemRepository;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
@@ -29,6 +30,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
     private final DonationItemRepository donationItemRepository;
+    private final CategoriesRepository categoriesRepository;
 
     private final DonationMapper donationMapper;
 
@@ -107,6 +109,16 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                     donationItemRepository.save(entity);
                 });
 
+        //카테고리 저장
+        List<String> categoryNames = donation.getCategories()
+                .stream()
+                .map(Category::getName)
+                .toList();
+        boolean isExistCategories = categoriesRepository.existsByName(categoryNames);
+        if (!isExistCategories) {
+            throw new DonationException(NO_MATCH_CATEGORY);
+        }
+        categoriesRepository.saveDonationCategory(donation.getId(), categoryNames);
         return true;
     }
 }
