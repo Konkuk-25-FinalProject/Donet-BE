@@ -1,9 +1,13 @@
 package com.donet.donet.review.application;
 
+import com.donet.donet.donation.application.port.out.FindDonationPort;
+import com.donet.donet.donation.domain.Donation;
 import com.donet.donet.review.application.port.in.CreateDonationReviewCommand;
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
+import com.donet.donet.user.application.port.out.UserRepositoryPort;
+import com.donet.donet.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,8 +15,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -20,6 +27,12 @@ import static org.mockito.Mockito.mock;
 class CreateDonationReviewServiceTest {
     @InjectMocks
     private CreateDonationReviewService service;
+
+    @Mock
+    private UserRepositoryPort userRepositoryPort;
+
+    @Mock
+    private FindDonationPort findDonationPort;
 
     @Mock
     private ImageUploaderPort imageUploaderPort;
@@ -33,7 +46,13 @@ class CreateDonationReviewServiceTest {
         // given
         CreateDonationReviewCommand command = mock(CreateDonationReviewCommand.class);
         DonationReview returnedReview = mock(DonationReview.class);
-        given(imageUploaderPort.upload(any())).willReturn("image");
+
+        User mockUser = mock(User.class);
+        Donation mockDonation = mock(Donation.class);
+        given(mockDonation.isWriter(mockUser)).willReturn(true);
+
+        given(userRepositoryPort.findById(anyLong())).willReturn(Optional.of(mockUser));
+        given(findDonationPort.findDonationById(anyLong())).willReturn(mockDonation);
         given(saveDonationReviewPort.save(any())).willReturn(returnedReview);
 
         // when
