@@ -10,7 +10,7 @@ import com.donet.donet.user.application.port.out.ImageUploaderPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.PROFILE_IMG_UPLOADING_FAILED;
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.REVIEW_IMAGE_UPLOAD_FAILED;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class CreateDonationReviewService implements CreateDonationReviewUsecase 
                 imageUrl = imageUploaderPort.upload(command.getImage());
             }
             catch (FileUploadingFailedException e){
-                throw new CustomException(PROFILE_IMG_UPLOADING_FAILED);
+                throw new CustomException(REVIEW_IMAGE_UPLOAD_FAILED);
             }
         }
         DonationReview donationReview = new DonationReview(command, imageUrl);
