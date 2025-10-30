@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.in.web;
 
+import com.donet.donet.global.annotation.CurrentUserId;
 import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;
 import com.donet.donet.review.adapter.in.web.dto.CreateDonationReviewRequest;
@@ -26,9 +27,10 @@ public class CreateDonationReviewController implements DonationReviewController{
     )
     @CustomExceptionDescription(CREATE_DONATION_REVIEW)
     @PostMapping
-    public BaseResponse<Void> createDonationReview(@RequestPart CreateDonationReviewRequest reviewRequest,
+    public BaseResponse<Void> createDonationReview(@CurrentUserId Long userId,
+                                                   @RequestPart CreateDonationReviewRequest reviewRequest,
                                                    @RequestPart(required = false) MultipartFile reviewImage){
-        createDonationReviewUsecase.create(reviewRequest.toCommand(reviewImage));
+        createDonationReviewUsecase.create(reviewRequest.toCommand(userId, reviewImage));
         return new BaseResponse<>(null);
     }
 }
