@@ -8,7 +8,7 @@ import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +28,7 @@ public class CreateDonationRecordController implements DonationController{
                     """
     )
     @CustomExceptionDescription(DEFAULT)
-    @GetMapping("/donate")
+    @PostMapping("/donate")
     public BaseResponse<Object> createDonationRecord(@CurrentUserId Long userId, @RequestBody CreateDonationRecordRequest createDonationRecordRequest) {
         AddDonationRecordCommand command = new AddDonationRecordCommand(
                 userId,
