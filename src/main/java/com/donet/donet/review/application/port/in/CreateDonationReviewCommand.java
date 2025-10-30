@@ -9,6 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 public class CreateDonationReviewCommand {
+    private Long userId;
+    private Long DonationId;
     private String title;
     private String summary;
     private List<String> tags;
