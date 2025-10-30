@@ -16,7 +16,10 @@ public class CreateDonationReviewService implements CreateDonationReviewUsecase 
 
     @Override
     public DonationReview create(CreateDonationReviewCommand command) {
-        String imageUrl = imageUploaderPort.upload(command.getImage());
+        String imageUrl = null;
+        if(command.getImage() != null){
+            imageUrl = imageUploaderPort.upload(command.getImage());
+        }
         DonationReview donationReview = new DonationReview(command, imageUrl);
         return saveDonationReviewPort.save(donationReview);
     }
