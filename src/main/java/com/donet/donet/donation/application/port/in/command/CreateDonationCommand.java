@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record CreateDonationCommand(
+        Long userId,
         List<MultipartFile> images,
         String title,
         boolean isAnonymous,
         List<Item> items,
-        String address,
         LocalDate startDate,
         LocalDate endDate,
         String category,
@@ -20,7 +20,8 @@ public record CreateDonationCommand(
 ) {
     public record Item(
             String itemName,
-            Long amount
+            Long amount,
+            Long price
     ){
     }
 }
