@@ -2,6 +2,7 @@ package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.donation.domain.DonationItem;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,11 @@ public class DonationMapper {
                 .map(DonationImageJpaEntity::getImageUrl)
                 .toList();
 
+        List<DonationItem> donationItems = donationJpaEntity.getDonationItemJpaEntities()
+                .stream()
+                .map(entity -> new DonationItem(entity.getId(), entity.getName(), entity.getQuantity(), entity.getPrice()))
+                .toList();
+
         return new Donation(
                 donationJpaEntity.getId(),
                 donationJpaEntity.getTitle(),
@@ -33,7 +39,7 @@ public class DonationMapper {
                 imageUrl,
                 donationJpaEntity.getUserJpaEntity().getId(),
                 donationJpaEntity.getPartnerJpaEntity().getId(),
-                null
+                donationItems
         );
     }
 
