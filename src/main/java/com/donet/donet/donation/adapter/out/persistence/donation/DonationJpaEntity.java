@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.persistence.BaseEntity;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
@@ -10,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name = "donation")
 @NoArgsConstructor
@@ -51,6 +53,9 @@ public class DonationJpaEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<DonationItemJpaEntity> donationItemJpaEntities;
 
     public void increaseView(){
         if(this.views == null) this.views = 0L;
