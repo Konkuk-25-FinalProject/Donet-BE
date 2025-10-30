@@ -1,4 +1,4 @@
-package com.donet.donet.donation.adapter.out.persistence;
+package com.donet.donet.donation.adapter.out.persistence.partner;
 
 import com.donet.donet.global.persistence.BaseEntity;
 import jakarta.persistence.*;

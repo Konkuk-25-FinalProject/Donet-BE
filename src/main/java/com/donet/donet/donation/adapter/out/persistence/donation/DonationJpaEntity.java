@@ -1,6 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
-import com.donet.donet.donation.adapter.out.persistence.PartnerJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.persistence.BaseEntity;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
