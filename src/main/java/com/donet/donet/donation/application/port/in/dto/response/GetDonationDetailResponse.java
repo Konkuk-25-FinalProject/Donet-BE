@@ -1,4 +1,4 @@
-package com.donet.donet.donation.application.port.in.response;
+package com.donet.donet.donation.application.port.in.dto.response;
 
 import com.donet.donet.donation.domain.Donation;
 
@@ -22,7 +22,8 @@ public record GetDonationDetailResponse(
                 donation.getTargetAmount(),
                 donation.getStartDate(),
                 donation.getEndDate(),
-                donation.getCurrentAmount() / donation.getTargetAmount() * 100
+                donation.getTargetAmount() == 0 ? 0L :
+                        Math.min(100L, donation.getCurrentAmount() * 100 / donation.getTargetAmount())
         );
     }
 }

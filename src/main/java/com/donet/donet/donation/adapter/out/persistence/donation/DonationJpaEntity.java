@@ -51,6 +51,7 @@ public class DonationJpaEntity extends BaseEntity {
     private PartnerJpaEntity partnerJpaEntity;
 
     public void increaseView(){
+        if(this.views == null) this.views = 0L;
         this.views++;
     }
 }

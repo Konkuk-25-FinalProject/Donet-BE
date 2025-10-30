@@ -18,15 +18,10 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @RequiredArgsConstructor
 public class DonationRecordMapper {
 
-    private final UserRepository userRepository;
-    private final DonationRepository donationRepository;
-
-    public DonationRecordJpaEntity toJpaEntity(DonationRecord donationRecord) {
-        UserJpaEntity userJpaEntity = userRepository.findById(donationRecord.getUserId())
-                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
-        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationRecord.getDonationId())
-                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
-
+    public DonationRecordJpaEntity toJpaEntity(
+            DonationRecord donationRecord,
+            UserJpaEntity userJpaEntity,
+            DonationJpaEntity donationJpaEntity) {
         return DonationRecordJpaEntity.builder()
                 .donationAmount(donationRecord.getDonationAmount())
                 .userJpaEntity(userJpaEntity)

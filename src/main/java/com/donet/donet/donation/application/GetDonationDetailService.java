@@ -1,7 +1,7 @@
 package com.donet.donet.donation.application;
 
 import com.donet.donet.donation.application.port.in.GetDonationDetailUsecase;
-import com.donet.donet.donation.application.port.in.response.GetDonationDetailResponse;
+import com.donet.donet.donation.application.port.in.dto.response.GetDonationDetailResponse;
 import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Donation;

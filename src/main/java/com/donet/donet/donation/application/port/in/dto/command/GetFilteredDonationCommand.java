@@ -1,4 +1,4 @@
-package com.donet.donet.donation.application.port.in.command;
+package com.donet.donet.donation.application.port.in.dto.command;
 
 import com.donet.donet.donation.domain.Category;
 import org.springframework.data.domain.Pageable;
