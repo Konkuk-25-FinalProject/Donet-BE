@@ -22,12 +22,12 @@ public class DonationRecordJpaEntity {
     @Column(nullable = false)
     private Long donationAmount;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserJpaEntity userJpaEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     private DonationJpaEntity donationJpaEntity;
 
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @ManyToOne(fetch = FetchType.LAZY)
 //    private WalletJpaEntity walletJpaEntity;
 }
