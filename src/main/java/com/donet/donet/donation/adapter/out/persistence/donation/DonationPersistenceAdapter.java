@@ -1,5 +1,7 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemRepository;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerRepository;
 import com.donet.donet.donation.application.port.out.CreateDonationPort;
@@ -7,6 +9,7 @@ import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.donation.domain.DonationItem;
 import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.exception.UserException;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
@@ -26,6 +29,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
+    private final DonationItemRepository donationItemRepository;
 
     private final DonationMapper donationMapper;
 
@@ -88,6 +92,12 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
         PartnerJpaEntity partnerJpaEntity = partnerRepository.findById(donation.getPartnerId())
                 .orElseThrow(() -> new DonationException(NO_MATCH_PARTNER));
+
+        donation.getDonationItems()
+                .forEach(item -> {
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item);
+                    donationItemRepository.save(entity);
+                });
 
         DonationJpaEntity donationJpaEntity;
         try{
