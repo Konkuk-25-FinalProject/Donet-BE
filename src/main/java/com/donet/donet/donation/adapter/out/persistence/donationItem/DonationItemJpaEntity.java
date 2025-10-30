@@ -31,11 +31,12 @@ public class DonationItemJpaEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private DonationJpaEntity donationJpaEntity;
 
-    public static DonationItemJpaEntity createNewEntity(DonationItem item) {
+    public static DonationItemJpaEntity createNewEntity(DonationItem item, DonationJpaEntity donationJpaEntity) {
         return DonationItemJpaEntity.builder()
                 .name(item.getName())
                 .quantity(item.getQuantity())
                 .price(item.getPrice())
+                .donationJpaEntity(donationJpaEntity)
                 .build();
     }
 }

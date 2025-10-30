@@ -93,12 +93,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         PartnerJpaEntity partnerJpaEntity = partnerRepository.findById(donation.getPartnerId())
                 .orElseThrow(() -> new DonationException(NO_MATCH_PARTNER));
 
-        donation.getDonationItems()
-                .forEach(item -> {
-                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item);
-                    donationItemRepository.save(entity);
-                });
-
         DonationJpaEntity donationJpaEntity;
         try{
             donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
@@ -106,6 +100,14 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
             return false;
         }
         donationRepository.save(donationJpaEntity);
+
+        //기부 아이템 저장
+        donation.getDonationItems()
+                .forEach(item -> {
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, donationJpaEntity);
+                    donationItemRepository.save(entity);
+                });
+
         return true;
     }
 }
