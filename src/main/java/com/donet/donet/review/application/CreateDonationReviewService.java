@@ -29,7 +29,7 @@ public class CreateDonationReviewService implements CreateDonationReviewUsecase 
         User user = userRepositoryPort.findById(command.getUserId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Donation donation = findDonationPort.findDonationById(command.getDonationId());
 
-        if(donation.isWriter(user)){
+        if(!donation.isWriter(user)){
             throw new CustomException(BAD_REQUEST);
         }
 
