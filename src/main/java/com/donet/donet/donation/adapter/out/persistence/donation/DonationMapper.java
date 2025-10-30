@@ -1,6 +1,7 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
+import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
 import com.donet.donet.donation.domain.DonationItem;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
@@ -24,6 +25,11 @@ public class DonationMapper {
                 .map(entity -> new DonationItem(entity.getId(), entity.getName(), entity.getQuantity(), entity.getPrice()))
                 .toList();
 
+        List<Category> categories = donationJpaEntity.getCategories()
+                .stream()
+                .map(entity -> new Category(entity.getId(), entity.getName()))
+                .toList();
+
         return new Donation(
                 donationJpaEntity.getId(),
                 donationJpaEntity.getTitle(),
@@ -37,7 +43,8 @@ public class DonationMapper {
                 imageUrl,
                 donationJpaEntity.getUserJpaEntity().getId(),
                 donationJpaEntity.getPartnerJpaEntity().getId(),
-                donationItems
+                donationItems,
+                categories
         );
     }
 
