@@ -28,7 +28,7 @@ public class CreateDonationService implements CreateDonationUsecase {
                 .stream()
                 .map(item -> DonationItem.builder()
                         .name(item.itemName())
-                        .quantity(item.amount())
+                        .quantity(item.quantity())
                         .price(item.price())
                         .build()
                 )
