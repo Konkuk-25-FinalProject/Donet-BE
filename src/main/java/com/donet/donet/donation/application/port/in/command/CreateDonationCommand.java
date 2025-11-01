@@ -20,7 +20,7 @@ public record CreateDonationCommand(
 ) {
     public record Item(
             String itemName,
-            Long amount,
+            Long quantity,
             Long price
     ){
     }
