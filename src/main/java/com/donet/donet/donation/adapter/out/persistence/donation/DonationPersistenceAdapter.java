@@ -119,6 +119,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         if (!isExistCategories) {
             throw new DonationException(NO_MATCH_CATEGORY);
         }
-        categoriesRepository.saveDonationCategory(donation.getId(), categoryNames);
+        categoriesRepository.saveDonationCategory(savedDonation.getId(), categoryNames);
     }
 }
