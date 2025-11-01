@@ -18,6 +18,6 @@ public class DonationImageJpaEntity {
     @Column(nullable = false)
     private String imageUrl;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private DonationJpaEntity donationJpaEntity;
 }

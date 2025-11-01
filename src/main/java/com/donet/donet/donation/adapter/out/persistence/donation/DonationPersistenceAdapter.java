@@ -1,5 +1,7 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemRepository;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerRepository;
 import com.donet.donet.donation.application.port.out.CreateDonationPort;
@@ -26,7 +28,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
-    private final DonationImageRepository donationImageRepository;
 
     private final DonationMapper donationMapper;
 
@@ -93,10 +94,18 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         DonationJpaEntity donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
         DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
 
+        //기부 아이템 저장
+        donation.getDonationItems()
+                .forEach(item -> {
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, savedDonation);
+                    savedDonation.addDonationItem(entity);
+                });
+
         //이미지 저장
-        List<DonationImageJpaEntity> imageEntities = donation.getImageUrl().stream()
-                .map(url -> new DonationImageJpaEntity(null, url, savedDonation))
-                .toList();
-        donationImageRepository.saveAll(imageEntities);
+        donation.getImageUrl()
+                .forEach(image -> {
+                    DonationImageJpaEntity entity = new DonationImageJpaEntity(null, image, savedDonation);
+                    savedDonation.addDonationImage(entity);
+                });
     }
 }
