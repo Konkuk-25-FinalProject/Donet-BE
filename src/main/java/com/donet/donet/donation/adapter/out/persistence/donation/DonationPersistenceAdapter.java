@@ -28,8 +28,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
-    private final DonationItemRepository donationItemRepository;
-    private final DonationImageRepository donationImageRepository;
 
     private final DonationMapper donationMapper;
 
