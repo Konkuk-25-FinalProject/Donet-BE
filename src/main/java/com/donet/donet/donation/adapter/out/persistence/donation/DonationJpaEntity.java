@@ -1,10 +1,11 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
-import com.donet.donet.donation.adapter.out.persistence.PartnerJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.persistence.BaseEntity;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Entity
+@Builder
 public class DonationJpaEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +46,10 @@ public class DonationJpaEntity extends BaseEntity {
     @Column(nullable = false)
     private Long views;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserJpaEntity userJpaEntity;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
 
     public void increaseView(){

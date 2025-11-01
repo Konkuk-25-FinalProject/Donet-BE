@@ -26,6 +26,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     //3000 : Donation 관련 에러
     NO_MATCH_DONATION(HttpStatus.NOT_FOUND.value(), 3000, "id에 일치하는 기부가 없습니다."),
     FAIL_TO_LOAD_DONATION_DETAIL(HttpStatus.SERVICE_UNAVAILABLE.value(), 3003, "기부 상세페이지 조회 실패했습니다."),
+    NO_MATCH_PARTNER(HttpStatus.NOT_FOUND.value(), 3000, "id에 일치하는 파트너사가 없습니다."),
 
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),
