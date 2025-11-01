@@ -1,12 +1,14 @@
 package com.donet.donet.donation.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class Donation {
     private Long id;
@@ -21,4 +23,5 @@ public class Donation {
     private List<String> imageUrl;
     private Long userId;
     private Long partnerId;
+    private List<DonationItem> donationItems;
 }

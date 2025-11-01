@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.application.port.out.CreateDonationPort;
 import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
@@ -16,7 +17,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 
 @Component
 @RequiredArgsConstructor
-public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonationPort {
+public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonationPort, CreateDonationPort {
     private final DonationRepository donationRepository;
     private final DonationMapper donationMapper;
 
@@ -70,5 +71,10 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
         donationJpaEntity.increaseView();
         return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
+    public boolean createDonation(Donation donation) {
+        return false;
     }
 }
