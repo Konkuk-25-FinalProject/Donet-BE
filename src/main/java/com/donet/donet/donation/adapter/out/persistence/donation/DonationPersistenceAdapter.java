@@ -115,7 +115,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                 .stream()
                 .map(Category::getName)
                 .toList();
-        boolean isExistCategories = categoriesRepository.existsByName(categoryNames);
+        boolean isExistCategories = categoriesRepository.existsByName(categoryNames, categoryNames.size());
         if (!isExistCategories) {
             throw new DonationException(NO_MATCH_CATEGORY);
         }

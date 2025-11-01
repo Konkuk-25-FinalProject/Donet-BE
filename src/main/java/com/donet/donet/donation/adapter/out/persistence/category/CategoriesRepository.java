@@ -22,10 +22,10 @@ public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, L
     List<CategoryJpaEntity> findCategoriesByName(@Param("names") List<String> names);
 
     @Query(
-            value = "SELECT COUNT(DISTINCT name) = :#{#names.size()} FROM category WHERE name IN (:names)",
+            value = "SELECT COUNT(DISTINCT name) = :size FROM category WHERE name IN (:names)",
             nativeQuery = true
     )
-    boolean existsByName(@Param("names") List<String> names);
+    boolean existsByName(@Param("names") List<String> names, @Param("size") int size);
 
     @Modifying
     @Transactional
