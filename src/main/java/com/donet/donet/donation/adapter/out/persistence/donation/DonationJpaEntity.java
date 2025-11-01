@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "donation")
@@ -63,5 +64,12 @@ public class DonationJpaEntity extends BaseEntity {
     public void increaseView(){
         if(this.views == null) this.views = 0L;
         this.views++;
+    }
+
+    public void addDonationItem(DonationItemJpaEntity donationItem) {
+        if (this.donationItemJpaEntities == null) {
+            this.donationItemJpaEntities = new ArrayList<>();
+        }
+        this.donationItemJpaEntities.add(donationItem);
     }
 }
