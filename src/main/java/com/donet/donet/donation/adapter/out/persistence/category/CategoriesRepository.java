@@ -30,8 +30,8 @@ public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, L
     @Modifying
     @Transactional
     @Query(
-            value = "INSERT INTO DonationCategory (donationId, categoryId) " +
-                    "SELECT :donationId, c.id FROM Category c WHERE c.name IN (:categoryNames)",
+            value = "INSERT INTO donation_category (donation_id, category_id) " +
+                    "SELECT :donationId, c.id FROM category c WHERE c.name IN (:categoryNames)",
             nativeQuery = true
     )
     void saveDonationCategory(@Param("donationId") Long donationId, @Param("categoryNames") List<String> categoryNames);
