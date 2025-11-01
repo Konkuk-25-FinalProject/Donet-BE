@@ -24,6 +24,9 @@ public record CreateDonationRequest(
     }
 
     public List<CreateDonationCommand.Item> toCommandItem() {
+        if(this.items == null || this.items.isEmpty()) {
+            return List.of();
+        }
         return this.items.stream()
                 .map(item -> new CreateDonationCommand.Item(item.itemName, item.amount, item.price))
                 .toList();

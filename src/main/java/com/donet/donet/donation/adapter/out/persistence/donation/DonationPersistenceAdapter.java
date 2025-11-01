@@ -29,7 +29,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
-    private final DonationItemRepository donationItemRepository;
     private final CategoriesRepository categoriesRepository;
 
     private final DonationMapper donationMapper;
@@ -87,26 +86,28 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public boolean createDonation(Donation donation) {
+    public void createDonation(Donation donation) {
         UserJpaEntity userJpaEntity = userRepository.findById(donation.getUserId())
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
         PartnerJpaEntity partnerJpaEntity = partnerRepository.findById(donation.getPartnerId())
                 .orElseThrow(() -> new DonationException(NO_MATCH_PARTNER));
 
-        DonationJpaEntity donationJpaEntity;
-        try{
-            donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
-        }catch(Exception e){
-            return false;
-        }
-        donationRepository.save(donationJpaEntity);
+        DonationJpaEntity donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
+        DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
 
         //기부 아이템 저장
         donation.getDonationItems()
                 .forEach(item -> {
-                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, donationJpaEntity);
-                    donationItemRepository.save(entity);
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, savedDonation);
+                    savedDonation.addDonationItem(entity);
+                });
+
+        //이미지 저장
+        donation.getImageUrl()
+                .forEach(image -> {
+                    DonationImageJpaEntity entity = new DonationImageJpaEntity(null, image, savedDonation);
+                    savedDonation.addDonationImage(entity);
                 });
 
         //카테고리 저장
@@ -119,6 +120,5 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
             throw new DonationException(NO_MATCH_CATEGORY);
         }
         categoriesRepository.saveDonationCategory(donation.getId(), categoryNames);
-        return true;
     }
 }

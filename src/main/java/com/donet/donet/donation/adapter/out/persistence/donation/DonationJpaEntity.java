@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -56,10 +57,10 @@ public class DonationJpaEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationItemJpaEntity> donationItemJpaEntities;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
     @ManyToMany
@@ -73,5 +74,19 @@ public class DonationJpaEntity extends BaseEntity {
     public void increaseView(){
         if(this.views == null) this.views = 0L;
         this.views++;
+    }
+
+    public void addDonationItem(DonationItemJpaEntity donationItem) {
+        if (this.donationItemJpaEntities == null) {
+            this.donationItemJpaEntities = new ArrayList<>();
+        }
+        this.donationItemJpaEntities.add(donationItem);
+    }
+
+    public void addDonationImage(DonationImageJpaEntity donationImage) {
+        if (this.donationImageJpaEntities == null) {
+            this.donationImageJpaEntities = new ArrayList<>();
+        }
+        this.donationImageJpaEntities.add(donationImage);
     }
 }
