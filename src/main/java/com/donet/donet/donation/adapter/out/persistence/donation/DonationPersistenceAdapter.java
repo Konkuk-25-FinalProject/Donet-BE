@@ -26,6 +26,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
+    private final DonationImageRepository donationImageRepository;
 
     private final DonationMapper donationMapper;
 
@@ -82,20 +83,20 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public boolean createDonation(Donation donation) {
+    public void createDonation(Donation donation) {
         UserJpaEntity userJpaEntity = userRepository.findById(donation.getUserId())
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
 
         PartnerJpaEntity partnerJpaEntity = partnerRepository.findById(donation.getPartnerId())
                 .orElseThrow(() -> new DonationException(NO_MATCH_PARTNER));
 
-        DonationJpaEntity donationJpaEntity;
-        try{
-            donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
-        }catch(Exception e){
-            return false;
-        }
-        donationRepository.save(donationJpaEntity);
-        return true;
+        DonationJpaEntity donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
+        DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
+
+        //이미지 저장
+        List<DonationImageJpaEntity> imageEntities = donation.getImageUrl().stream()
+                .map(url -> new DonationImageJpaEntity(null, url, savedDonation))
+                .toList();
+        donationImageRepository.saveAll(imageEntities);
     }
 }
