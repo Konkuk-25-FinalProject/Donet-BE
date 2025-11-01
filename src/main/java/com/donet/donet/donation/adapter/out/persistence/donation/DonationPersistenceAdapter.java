@@ -26,6 +26,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
+    private final DonationImageRepository donationImageRepository;
 
     private final DonationMapper donationMapper;
 
@@ -95,7 +96,14 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         }catch(Exception e){
             return false;
         }
-        donationRepository.save(donationJpaEntity);
+        DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
+
+        //이미지 저장
+        List<DonationImageJpaEntity> imageEntities = donation.getImageUrl().stream()
+                .map(url -> new DonationImageJpaEntity(null, url, savedDonation))
+                .toList();
+        donationImageRepository.saveAll(imageEntities);
+
         return true;
     }
 }
