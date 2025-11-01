@@ -1,0 +1,54 @@
+package com.donet.donet.donation.adapter.in.web;
+
+import com.donet.donet.donation.adapter.in.web.dto.CreateDonationRequest;
+import com.donet.donet.donation.application.port.in.CreateDonationUsecase;
+import com.donet.donet.donation.application.port.in.command.CreateDonationCommand;
+import com.donet.donet.global.annotation.CurrentUserId;
+import com.donet.donet.global.response.BaseResponse;
+import com.donet.donet.global.swagger.CustomExceptionDescription;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+
+import static com.donet.donet.global.swagger.SwaggerResponseDescription.DEFAULT;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/donation")
+public class CreateDonationController implements DonationController{
+    private final CreateDonationUsecase createDonationUsecase;
+
+    @Operation(
+            summary = "새로운 기부 생성 API",
+            description = """
+                    새로운 기부를 생성하는 API입니다. 기부 등록 페이지에서 사용됩니다.  
+                    """
+    )
+    @CustomExceptionDescription(DEFAULT)
+    @PostMapping("/register")
+    public BaseResponse<Void> createDonation(@Parameter(hidden = true) @CurrentUserId Long userId,
+                                             @RequestPart(required = false) List<MultipartFile> images,
+                                             @RequestPart CreateDonationRequest request
+    ){
+        CreateDonationCommand command = new CreateDonationCommand(
+                userId,
+                images,
+                request.title(),
+                request.isAnonymous(),
+                request.toCommandItem(),
+                request.startDate(),
+                request.endDate(),
+                request.category(),
+                request.targetAmount(),
+                request.partnerId(),
+                request.content()
+        );
+
+        createDonationUsecase.createDonation(command);
+        return new BaseResponse<>(null);
+    }
+}
