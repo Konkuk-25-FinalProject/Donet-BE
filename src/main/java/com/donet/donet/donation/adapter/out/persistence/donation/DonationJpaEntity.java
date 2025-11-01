@@ -72,4 +72,11 @@ public class DonationJpaEntity extends BaseEntity {
         }
         this.donationItemJpaEntities.add(donationItem);
     }
+
+    public void addDonationImage(DonationImageJpaEntity donationImage) {
+        if (this.donationImageJpaEntities == null) {
+            this.donationImageJpaEntities = new ArrayList<>();
+        }
+        this.donationImageJpaEntities.add(donationImage);
+    }
 }
