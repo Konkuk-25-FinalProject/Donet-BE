@@ -95,19 +95,19 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
         DonationJpaEntity donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
         DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
-        donationRepository.save(donationJpaEntity);
 
         //기부 아이템 저장
         donation.getDonationItems()
                 .forEach(item -> {
-                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, donationJpaEntity);
-                    donationItemRepository.save(entity);
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, savedDonation);
+                    savedDonation.addDonationItem(entity);
                 });
 
         //이미지 저장
-        List<DonationImageJpaEntity> imageEntities = donation.getImageUrl().stream()
-                .map(url -> new DonationImageJpaEntity(null, url, savedDonation))
-                .toList();
-        donationImageRepository.saveAll(imageEntities);
+        donation.getImageUrl()
+                .forEach(image -> {
+                    DonationImageJpaEntity entity = new DonationImageJpaEntity(null, image, savedDonation);
+                    savedDonation.addDonationImage(entity);
+                });
     }
 }
