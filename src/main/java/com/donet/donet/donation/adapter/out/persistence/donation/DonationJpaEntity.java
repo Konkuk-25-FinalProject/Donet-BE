@@ -1,6 +1,7 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
 import com.donet.donet.donation.adapter.out.persistence.category.CategoryJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.donationCategory.DonationCategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.persistence.BaseEntity;
@@ -63,13 +64,8 @@ public class DonationJpaEntity extends BaseEntity {
     @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
-    @ManyToMany
-    @JoinTable(
-            name = "DonationCategory",
-            joinColumns = @JoinColumn(name = "donationId"),
-            inverseJoinColumns = @JoinColumn(name = "categoryId")
-    )
-    private Set<CategoryJpaEntity> categories;
+    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DonationCategoryJpaEntity> donationCategories;
 
     public void increaseView(){
         if(this.views == null) this.views = 0L;
@@ -88,5 +84,13 @@ public class DonationJpaEntity extends BaseEntity {
             this.donationImageJpaEntities = new ArrayList<>();
         }
         this.donationImageJpaEntities.add(donationImage);
+    }
+
+    public void addDonationCategory(DonationCategoryJpaEntity donationCategory) {
+        if (this.donationCategories == null) {
+            this.donationCategories = new ArrayList<>();
+        }
+        donationCategories.add(donationCategory);
+        donationCategory.setDonation(this);
     }
 }
