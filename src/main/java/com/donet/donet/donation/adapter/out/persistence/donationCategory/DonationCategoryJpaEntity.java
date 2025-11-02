@@ -22,10 +22,10 @@ public class DonationCategoryJpaEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donation_id", nullable = false)
-    private DonationJpaEntity donation;
+    private DonationJpaEntity donationJpaEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
-    private CategoryJpaEntity category;
+    private CategoryJpaEntity categoryJpaEntity;
 }
 

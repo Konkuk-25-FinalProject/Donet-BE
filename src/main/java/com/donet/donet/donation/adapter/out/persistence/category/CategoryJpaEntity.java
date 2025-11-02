@@ -25,6 +25,6 @@ public class CategoryJpaEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categoryJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationCategoryJpaEntity> donationCategories = new ArrayList<>();
 }

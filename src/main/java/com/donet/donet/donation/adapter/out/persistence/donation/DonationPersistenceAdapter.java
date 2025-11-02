@@ -104,8 +104,8 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
         for (CategoryJpaEntity category : categoryJpaEntities) {
             DonationCategoryJpaEntity dc = DonationCategoryJpaEntity.builder()
-                    .donation(donationJpaEntity)
-                    .category(category)
+                    .donationJpaEntity(donationJpaEntity)
+                    .categoryJpaEntity(category)
                     .build();
             donationJpaEntity.addDonationCategory(dc);
         }

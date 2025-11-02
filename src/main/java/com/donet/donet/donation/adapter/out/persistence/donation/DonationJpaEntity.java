@@ -1,6 +1,5 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
-import com.donet.donet.donation.adapter.out.persistence.category.CategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationCategory.DonationCategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
@@ -15,7 +14,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "donation")
 @NoArgsConstructor
@@ -58,13 +56,13 @@ public class DonationJpaEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
 
-    @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationItemJpaEntity> donationItemJpaEntities;
 
-    @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
-    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donationJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationCategoryJpaEntity> donationCategories;
 
     public void increaseView(){
@@ -91,6 +89,6 @@ public class DonationJpaEntity extends BaseEntity {
             this.donationCategories = new ArrayList<>();
         }
         donationCategories.add(donationCategory);
-        donationCategory.setDonation(this);
+        donationCategory.setDonationJpaEntity(this);
     }
 }

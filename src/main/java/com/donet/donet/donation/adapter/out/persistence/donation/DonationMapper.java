@@ -28,7 +28,7 @@ public class DonationMapper {
 
         List<Category> categories = donationJpaEntity.getDonationCategories()
                 .stream()
-                .map(DonationCategoryJpaEntity::getCategory)
+                .map(DonationCategoryJpaEntity::getCategoryJpaEntity)
                 .map(entity -> new Category(entity.getId(), entity.getName()))
                 .toList();
 
