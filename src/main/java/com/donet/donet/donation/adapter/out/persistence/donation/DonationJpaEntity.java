@@ -58,13 +58,13 @@ public class DonationJpaEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
 
-    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationItemJpaEntity> donationItemJpaEntities;
 
-    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donation", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
-    @OneToMany(mappedBy = "donationJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationCategoryJpaEntity> donationCategories;
 
     public void increaseView(){
