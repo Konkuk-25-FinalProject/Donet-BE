@@ -64,7 +64,7 @@ public class DonationJpaEntity extends BaseEntity {
     @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
-    @OneToMany(mappedBy = "donation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "donationJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationCategoryJpaEntity> donationCategories;
 
     public void increaseView(){
