@@ -1,6 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
-import com.donet.donet.donation.adapter.out.persistence.category.CategoryJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.donationCategory.DonationCategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.persistence.BaseEntity;
@@ -12,8 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "donation")
 @NoArgsConstructor
@@ -56,22 +56,39 @@ public class DonationJpaEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private PartnerJpaEntity partnerJpaEntity;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationItemJpaEntity> donationItemJpaEntities;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DonationImageJpaEntity> donationImageJpaEntities;
 
-    @ManyToMany
-    @JoinTable(
-            name = "DonationCategory",
-            joinColumns = @JoinColumn(name = "donationId"),
-            inverseJoinColumns = @JoinColumn(name = "categoryId")
-    )
-    private Set<CategoryJpaEntity> categories;
+    @OneToMany(mappedBy = "donationJpaEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DonationCategoryJpaEntity> donationCategories;
 
     public void increaseView(){
         if(this.views == null) this.views = 0L;
         this.views++;
+    }
+
+    public void addDonationItem(DonationItemJpaEntity donationItem) {
+        if (this.donationItemJpaEntities == null) {
+            this.donationItemJpaEntities = new ArrayList<>();
+        }
+        this.donationItemJpaEntities.add(donationItem);
+    }
+
+    public void addDonationImage(DonationImageJpaEntity donationImage) {
+        if (this.donationImageJpaEntities == null) {
+            this.donationImageJpaEntities = new ArrayList<>();
+        }
+        this.donationImageJpaEntities.add(donationImage);
+    }
+
+    public void addDonationCategory(DonationCategoryJpaEntity donationCategory) {
+        if (this.donationCategories == null) {
+            this.donationCategories = new ArrayList<>();
+        }
+        donationCategories.add(donationCategory);
+        donationCategory.setDonationJpaEntity(this);
     }
 }

@@ -32,7 +32,7 @@ public class CreateDonationController implements DonationController{
     @PostMapping("/register")
     public BaseResponse<Void> createDonation(@Parameter(hidden = true) @CurrentUserId Long userId,
                                              @RequestPart(required = false) List<MultipartFile> images,
-                                             @RequestBody CreateDonationRequest request
+                                             @RequestPart CreateDonationRequest request
     ){
         CreateDonationCommand command = new CreateDonationCommand(
                 userId,
