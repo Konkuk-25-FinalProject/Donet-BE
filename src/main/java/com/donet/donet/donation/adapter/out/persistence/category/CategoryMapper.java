@@ -13,9 +13,9 @@ public class CategoryMapper {
     }
 
     public CategoryJpaEntity mapToJpaEntity(Category category) {
-        return new CategoryJpaEntity(
-                category.getId(),
-                category.getName()
-        );
+        return CategoryJpaEntity.builder()
+                .name(category.getName())
+                .id(category.getId())
+                .build();
     }
 }

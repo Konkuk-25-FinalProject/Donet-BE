@@ -2,7 +2,7 @@ package com.donet.donet.donation.adapter.in.web;
 
 import com.donet.donet.donation.adapter.in.web.dto.CreateDonationRecordRequest;
 import com.donet.donet.donation.application.port.in.AddDonationRecordUsecase;
-import com.donet.donet.donation.application.port.in.command.AddDonationRecordCommand;
+import com.donet.donet.donation.application.port.in.dto.command.AddDonationRecordCommand;
 import com.donet.donet.global.annotation.CurrentUserId;
 import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;

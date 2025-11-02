@@ -1,10 +1,9 @@
 package com.donet.donet.donation.adapter.in.web.dto;
 
-import com.donet.donet.donation.application.port.in.command.CreateDonationCommand;
+import com.donet.donet.donation.application.port.in.dto.command.CreateDonationCommand;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record CreateDonationRequest(
         String title,
@@ -12,7 +11,7 @@ public record CreateDonationRequest(
         List<Item> items,
         LocalDate startDate,
         LocalDate endDate,
-        String category,
+        List<String> category,
         Long targetAmount,
         Long partnerId,
         String content

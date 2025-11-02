@@ -1,7 +1,9 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.donation.adapter.out.persistence.category.CategoriesRepository;
+import com.donet.donet.donation.adapter.out.persistence.category.CategoryJpaEntity;
+import com.donet.donet.donation.adapter.out.persistence.donationCategory.DonationCategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
-import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemRepository;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerRepository;
 import com.donet.donet.donation.application.port.out.CreateDonationPort;
@@ -28,6 +30,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final DonationRepository donationRepository;
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
+    private final CategoriesRepository categoriesRepository;
 
     private final DonationMapper donationMapper;
 
@@ -92,20 +95,35 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                 .orElseThrow(() -> new DonationException(NO_MATCH_PARTNER));
 
         DonationJpaEntity donationJpaEntity = donationMapper.mapToJpaEntity(donation, userJpaEntity, partnerJpaEntity);
-        DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
 
-        //기부 아이템 저장
+        //카테고리 연결
+        List<String> categoryNames = donation.getCategories().stream().map(Category::getName).toList();
+        List<CategoryJpaEntity> categoryJpaEntities = categoriesRepository.findAll().stream()
+                .filter(cat -> categoryNames.contains(cat.getName()))
+                .toList();
+
+        for (CategoryJpaEntity category : categoryJpaEntities) {
+            DonationCategoryJpaEntity dc = DonationCategoryJpaEntity.builder()
+                    .donationJpaEntity(donationJpaEntity)
+                    .categoryJpaEntity(category)
+                    .build();
+            donationJpaEntity.addDonationCategory(dc);
+        }
+
+        //기부 아이템 연결
         donation.getDonationItems()
                 .forEach(item -> {
-                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, savedDonation);
-                    savedDonation.addDonationItem(entity);
+                    DonationItemJpaEntity entity = DonationItemJpaEntity.createNewEntity(item, donationJpaEntity);
+                    donationJpaEntity.addDonationItem(entity);
                 });
 
-        //이미지 저장
+        //이미지 연결
         donation.getImageUrl()
                 .forEach(image -> {
-                    DonationImageJpaEntity entity = new DonationImageJpaEntity(null, image, savedDonation);
-                    savedDonation.addDonationImage(entity);
+                    DonationImageJpaEntity entity = new DonationImageJpaEntity(null, image, donationJpaEntity);
+                    donationJpaEntity.addDonationImage(entity);
                 });
+
+        DonationJpaEntity savedDonation = donationRepository.save(donationJpaEntity);
     }
 }

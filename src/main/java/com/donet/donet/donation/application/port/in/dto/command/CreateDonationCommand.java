@@ -1,4 +1,4 @@
-package com.donet.donet.donation.application.port.in.command;
+package com.donet.donet.donation.application.port.in.dto.command;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +13,7 @@ public record CreateDonationCommand(
         List<Item> items,
         LocalDate startDate,
         LocalDate endDate,
-        String category,
+        List<String> category,
         Long targetAmount,
         Long partnerId,
         String content
