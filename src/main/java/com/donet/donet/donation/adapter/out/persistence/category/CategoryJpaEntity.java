@@ -4,6 +4,7 @@ import com.donet.donet.donation.adapter.out.persistence.donationCategory.Donatio
 import com.donet.donet.global.persistence.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Entity
+@Builder
 public class CategoryJpaEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
