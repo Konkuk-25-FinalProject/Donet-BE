@@ -6,7 +6,9 @@ import com.donet.donet.global.swagger.CustomExceptionDescription;
 import com.donet.donet.review.adapter.in.web.dto.CreateDonationReviewRequest;
 import com.donet.donet.review.application.port.in.CreateDonationReviewUsecase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -26,10 +28,10 @@ public class CreateDonationReviewController implements DonationReviewController{
             description = "기부후기를 생성할 수 있다. 기부후기에서 이미지는 선택사항이다."
     )
     @CustomExceptionDescription(CREATE_DONATION_REVIEW)
-    @PostMapping
-    public BaseResponse<Void> createDonationReview(@CurrentUserId Long userId,
-                                                   @RequestPart CreateDonationReviewRequest reviewRequest,
-                                                   @RequestPart(required = false) MultipartFile reviewImage){
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public BaseResponse<Void> createDonationReview(@Parameter(hidden = true) @CurrentUserId Long userId,
+                                                   @Parameter @RequestPart CreateDonationReviewRequest reviewRequest,
+                                                   @Parameter @RequestPart(required = false) MultipartFile reviewImage){
         createDonationReviewUsecase.create(reviewRequest.toCommand(userId, reviewImage));
         return new BaseResponse<>(null);
     }
