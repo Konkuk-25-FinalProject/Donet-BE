@@ -2,7 +2,7 @@ package com.donet.donet.review.application;
 
 import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.domain.Donation;
-import com.donet.donet.review.application.port.in.CreateDonationReviewCommand;
+import com.donet.donet.review.application.port.in.dto.CreateDonationReviewCommand;
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;

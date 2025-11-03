@@ -1,6 +1,6 @@
 package com.donet.donet.review.domain;
 
-import com.donet.donet.review.application.port.in.CreateDonationReviewCommand;
+import com.donet.donet.review.application.port.in.dto.CreateDonationReviewCommand;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

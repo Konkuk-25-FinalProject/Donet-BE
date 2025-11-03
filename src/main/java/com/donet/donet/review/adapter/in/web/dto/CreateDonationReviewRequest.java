@@ -1,7 +1,7 @@
 package com.donet.donet.review.adapter.in.web.dto;
 
 
-import com.donet.donet.review.application.port.in.CreateDonationReviewCommand;
+import com.donet.donet.review.application.port.in.dto.CreateDonationReviewCommand;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
