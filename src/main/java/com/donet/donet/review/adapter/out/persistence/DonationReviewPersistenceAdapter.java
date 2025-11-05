@@ -7,6 +7,7 @@ import com.donet.donet.user.adapter.out.persistence.UserEntityMapper;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import com.donet.donet.user.adapter.out.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,4 +41,14 @@ public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort,
         return found.map(entity -> DonationReviewEntityMapper.mapToDomainEntity(entity,
                 userEntityMapper.mapToDomainEntity(entity.getWriter())));
     }
+
+    @Override
+    public List<DonationReview> findPage(int size, Long lastId) {
+        List<DonationReviewJpaEntity> jpaEntities = donationReviewRepository.findAllByIdLessThanOrderByIdDesc(lastId, PageRequest.of(0, size));
+        return jpaEntities.stream()
+                .map(entity -> DonationReviewEntityMapper.mapToDomainEntity(entity,
+                        userEntityMapper.mapToDomainEntity(entity.getWriter())))
+                .toList();
+    }
+
 }
