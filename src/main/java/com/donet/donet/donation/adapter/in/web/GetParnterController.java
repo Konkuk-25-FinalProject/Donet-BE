@@ -25,7 +25,7 @@ public class GetParnterController implements DonationController{
                     """
     )
     @CustomExceptionDescription(DEFAULT)
-    @GetMapping("")
+    @GetMapping()
     public BaseResponse<GetPartnerResponse> getParnters() {
         return new BaseResponse<>(getPartnerUsecase.getPartner());
     }
