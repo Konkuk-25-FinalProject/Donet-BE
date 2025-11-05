@@ -11,12 +11,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PartnerPersistenceAdapter implements FindPartnerPort {
     private final PartnerRepository partnerRepository;
+    private final PartnerMapper partnerMapper;
 
     @Override
     public List<Partner> findAllPartners() {
-        List<PartnerJpaEntity> partnerJpaEntities = partnerRepository.findAll();
-        return partnerJpaEntities.stream()
-                .map(entity -> new Partner(entity.getId(), entity.getName(), entity.getWalletAddress()))
+        return partnerRepository.findAll()
+                .stream()
+                .map(partnerMapper::mapToDomainEntity)
                 .toList();
     }
 }
