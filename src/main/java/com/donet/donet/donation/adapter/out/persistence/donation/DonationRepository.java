@@ -18,9 +18,9 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
                     "WHERE dc.category_id IN (:categoryIds) " +
                     "GROUP BY d.id " +
                     "HAVING COUNT(DISTINCT dc.category_id) = :size " +
-                    "LIMIT 1",
+                    "LIMIT :donationSize",
             nativeQuery = true)
-    Optional<DonationJpaEntity> findDonationWithAllCategories(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size);
+    List<DonationJpaEntity> findDonationWithAllCategories(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, @Param("donationSize") Integer donationSize);
 
     @Query(value = "SELECT * FROM donation LIMIT 1", nativeQuery = true)
     DonationJpaEntity findAnyDonation();
