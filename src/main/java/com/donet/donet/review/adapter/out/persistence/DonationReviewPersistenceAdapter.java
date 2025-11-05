@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,5 +25,11 @@ public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort,
                 .stream()
                 .map(DonationReviewEntityMapper::mapToDomainEntity)
                 .toList();
+    }
+
+    @Override
+    public Optional<DonationReview> load(Long donationReviewId) {
+        Optional<DonationReviewJpaEntity> found = donationReviewRepository.findById(donationReviewId);
+        return found.map(DonationReviewEntityMapper::mapToDomainEntity);
     }
 }
