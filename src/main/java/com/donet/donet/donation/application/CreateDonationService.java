@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,8 @@ public class CreateDonationService implements CreateDonationUsecase {
 
     @Override
     public void createDonation(CreateDonationCommand command) {
-        List<String> imagesUrls = command.images()
+        List<String> imagesUrls = Optional.ofNullable(command.images())
+                .orElseGet(List::of)
                 .stream()
                 .map(imageUploaderPort::upload)
                 .toList();
