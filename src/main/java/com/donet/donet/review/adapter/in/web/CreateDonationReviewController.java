@@ -5,6 +5,7 @@ import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;
 import com.donet.donet.review.adapter.in.web.dto.CreateDonationReviewRequest;
 import com.donet.donet.review.application.port.in.CreateDonationReviewUsecase;
+import com.donet.donet.review.application.port.in.dto.CreateDonationReviewCommand;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,15 @@ public class CreateDonationReviewController implements DonationReviewController{
     public BaseResponse<Void> createDonationReview(@Parameter(hidden = true) @CurrentUserId Long userId,
                                                    @Parameter @RequestPart @Validated CreateDonationReviewRequest reviewRequest,
                                                    @Parameter @RequestPart(required = false) MultipartFile reviewImage){
-        createDonationReviewUsecase.create(reviewRequest.toCommand(userId, reviewImage));
+
+        CreateDonationReviewCommand command = new CreateDonationReviewCommand(userId,
+                reviewRequest.donationId(),
+                reviewRequest.title(),
+                reviewRequest.summary(),
+                reviewRequest.tags(),
+                reviewRequest.content(),
+                reviewImage);
+        createDonationReviewUsecase.create(command);
         return new BaseResponse<>(null);
     }
 }

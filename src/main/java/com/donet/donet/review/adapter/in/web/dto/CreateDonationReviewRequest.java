@@ -14,7 +14,4 @@ public record CreateDonationReviewRequest (
         List<@NotBlank String> tags,
         @NotBlank String content
 ){
-    public CreateDonationReviewCommand toCommand(Long userId, MultipartFile reviewImage) {
-        return new CreateDonationReviewCommand(userId, donationId, title, summary, tags, content, reviewImage);
-    }
 }
