@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Table(name = "donation")
+@Table(name = "partner")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

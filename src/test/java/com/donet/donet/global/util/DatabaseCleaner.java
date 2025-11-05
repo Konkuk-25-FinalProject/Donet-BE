@@ -1,0 +1,48 @@
+package com.donet.donet.global.util;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class DatabaseCleaner {
+
+    private final List<String> tableNames = new ArrayList<>();
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+	// 바뀐부분 : 의존성 주입이후 초기화 수행 시 Table을 조회한다.
+    @SuppressWarnings("unchecked")
+    @PostConstruct
+    private void findDatabaseTableNames() {
+        List<Object[]> tableInfos = entityManager.createNativeQuery("SHOW TABLES").getResultList();
+        for (Object[] tableInfo : tableInfos) {
+            String tableName = (String) tableInfo[0];
+            tableNames.add(tableName);
+        }
+    }
+
+    private void truncate() {
+        entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY FALSE").executeUpdate();
+        for (String tableName : tableNames) {
+            entityManager.createNativeQuery(String.format("TRUNCATE TABLE %s", tableName)).executeUpdate();
+            // H2에서는 AUTO_INCREMENT를 명시적으로 초기화
+            entityManager.createNativeQuery(
+                    String.format("ALTER TABLE %s ALTER COLUMN ID RESTART WITH 1", tableName)
+            ).executeUpdate();
+        }
+        entityManager.createNativeQuery("SET REFERENTIAL_INTEGRITY TRUE").executeUpdate();
+    }
+
+    @Transactional
+    public void clear() {
+        entityManager.clear();
+        truncate();
+    }
+}

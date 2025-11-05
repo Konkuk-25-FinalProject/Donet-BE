@@ -1,5 +1,6 @@
 package com.donet.donet.donation.domain;
 
+import com.donet.donet.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,4 +26,8 @@ public class Donation {
     private Long partnerId;
     private List<DonationItem> donationItems;
     private List<Category> categories;
+
+    public boolean isWriter(User user) {
+        return userId == user.getId();
+    }
 }
