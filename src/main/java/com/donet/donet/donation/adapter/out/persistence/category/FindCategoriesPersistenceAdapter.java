@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.category;
 
+import com.donet.donet.donation.adapter.out.persistence.donation.DonationRepository;
 import com.donet.donet.donation.application.port.out.FindCategoriesPort;
 import com.donet.donet.donation.domain.Category;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FindCategoriesPersistenceAdapter implements FindCategoriesPort {
     private final CategoriesRepository categoriesRepository;
+    private final DonationRepository donationRepository;
     private final CategoryMapper categoryMapper;
 
     @Override
@@ -31,6 +33,10 @@ public class FindCategoriesPersistenceAdapter implements FindCategoriesPort {
 
     @Override
     public List<Category> findDonatedCategories(Long userId) {
-        return List.of();
+        List<Long> donationIdsUserDonated = donationRepository.getDonationIdsUserDonated(userId);
+        return categoriesRepository.findCategoriesFromDonation(donationIdsUserDonated)
+                .stream()
+                .map(categoryMapper::mapToDomainEntity)
+                .toList();
     }
 }
