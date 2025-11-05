@@ -46,8 +46,9 @@ public record GetMainPageInfoResponse (
             String imgUrl
     ){
         public static DonationReviewResponse fromDonationReview (DonationReview review) {
+            String imageUrl = review.getImageUrl() != null ? review.getImageUrl() : "";
             return new DonationReviewResponse(
-                    review.getId(), review.getTitle(), review.getContent(), review.getImageUrl()
+                    review.getId(), review.getTitle(), review.getContent(), imageUrl
             );
         }
     }
