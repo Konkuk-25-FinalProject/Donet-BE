@@ -21,18 +21,4 @@ public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, L
     )
     List<CategoryJpaEntity> findCategoriesByName(@Param("names") List<String> names);
 
-    @Query(
-            value = "SELECT COUNT(DISTINCT name) = :size FROM category WHERE name IN (:names)",
-            nativeQuery = true
-    )
-    boolean existsByName(@Param("names") List<String> names, @Param("size") int size);
-
-    @Modifying
-    @Transactional
-    @Query(
-            value = "INSERT INTO donation_category (donation_id, category_id) " +
-                    "SELECT :donationId, c.id FROM category c WHERE c.name IN (:categoryNames)",
-            nativeQuery = true
-    )
-    void saveDonationCategory(@Param("donationId") Long donationId, @Param("categoryNames") List<String> categoryNames);
 }
