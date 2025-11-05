@@ -28,4 +28,9 @@ public class FindCategoriesPersistenceAdapter implements FindCategoriesPort {
                 .map(categoryMapper::mapToDomainEntity)
                 .toList();
     }
+
+    @Override
+    public List<Category> findDonatedCategories(Long userId) {
+        return List.of();
+    }
 }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface FindCategoriesPort {
     List<Category> findInterestedCategories(Long userId);
     List<Category> findCategoriesByName(List<String> names);
+    List<Category> findDonatedCategories(Long userId);
 }
