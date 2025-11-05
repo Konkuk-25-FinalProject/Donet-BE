@@ -58,7 +58,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public Donation findRecommandedDonation(List<Category> categories) {
+    public Donation findRecommendedDonation(List<Category> categories) {
         List<Long> categoryIds = categories.stream()
                 .map(Category::getId)
                 .toList();
@@ -70,6 +70,11 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
+    public List<Donation> findRecommendedDonations(List<Category> categories) {
+        return List.of();
+    }
+
+    @Override
     public Donation findDonationById(long id) {
         DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(id)
                 .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
@@ -78,7 +83,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public List<Donation> getPopularDonations() {
+    public List<Donation> findPopularDonations() {
         return List.of();
     }
 
