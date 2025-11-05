@@ -9,8 +9,7 @@ import java.util.List;
 public interface FindDonationPort {
     List<Donation> findFilterDonationPage(List<Category> categories, Pageable pageable);
     Donation findImminentDonation();
-    Donation findPopularDonation();
-    List<Donation> findPopularDonations();
+    List<Donation> findPopularDonations(Integer size);
     Donation findRecommendedDonation(List<Category> categories);
     List<Donation> findRecommendedDonations(List<Category> categories);
     Donation findDonationById(long id);
