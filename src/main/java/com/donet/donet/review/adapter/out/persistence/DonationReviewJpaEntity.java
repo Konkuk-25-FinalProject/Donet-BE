@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "dontaion_review")
+@Table(name = "donation_review")
 @Entity
 public class DonationReviewJpaEntity {
     @Id
