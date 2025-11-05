@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
@@ -114,5 +116,17 @@ public class GlobalControllerAdvice {
         log.error("[handle_CustomException]", e);
         return ResponseEntity.status(e.getExceptionStatus().getStatus())
                 .body(new BaseErrorResponse(e.getExceptionStatus()));
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public BaseErrorResponse handle_MissingServletRequestPartException(MissingServletRequestPartException e) {
+        return new BaseErrorResponse(BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MultipartException.class)
+    public BaseErrorResponse handle_MultipartException(MultipartException e) {
+        return new BaseErrorResponse(BAD_REQUEST);
     }
 }

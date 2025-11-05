@@ -13,6 +13,10 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 public enum SwaggerResponseDescription {
     DEFAULT(new LinkedHashSet<>()),
 
+    CREATE_DONATION_REVIEW(new LinkedHashSet<>(Set.of(
+        REVIEW_IMAGE_UPLOAD_FAILED
+    ))),
+
     REISSUE_TOKEN(new LinkedHashSet<>(Set.of(
             INVALID_JWT,
             USER_NOT_FOUND,

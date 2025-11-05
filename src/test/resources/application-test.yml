@@ -30,6 +30,6 @@ app:
       client: asdf1234asdf1234asdf1234asdf1234asdf1234
       redirect: http://localhost:8080/auth/login/kakao
   jwt:
-    access-expire-ms: 360000
-    refresh-expire-ms : 3600000
+    access-expire-ms: 36000000
+    refresh-expire-ms : 36000000
     secret-key: asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234asdf1234
