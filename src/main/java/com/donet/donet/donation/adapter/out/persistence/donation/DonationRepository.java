@@ -25,8 +25,8 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     @Query(value = "SELECT * FROM donation LIMIT 1", nativeQuery = true)
     DonationJpaEntity findAnyDonation();
 
-    @Query(value = "SELECT * FROM donation d ORDER BY d.views DESC LIMIT 1", nativeQuery = true)
-    DonationJpaEntity findPopularDonation();
+    @Query(value = "SELECT * FROM donation d ORDER BY d.views DESC LIMIT :size", nativeQuery = true)
+    List<DonationJpaEntity> findPopularDonations(@Param("size") Integer size);
 
     @Query(value =
             "SELECT * FROM donation d " +
