@@ -1,6 +1,5 @@
 package com.donet.donet.donation.adapter.in.web;
 
-import com.donet.donet.donation.application.port.in.GetPartnerUsecase;
 import com.donet.donet.donation.application.port.in.dto.response.GetPartnerResponse;
 import com.donet.donet.donation.application.port.out.FindPartnerPort;
 import com.donet.donet.donation.domain.Partner;
@@ -19,7 +18,7 @@ import static com.donet.donet.global.swagger.SwaggerResponseDescription.DEFAULT;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/partners")
-public class GetParnterController implements DonationController{
+public class GetPartnerController implements DonationController{
     private final FindPartnerPort findPartnerPort;
 
     @Operation(
