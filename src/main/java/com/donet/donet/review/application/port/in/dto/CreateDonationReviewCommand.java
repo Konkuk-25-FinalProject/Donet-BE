@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 public class CreateDonationReviewCommand {
     private Long userId;
-    private Long DonationId;
+    private Long donationId;
     private String title;
     private String summary;
     private List<String> tags;
