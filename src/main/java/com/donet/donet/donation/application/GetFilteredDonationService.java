@@ -22,7 +22,7 @@ public class GetFilteredDonationService implements GetFilteredDonationUsecase {
         List<Category> interestedCategories = findCategoriesPort.findInterestedCategories(command.userId());
         Donation recommendedDonation = findDonationPort.findRecommendedDonation(interestedCategories);
         Donation imminentDonation = findDonationPort.findImminentDonation();
-        Donation popularDonation = findDonationPort.findPopularDonation();
+        Donation popularDonation = findDonationPort.findPopularDonations(1).get(0);
 
         List<Category> categories = findCategoriesPort.findCategoriesByName(command.categories());
         List<Donation> filteredDonations = findDonationPort.findFilterDonationPage(categories, command.pageable());
