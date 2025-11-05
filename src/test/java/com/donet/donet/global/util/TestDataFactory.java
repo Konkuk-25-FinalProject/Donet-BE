@@ -72,7 +72,7 @@ public class TestDataFactory {
     public DonationReviewJpaEntity createDonationReview(String title, List<String> tags, String content, Long userId){
         UserJpaEntity user = userRepository.findById(userId).get();
         String flattenTags = tags.stream().collect(Collectors.joining("#"));
-        DonationReviewJpaEntity donation = new DonationReviewJpaEntity(null, title, "요약", flattenTags, content, "이미지", user);
-        return donationReviewRepository.save(donation);
+        DonationReviewJpaEntity donationReview = new DonationReviewJpaEntity(null, title, "요약", flattenTags, content, "이미지", user);
+        return donationReviewRepository.save(donationReview);
     }
 }
