@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class DonationItem {
-    private long id;
+    private Long id;
     private String name;
     private Long quantity;
     private Long price;
