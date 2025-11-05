@@ -6,11 +6,15 @@ import com.donet.donet.review.application.port.in.dto.GetDonationReviewDetailCom
 import com.donet.donet.review.application.port.in.dto.GetDonationReviewDetailResponse;
 import com.donet.donet.review.application.port.out.LoadDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.DONATION_REVIEW_NOT_FOUND;
 
+@RequiredArgsConstructor
+@Service
 public class GetDonationReviewDetailService implements GetDonationReviewDetailUsecase {
-    private LoadDonationReviewPort loadDonationReviewPort;
+    private final LoadDonationReviewPort loadDonationReviewPort;
     @Override
     public GetDonationReviewDetailResponse getDonationReviewDetail(GetDonationReviewDetailCommand command) {
         DonationReview donationReview = loadDonationReviewPort.load(command.getDonationReviewId())
