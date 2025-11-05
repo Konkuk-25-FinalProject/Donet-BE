@@ -1,13 +1,14 @@
 package com.donet.donet.donation.application.port.in.dto.response;
 
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.review.domain.DonationReview;
 
 import java.util.List;
 
 public record GetMainPageInfoResponse (
         List<TopDonation> topDonations,
         List<RecommendDonation> recommendDonations,
-        List<DonationReview> donationReviews
+        List<DonationReviewResponse> donationReviews
 ){
     public record TopDonation (
             Long donationId,
@@ -36,15 +37,15 @@ public record GetMainPageInfoResponse (
         }
     }
 
-    public record DonationReview(
+    public record DonationReviewResponse(
             Long reviewId,
             String title,
             String content,
             String imgUrl
     ){
-        public static GetMainPageInfoResponse.DonationReview fromDonationReview (DonationReview review) {
-            return new GetMainPageInfoResponse.DonationReview(
-                    review.reviewId, review.title, review.content, review.imgUrl
+        public static DonationReviewResponse fromDonationReview (DonationReview review) {
+            return new DonationReviewResponse(
+                    review.getId(), review.getTitle(), review.getContent(), review.getImageUrl()
             );
         }
     }
@@ -58,8 +59,8 @@ public record GetMainPageInfoResponse (
                 .map(RecommendDonation::fromDonation)
                 .toList();
 
-        List<GetMainPageInfoResponse.DonationReview> donationReviewsResponse = donationReviews.stream()
-                .map(GetMainPageInfoResponse.DonationReview::fromDonationReview)
+        List<DonationReviewResponse> donationReviewsResponse = donationReviews.stream()
+                .map(DonationReviewResponse::fromDonationReview)
                 .toList();
 
         return new GetMainPageInfoResponse(topDonationsResponse, recommendDonationsResponse, donationReviewsResponse);
