@@ -31,7 +31,7 @@ public class GetDonationListController implements DonationController{
                     """
     )
     @CustomExceptionDescription(DEFAULT)
-    @GetMapping("")
+    @GetMapping()
     public BaseResponse<GetFilteredDonationResponse> getDonationList(@CurrentUserId Long userId, @RequestParam("category")List<String> categories, Pageable pageable) {
         GetFilteredDonationCommand command = new GetFilteredDonationCommand(userId, categories, pageable);
 
