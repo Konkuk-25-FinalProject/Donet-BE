@@ -20,7 +20,7 @@ public class GetFilteredDonationService implements GetFilteredDonationUsecase {
     @Override
     public GetFilteredDonationResponse getFilteredDonation(GetFilteredDonationCommand command) {
         List<Category> interestedCategories = findCategoriesPort.findInterestedCategories(command.userId());
-        Donation recommendedDonation = findDonationPort.findRecommendedDonation(interestedCategories);
+        Donation recommendedDonation = findDonationPort.findRecommendedDonations(interestedCategories, 1).get(0);
         Donation imminentDonation = findDonationPort.findImminentDonation();
         Donation popularDonation = findDonationPort.findPopularDonations(1).get(0);
 
