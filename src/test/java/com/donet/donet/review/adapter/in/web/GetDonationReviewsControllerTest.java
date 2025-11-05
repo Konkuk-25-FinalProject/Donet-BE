@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.in.web;
 
+import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEntity;
 import com.donet.donet.global.jwt.JwtUtil;
 import com.donet.donet.global.util.DatabaseClearExtension;
 import com.donet.donet.global.util.TestDataFactory;
@@ -51,8 +52,8 @@ class GetDonationReviewsControllerTest {
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
         IntStream.rangeClosed(1, size + 1).forEach(i->{
-            testDataFactory.createDonation(user.getId());
-            testDataFactory.createDonationReview(title + i, tags, content, user.getId());
+            DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+            testDataFactory.createDonationReview(title + i, tags, content, user.getId(), donation.getId());
         });
 
         UserJpaEntity anotherUser = testDataFactory.createUser("KAKAO", "kakaoId2");

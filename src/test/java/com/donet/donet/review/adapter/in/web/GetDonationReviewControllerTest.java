@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.in.web;
 
+import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEntity;
 import com.donet.donet.global.jwt.JwtUtil;
 import com.donet.donet.global.util.DatabaseClearExtension;
 import com.donet.donet.global.util.TestDataFactory;
@@ -48,8 +49,8 @@ class GetDonationReviewControllerTest {
         String content = "내용";
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        testDataFactory.createDonation(user.getId());
-        DonationReviewJpaEntity donationReview = testDataFactory.createDonationReview(title, tags, content, user.getId());
+        DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+        DonationReviewJpaEntity donationReview = testDataFactory.createDonationReview(title, tags, content, user.getId(), donation.getId() );
 
         UserJpaEntity anotherUser = testDataFactory.createUser("KAKAO", "kakaoId2");
 
