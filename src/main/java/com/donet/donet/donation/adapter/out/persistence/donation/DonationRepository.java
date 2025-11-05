@@ -47,4 +47,10 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, Pageable pageable);
 
     Optional<DonationJpaEntity> findDonationById(Long id);
+
+    @Query(value =
+            "SELECT dr.donation_id FROM donation_record dr " +
+                    "WHERE dr.user_id = :userId ",
+            nativeQuery = true)
+    List<Long> getDonationIdsUserDonated(@Param("userId") Long userId);
 }
