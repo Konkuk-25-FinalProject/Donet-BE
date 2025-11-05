@@ -78,6 +78,11 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
+    public List<Donation> getPopularDonations() {
+        return List.of();
+    }
+
+    @Override
     public Donation increaseDonationView(Long donationId) {
         DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationId)
                 .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));

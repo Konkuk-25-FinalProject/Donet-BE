@@ -12,4 +12,5 @@ public interface FindDonationPort {
     Donation findPopularDonation();
     Donation findRecommandedDonation(List<Category> categories);
     Donation findDonationById(long id);
+    List<Donation> getPopularDonations();
 }
