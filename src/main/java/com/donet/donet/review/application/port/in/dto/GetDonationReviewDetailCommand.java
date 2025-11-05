@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GetDonationReviewDetailCommand {
-    private final Long donationId;
+    private final Long donationReviewId;
 }
