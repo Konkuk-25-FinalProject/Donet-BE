@@ -29,7 +29,7 @@ public class GetPartnerController implements DonationController{
     )
     @CustomExceptionDescription(DEFAULT)
     @GetMapping()
-    public BaseResponse<GetPartnerResponse> getParnters() {
+    public BaseResponse<GetPartnerResponse> getPartners() {
         List<Partner> partners = findPartnerPort.findAllPartners();
         return new BaseResponse<>(GetPartnerResponse.from(partners));
     }
