@@ -12,12 +12,14 @@ public class DonationReviewEntityMapper {
                 entity.getSummary(),
                 entity.getTags().stream().collect(Collectors.joining("#")),
                 entity.getContent(),
-                entity.getImageUrl());
+                entity.getImageUrl(),
+                null);
     }
 
     public static DonationReview mapToDomainEntity(DonationReviewJpaEntity jpaEntity) {
         return new DonationReview(jpaEntity.getId(),
                 jpaEntity.getTitle(),
+                jpaEntity.getWriter().getNickname(),
                 jpaEntity.getSummary(),
                 Arrays.stream(jpaEntity.getTags().split("#")).toList(),
                 jpaEntity.getImageUrl(),
