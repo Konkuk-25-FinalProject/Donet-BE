@@ -1,9 +1,11 @@
 package com.donet.donet.review.application.port.in.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.List;
 
+@Getter
 @AllArgsConstructor
 public class GetDonationReviewDetailResponse {
     private final String title;
