@@ -62,6 +62,13 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
     @Override
     public List<Donation> findRecommendedDonations(List<Category> categories, Integer donationSize) {
+        if(categories.isEmpty()) {
+            return donationRepository.findDonationsLimit(donationSize)
+                    .stream()
+                    .map(donationMapper::mapToDomainEntity)
+                    .toList();
+        }
+
         List<Long> categoryIds = categories.stream()
                 .map(Category::getId)
                 .toList();
