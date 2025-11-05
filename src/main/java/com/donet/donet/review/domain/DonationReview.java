@@ -11,12 +11,13 @@ import java.util.List;
 public class DonationReview {
     private Long id;
     private String title;
+    private String writerName;
     private String summary;
     private List<String> tags;
     private String imageUrl;
     private String content;
 
     public DonationReview(CreateDonationReviewCommand command, String imageUrl) {
-        this(null, command.getTitle(), command.getSummary(), command.getTags(), imageUrl, command.getContent());
+        this(null, command.getTitle(),null, command.getSummary(), command.getTags(), imageUrl, command.getContent());
     }
 }
