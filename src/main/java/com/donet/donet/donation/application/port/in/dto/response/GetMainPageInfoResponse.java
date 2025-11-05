@@ -18,8 +18,10 @@ public record GetMainPageInfoResponse (
             Long raised
     ){
         public static TopDonation fromDonation (Donation donation) {
+            List<String> imageUrls = donation.getImageUrl();
+            String imageUrl = imageUrls.isEmpty() ? null : imageUrls.get(0);
             return new TopDonation(
-                    donation.getId(), donation.getImageUrl().get(0), donation.getTitle(), donation.getDescription(), donation.getCurrentAmount()
+                    donation.getId(), imageUrl, donation.getTitle(), donation.getDescription(), donation.getCurrentAmount()
             );
         }
     }
