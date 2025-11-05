@@ -35,7 +35,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     PROFILE_IMG_UPLOADING_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 4003, "일시적 오류로 사용자 프로필 이미지 업로드에 실패했습니다."),
 
     // 6000 : Review 관련 에러
-    REVIEW_IMAGE_UPLOAD_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 4003, "일시적 오류로 리뷰 이미지 업로드에 실패했습니다.");
+    REVIEW_IMAGE_UPLOAD_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 6000, "일시적 오류로 리뷰 이미지 업로드에 실패했습니다.");
 
     private final int status;
     private final int code;
