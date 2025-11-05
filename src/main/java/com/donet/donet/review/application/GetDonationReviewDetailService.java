@@ -22,7 +22,7 @@ public class GetDonationReviewDetailService implements GetDonationReviewDetailUs
 
         return new GetDonationReviewDetailResponse(donationReview.getTitle(),
                 donationReview.getTags(),
-                donationReview.getWriterName(),
+                donationReview.getWriter().getNickname(),
                 donationReview.getImageUrl(),
                 donationReview.getContent());
     }
