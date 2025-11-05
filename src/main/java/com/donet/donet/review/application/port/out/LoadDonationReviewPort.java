@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface LoadDonationReviewPort {
     List<DonationReview> loadRecentReviews(Integer limit);
     Optional<DonationReview> load(Long donationReviewId);
+
+    List<DonationReview> findPage(int size, Long lastId);
 }
