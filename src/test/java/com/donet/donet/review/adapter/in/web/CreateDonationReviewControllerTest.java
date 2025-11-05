@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.in.web;
 
+import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEntity;
 import com.donet.donet.global.jwt.JwtUtil;
 import com.donet.donet.global.util.DatabaseClearExtension;
 import com.donet.donet.global.util.TestDataFactory;
@@ -52,7 +53,7 @@ class CreateDonationReviewControllerTest {
     void shouldSucceedWhenRequestWithImage(){
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        UserJpaEntity donation = testDataFactory.createDonation(user.getId());
+        testDataFactory.createDonation(user.getId());
         String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"), "내용");
@@ -79,7 +80,7 @@ class CreateDonationReviewControllerTest {
     @Test
     void shouldSucceedWhenRequestWithoutImage(){
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        UserJpaEntity donation = testDataFactory.createDonation(user.getId());
+        testDataFactory.createDonation(user.getId());
         String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"),"내용");

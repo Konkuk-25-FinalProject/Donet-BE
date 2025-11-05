@@ -47,7 +47,7 @@ public class TestDataFactory {
     }
 
     @Transactional
-    public UserJpaEntity createDonation(Long userId) {
+    public DonationJpaEntity createDonation(Long userId) {
         UserJpaEntity user = userRepository.findById(userId).get();
         PartnerJpaEntity partner = partnerRepository.save(new PartnerJpaEntity(null, "파트너사", "지갑주소"));
         DonationItemJpaEntity donationItem = new DonationItemJpaEntity(null, "삼다수", 1L, 5000L, null);
@@ -65,9 +65,7 @@ public class TestDataFactory {
         DonationCategoryJpaEntity donationCategory = new DonationCategoryJpaEntity(null, donation, category);
         donationCategoryRepository.save(donationCategory);
 
-        donationRepository.save(donation);
-
-        return user;
+        return donationRepository.save(donation);
     }
 
     @Transactional
