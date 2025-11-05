@@ -24,7 +24,7 @@ public class GetDonationReviewsService implements GetDonationReviewsUsecase {
                 .map(entity -> new GetDonationReviewsResponse.ReviewSummary(entity.getId(),
                         entity.getTitle(),
                         entity.getTags(),
-                        entity.getWriter().getNickname(),
+                        entity.getWriterName(),
                         entity.getImageUrl(),
                         entity.getContent()))
                 .toList();
