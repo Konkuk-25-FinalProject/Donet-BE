@@ -23,9 +23,11 @@ public class DonationRecordJpaEntity {
     private Long donationAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
     private UserJpaEntity userJpaEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "donation_id")
     private DonationJpaEntity donationJpaEntity;
 
 //    @ManyToOne(fetch = FetchType.LAZY)

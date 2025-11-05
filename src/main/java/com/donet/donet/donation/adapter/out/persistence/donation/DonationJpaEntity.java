@@ -51,9 +51,11 @@ public class DonationJpaEntity extends BaseEntity {
     private Long views;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "users_id")
     private UserJpaEntity userJpaEntity;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "partner_id")
     private PartnerJpaEntity partnerJpaEntity;
 
     @OneToMany(mappedBy = "donationJpaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
