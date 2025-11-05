@@ -25,7 +25,7 @@ public class GetMainPageInfoService implements GetMainPageInfoUsecase {
         List<Donation> topDonations = findDonationPort.findPopularDonations(3);
         List<Category> donatedCategories = (userId == null) ? List.of() : findCategoriesPort.findDonatedCategories(userId);
         List<Donation> recommendDonations = findDonationPort.findRecommendedDonations(donatedCategories, 2);
-        List<DonationReview> recentReviews = loadDonationReviewPort.loadRecentReviews();
+        List<DonationReview> recentReviews = loadDonationReviewPort.loadRecentReviews(2);
 
         return GetMainPageInfoResponse.from(topDonations, recommendDonations, recentReviews);
     }
