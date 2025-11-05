@@ -21,7 +21,7 @@ public class GetDonationReviewController implements DonationReviewController{
             summary = "기부후기 상세 조회",
             description = "기부후기를 상세 조회할 수 있다"
     )
-    @CustomExceptionDescription(SwaggerResponseDescription.GET_DONATION_REVIEW_DETAIL)
+    @CustomExceptionDescription(SwaggerResponseDescription.GET_DONATION_REVIEW)
     @GetMapping("/{donationReviewId}/detail")
     public BaseResponse<GetDonationReviewDetailResponse> getDonationReview(@PathVariable Long donationReviewId){
         GetDonationReviewDetailCommand commmand = new GetDonationReviewDetailCommand(donationReviewId);
