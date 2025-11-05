@@ -4,5 +4,5 @@ import com.donet.donet.review.application.port.in.dto.GetDonationReviewDetailCom
 import com.donet.donet.review.application.port.in.dto.GetDonationReviewDetailResponse;
 
 public interface GetDonationReviewDetailUsecase {
-    GetDonationReviewDetailResponse getDonationReviewDetail(GetDonationReviewDetailCommand commmand);
+    GetDonationReviewDetailResponse getDonationReviewDetail(GetDonationReviewDetailCommand command);
 }
