@@ -1,5 +1,6 @@
-package com.donet.donet.review.application.port.in;
+package com.donet.donet.review.application;
 
+import com.donet.donet.review.application.port.in.GetDonationReviewsUsecase;
 import com.donet.donet.review.application.port.in.dto.GetDonationReviewsResponse;
 import com.donet.donet.review.application.port.out.LoadDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
@@ -19,6 +20,7 @@ public class GetDonationReviewsService implements GetDonationReviewsUsecase {
         Long nextLastId =  null;
 
         List<GetDonationReviewsResponse.ReviewSummary> summaries = reviews.stream()
+                .limit(size)
                 .map(entity -> new GetDonationReviewsResponse.ReviewSummary(entity.getId(),
                         entity.getTitle(),
                         entity.getTags(),
