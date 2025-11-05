@@ -61,20 +61,15 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public Donation findRecommendedDonation(List<Category> categories) {
+    public List<Donation> findRecommendedDonations(List<Category> categories, Integer donationSize) {
         List<Long> categoryIds = categories.stream()
                 .map(Category::getId)
                 .toList();
 
-        DonationJpaEntity donationJpaEntity = donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size())
-                .orElse(donationRepository.findAnyDonation());
-
-        return donationMapper.mapToDomainEntity(donationJpaEntity);
-    }
-
-    @Override
-    public List<Donation> findRecommendedDonations(List<Category> categories) {
-        return List.of();
+        return donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size(), donationSize)
+                .stream()
+                .map(donationMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override

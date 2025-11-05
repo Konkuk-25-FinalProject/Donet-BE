@@ -10,7 +10,6 @@ public interface FindDonationPort {
     List<Donation> findFilterDonationPage(List<Category> categories, Pageable pageable);
     Donation findImminentDonation();
     List<Donation> findPopularDonations(Integer size);
-    Donation findRecommendedDonation(List<Category> categories);
-    List<Donation> findRecommendedDonations(List<Category> categories);
+    List<Donation> findRecommendedDonations(List<Category> categories, Integer donationSize);
     Donation findDonationById(long id);
 }
