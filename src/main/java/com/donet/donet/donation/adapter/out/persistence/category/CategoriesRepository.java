@@ -25,5 +25,5 @@ public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, L
             value = "SELECT * FROM category c WHERE c.id IN (SELECT dc.category_id FROM donation_category dc WHERE dc.donation_id IN :donationIds)",
             nativeQuery = true
     )
-    List<CategoryJpaEntity> findCategoriesFromDonation(List<Long> donationIds);
+    List<CategoryJpaEntity> findCategoriesFromDonation(@Param("donationIds") List<Long> donationIds);
 }
