@@ -18,10 +18,6 @@ public class User {
     private String loginId;
     private String walletAddress;
 
-    public User(Long userId){
-        this(userId, null, null, null, null, null);
-    }
-
     public void editProfileImage(String profileImage) {
         if(profileImage == null || profileImage.isBlank()){
             throw new CustomException(USER_DOMAIN_RULE_VIOLATION);
