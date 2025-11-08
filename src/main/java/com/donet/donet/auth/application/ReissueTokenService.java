@@ -6,7 +6,7 @@ import com.donet.donet.auth.application.port.in.dto.ReissueTokenResponse;
 import com.donet.donet.auth.application.port.out.CacheRefreshTokenPort;
 import com.donet.donet.auth.application.port.out.TokenIssuerPort;
 import com.donet.donet.global.exception.CustomException;
-import com.donet.donet.user.application.port.out.UserRepositoryPort;
+import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 public class ReissueTokenService implements ReissueTokenUsecase {
     private final CacheRefreshTokenPort cacheRefreshTokenPort;
     private final TokenIssuerPort tokenIssuerPort;
-    private final UserRepositoryPort findUserPort;
+    private final FindUserPort findUserPort;
 
     @Override
     public ReissueTokenResponse reissue(ReissueTokenCommand command) {

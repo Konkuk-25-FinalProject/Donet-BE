@@ -8,8 +8,8 @@ import com.donet.donet.review.application.port.in.dto.CreateDonationReviewComman
 import com.donet.donet.review.application.port.in.CreateDonationReviewUsecase;
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
+import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
-import com.donet.donet.user.application.port.out.UserRepositoryPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @Service
 @RequiredArgsConstructor
 public class CreateDonationReviewService implements CreateDonationReviewUsecase {
-    private final UserRepositoryPort userRepositoryPort;
+    private final FindUserPort findUserPort;
     private final FindDonationPort findDonationPort;
     private final ImageUploaderPort imageUploaderPort;
     private final SaveDonationReviewPort saveDonationReviewPort;
 
     @Override
     public DonationReview create(CreateDonationReviewCommand command) {
-        User user = userRepositoryPort.findById(command.getUserId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        User user = findUserPort.findById(command.getUserId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Donation donation = findDonationPort.findDonationById(command.getDonationId());
 
         if(!donation.isWriter(user)){
