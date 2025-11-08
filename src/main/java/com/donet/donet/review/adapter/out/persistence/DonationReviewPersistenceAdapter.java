@@ -2,6 +2,7 @@ package com.donet.donet.review.adapter.out.persistence;
 
 import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donation.DonationRepository;
+import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.review.application.port.out.LoadDonationReviewPort;
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.NO_MATCH_DONATION;
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.USER_NOT_FOUND;
+
 @Repository
 @RequiredArgsConstructor
 public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort, LoadDonationReviewPort {
@@ -23,8 +27,10 @@ public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort,
 
     @Override
     public DonationReview save(DonationReview donationReview) {
-        UserJpaEntity userJpaEntity = userRepository.findById(donationReview.getWriterId()).get();
-        DonationJpaEntity donationJpaEntity = donationRepository.findById(donationReview.getDonationId()).get();
+        UserJpaEntity userJpaEntity = userRepository.findById(donationReview.getWriterId())
+                .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        DonationJpaEntity donationJpaEntity = donationRepository.findById(donationReview.getDonationId())
+                .orElseThrow(() -> new CustomException(NO_MATCH_DONATION));
         DonationReviewJpaEntity saved = donationReviewRepository.save(DonationReviewEntityMapper.mapToJpaEntity(donationReview, userJpaEntity, donationJpaEntity));
         return DonationReviewEntityMapper.mapToDomainEntity(saved, userJpaEntity, donationJpaEntity);
     }
