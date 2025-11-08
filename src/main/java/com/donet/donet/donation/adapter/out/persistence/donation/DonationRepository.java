@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -59,4 +60,16 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
             nativeQuery = true
     )
     List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
+
+    @Query("""
+         select record.donationJpaEntity.title AS title,
+             (select di from DonationImageJpaEntity di where di.donationJpaEntity = record.donationJpaEntity order by di.id desc limit 1) AS imageUrl,
+             record.donationAmount AS donatedAmount
+             from DonationRecordJpaEntity record 
+             where record.userJpaEntity = :user
+                 order by record.id desc
+    """)
+    List<JoinedDonationProjection> findJoinedDonations(@Param("user") UserJpaEntity userJpaEntity, Pageable pageable);
+
+    List<DonationJpaEntity> findAllByUserJapEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
 }

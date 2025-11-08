@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 public interface DonationReviewRepository extends JpaRepository<DonationReviewJpaEntity, Long> {
     @Query(
@@ -15,4 +16,9 @@ public interface DonationReviewRepository extends JpaRepository<DonationReviewJp
     List<DonationReviewJpaEntity> findRecentReviews(@Param("limit") Integer limit);
 
     List<DonationReviewJpaEntity> findAllByIdLessThanOrderByIdDesc(Long donationReviewId, Pageable pageable);
+
+    @Query("""
+        select review.donation.id from DonationReviewJpaEntity review where review.donation.id in :ids
+    """)
+    List<Long> findAllDonationIdHavingReview(@Param("ids") Set<Long> ids);
 }
