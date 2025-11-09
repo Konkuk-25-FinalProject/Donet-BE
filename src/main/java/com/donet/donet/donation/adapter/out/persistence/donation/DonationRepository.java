@@ -71,5 +71,5 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     """)
     List<JoinedDonationProjection> findJoinedDonations(@Param("user") UserJpaEntity userJpaEntity, Pageable pageable);
 
-    List<DonationJpaEntity> findAllByUserJapEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
+    List<DonationJpaEntity> findAllByUserJpaEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
 }
