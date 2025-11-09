@@ -97,6 +97,15 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
+    public Donation addDonationAmount(Long donationId, Long amount) {
+        DonationJpaEntity donationJpaEntity = donationRepository.findDonationById(donationId)
+                .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
+
+        donationJpaEntity.addAmount(amount);
+        return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
     public void createDonation(Donation donation) {
         UserJpaEntity userJpaEntity = userRepository.findById(donation.getUserId())
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
