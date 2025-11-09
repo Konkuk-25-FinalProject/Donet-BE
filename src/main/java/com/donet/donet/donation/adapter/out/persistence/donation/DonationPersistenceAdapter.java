@@ -109,7 +109,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     @Override
     public List<RegisteredDonation> findRegistertedDonations(User user, int size) {
         UserJpaEntity userJpaEntity = userRepository.findById(user.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        List<DonationJpaEntity> donationJpaEntities = donationRepository.findAllByUserJapEntityOrderByIdDesc(userJpaEntity, PageRequest.of(0, size));
+        List<DonationJpaEntity> donationJpaEntities = donationRepository.findAllByUserJpaEntityOrderByIdDesc(userJpaEntity, PageRequest.of(0, size));
         Set<Long> donationIds = donationJpaEntities.stream().map(DonationJpaEntity::getId).collect(Collectors.toSet());
         List<Long> reviewedDonationIds = donationReviewRepository.findAllDonationIdHavingReview(donationIds);
         List<RegisteredDonation> registeredDonations = donationJpaEntities.stream()
