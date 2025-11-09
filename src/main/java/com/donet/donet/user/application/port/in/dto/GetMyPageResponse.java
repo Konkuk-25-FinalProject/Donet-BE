@@ -1,5 +1,8 @@
 package com.donet.donet.user.application.port.in.dto;
 
+import com.donet.donet.user.domain.JoinedDonation;
+import com.donet.donet.user.domain.RegisteredDonation;
+
 import java.util.List;
 
 public record GetMyPageResponse (
@@ -9,19 +12,4 @@ public record GetMyPageResponse (
         List<JoinedDonation> joinedDonations,
         List<RegisteredDonation> registeredDonations
 ){
-    public record JoinedDonation(
-            String title,
-            String imageUrl,
-            Long amount
-    ){
-    }
-
-    public record RegisteredDonation (
-            String title,
-            String imageUrl,
-            Long amount,
-            Long progressRate,
-            Boolean reviewable
-    ){
-    }
 }
