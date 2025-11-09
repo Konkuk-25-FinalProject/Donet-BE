@@ -1,6 +1,7 @@
 package com.donet.donet.review.adapter.out.persistence;
 
 import com.donet.donet.global.persistence.BaseEntity;
+import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,12 @@ public class DonationReviewJpaEntity extends BaseEntity {
     private String content;
 
     private String imageUrl;
+
+    @ManyToOne
+    @JoinColumn(name = "writer_id")
+    private UserJpaEntity writer;
+
+    public void setWriter(UserJpaEntity writer) {
+        this.writer = writer;
+    }
 }

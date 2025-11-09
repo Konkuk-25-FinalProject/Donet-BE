@@ -9,6 +9,8 @@ import com.donet.donet.donation.adapter.out.persistence.donationCategory.Donatio
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerRepository;
+import com.donet.donet.review.adapter.out.persistence.DonationReviewJpaEntity;
+import com.donet.donet.review.adapter.out.persistence.DonationReviewRepository;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import com.donet.donet.user.adapter.out.persistence.UserRepository;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class TestDataFactory {
@@ -36,13 +39,16 @@ public class TestDataFactory {
     @Autowired
     DonationCategoryRepository donationCategoryRepository;
 
-    public UserJpaEntity createUser() {
-        return userRepository.save(new UserJpaEntity(null, "닉네임", "이미지",  "KAKAO", "kakaocode", "waller"));
+    @Autowired
+    DonationReviewRepository donationReviewRepository;
+
+    public UserJpaEntity createUser(String provider, String loginId) {
+        return userRepository.save(new UserJpaEntity(null, "닉네임", "이미지",  provider, loginId, "waller"));
     }
 
     @Transactional
-    public UserJpaEntity createUserWhoWroteDonation() {
-        UserJpaEntity user = userRepository.save(new UserJpaEntity(null, "닉네임", "이미지", "KAKAO", "kakaocode", "waller"));
+    public DonationJpaEntity createDonation(Long userId) {
+        UserJpaEntity user = userRepository.findById(userId).get();
         PartnerJpaEntity partner = partnerRepository.save(new PartnerJpaEntity(null, "파트너사", "지갑주소"));
         DonationItemJpaEntity donationItem = new DonationItemJpaEntity(null, "삼다수", 1L, 5000L, null);
 
@@ -59,8 +65,14 @@ public class TestDataFactory {
         DonationCategoryJpaEntity donationCategory = new DonationCategoryJpaEntity(null, donation, category);
         donationCategoryRepository.save(donationCategory);
 
-        donationRepository.save(donation);
+        return donationRepository.save(donation);
+    }
 
-        return user;
+    @Transactional
+    public DonationReviewJpaEntity createDonationReview(String title, List<String> tags, String content, Long userId){
+        UserJpaEntity user = userRepository.findById(userId).get();
+        String flattenTags = tags.stream().collect(Collectors.joining("#"));
+        DonationReviewJpaEntity donation = new DonationReviewJpaEntity(null, title, "요약", flattenTags, content, "이미지", user);
+        return donationReviewRepository.save(donation);
     }
 }

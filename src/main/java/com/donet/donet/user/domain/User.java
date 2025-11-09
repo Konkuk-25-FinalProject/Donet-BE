@@ -2,12 +2,14 @@ package com.donet.donet.user.domain;
 
 import com.donet.donet.global.exception.CustomException;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.USER_DOMAIN_RULE_VIOLATION;
 
 @AllArgsConstructor
 @Getter
+@Builder
 public class User {
     private Long id;
     private String nickname;
@@ -15,6 +17,10 @@ public class User {
     private String loginProvider;
     private String loginId;
     private String walletAddress;
+
+    public User(Long userId){
+        this(userId, null, null, null, null, null);
+    }
 
     public void editProfileImage(String profileImage) {
         if(profileImage == null || profileImage.isBlank()){
@@ -36,4 +42,6 @@ public class User {
         }
         this.walletAddress = walletAddress;
     }
+
+
 }
