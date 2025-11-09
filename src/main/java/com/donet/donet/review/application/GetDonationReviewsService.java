@@ -15,6 +15,10 @@ public class GetDonationReviewsService implements GetDonationReviewsUsecase {
     private final LoadDonationReviewPort loadDonationReviewPort;
     @Override
     public GetDonationReviewsResponse getDonationReviews(int size, Long lastId) {
+        if(lastId == null){
+            lastId = Long.MAX_VALUE;
+        }
+
         List<DonationReview> reviews = loadDonationReviewPort.findPage(size + 1, lastId);
         Boolean hasNext = reviews.size() > size;
         Long nextLastId =  null;
