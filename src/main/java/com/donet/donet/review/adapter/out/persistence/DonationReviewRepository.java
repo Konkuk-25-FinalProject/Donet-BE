@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.out.persistence;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +13,6 @@ public interface DonationReviewRepository extends JpaRepository<DonationReviewJp
             nativeQuery = true
     )
     List<DonationReviewJpaEntity> findRecentReviews(@Param("limit") Integer limit);
+
+    List<DonationReviewJpaEntity> findAllByIdLessThanOrderByIdDesc(Long donationReviewId, Pageable pageable);
 }
