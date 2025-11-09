@@ -3,6 +3,7 @@ package com.donet.donet.donation.adapter.out.persistence.donation;
 import com.donet.donet.donation.adapter.out.persistence.donationCategory.DonationCategoryJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationItemJpaEntity;
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
+import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.persistence.BaseEntity;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
@@ -14,6 +15,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.EXPIRED_DONATION;
 
 @Table(name = "donation")
 @NoArgsConstructor
@@ -70,6 +73,13 @@ public class DonationJpaEntity extends BaseEntity {
     public void increaseView(){
         if(this.views == null) this.views = 0L;
         this.views++;
+    }
+
+    public void addAmount(Long amount){
+        if(this.currentAmount >= this.targetAmount || endDate.isBefore(LocalDate.now())) {
+            throw new DonationException(EXPIRED_DONATION);
+        }
+        this.currentAmount = this.currentAmount + amount;
     }
 
     public void addDonationItem(DonationItemJpaEntity donationItem) {
