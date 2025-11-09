@@ -24,7 +24,7 @@ public class GetDonationReviewController implements DonationReviewController{
     @CustomExceptionDescription(SwaggerResponseDescription.GET_DONATION_REVIEW)
     @GetMapping("/{donationReviewId}/detail")
     public BaseResponse<GetDonationReviewDetailResponse> getDonationReview(@PathVariable Long donationReviewId){
-        GetDonationReviewDetailCommand commmand = new GetDonationReviewDetailCommand(donationReviewId);
-        return new BaseResponse<>(getDonationReviewDetailUsecase.getDonationReviewDetail(commmand));
+        GetDonationReviewDetailCommand command = new GetDonationReviewDetailCommand(donationReviewId);
+        return new BaseResponse<>(getDonationReviewDetailUsecase.getDonationReviewDetail(command));
     }
 }
