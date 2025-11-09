@@ -29,6 +29,7 @@ public class DonationItemJpaEntity {
     private Long price;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "donation_id")
     private DonationJpaEntity donationJpaEntity;
 
     public static DonationItemJpaEntity createNewEntity(DonationItem item, DonationJpaEntity donationJpaEntity) {

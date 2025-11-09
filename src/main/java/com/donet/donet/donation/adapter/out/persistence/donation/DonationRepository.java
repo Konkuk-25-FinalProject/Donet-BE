@@ -53,4 +53,10 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
                     "WHERE dr.user_id = :userId ",
             nativeQuery = true)
     List<Long> getDonationIdsUserDonated(@Param("userId") Long userId);
+
+    @Query(
+            value = "SELECT * FROM donation LIMIT :size",
+            nativeQuery = true
+    )
+    List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
 }

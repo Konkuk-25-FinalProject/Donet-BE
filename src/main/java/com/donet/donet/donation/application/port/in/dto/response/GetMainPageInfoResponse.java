@@ -33,8 +33,9 @@ public record GetMainPageInfoResponse (
             Long raised
     ){
         public static RecommendDonation fromDonation (Donation donation) {
+            String imgUrl = donation.getImageUrl().isEmpty() ? null : donation.getImageUrl().get(0);
             return new RecommendDonation(
-                    donation.getId(), donation.getImageUrl().get(0), donation.getTitle(), donation.getCurrentAmount()
+                    donation.getId(), imgUrl, donation.getTitle(), donation.getCurrentAmount()
             );
         }
     }
