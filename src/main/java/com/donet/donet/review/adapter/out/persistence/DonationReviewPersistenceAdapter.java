@@ -39,7 +39,7 @@ public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort,
     public List<DonationReview> loadRecentReviews(Integer limit) {
         return donationReviewRepository.findRecentReviews(limit)
                 .stream()
-                .map(jpaEntity -> DonationReviewEntityMapper.mapToDomainEntity(jpaEntity, userEntityMapper.mapToDomainEntity(jpaEntity.getWriter())))
+                .map(jpaEntity -> DonationReviewEntityMapper.mapToDomainEntity(jpaEntity, jpaEntity.getWriter(), jpaEntity.getDonation()))
                 .toList();
     }
 
