@@ -26,7 +26,7 @@ public class GetDonationReviewsController implements DonationReviewController{
     )
     @CustomExceptionDescription(SwaggerResponseDescription.GET_DONATION_REVIEW)
     @GetMapping
-    public BaseResponse<GetDonationReviewsResponse> getDonationReviews(@RequestParam("size") int size, @RequestParam("lastId")Long lastId){
+    public BaseResponse<GetDonationReviewsResponse> getDonationReviews(@RequestParam("size") int size, @RequestParam(value = "lastId", required = false) Long lastId){
         log.info("[getDonationReviews] size = {}, lastId = {}", size, lastId);
         return new BaseResponse<>(getDonationReviewsUsecase.getDonationReviews(size, lastId));
     }
