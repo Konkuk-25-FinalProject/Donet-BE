@@ -16,15 +16,16 @@ public record GetMyPageApiResponse (
                 resp.profileImageUrl(),
                 resp.walletAddress(),
                 resp.joinedDonations().stream()
-                        .map(j -> new JoinedDonation(j.title(), j.imageUrl(), j.amount()))
+                        .map(j -> new JoinedDonation(j.donationId(), j.title(), j.imageUrl(), j.amount()))
                         .toList(),
                 resp.registeredDonations().stream()
-                        .map(r -> new RegisteredDonation(r.title(), r.imageUrl(), r.amount(), r.progressRate(), r.reviewable()))
+                        .map(r -> new RegisteredDonation(r.donationId(), r.title(), r.imageUrl(), r.amount(), r.progressRate(), r.reviewable()))
                         .toList()
                 );
     }
 
     public record JoinedDonation(
+                Long donationId,
                 String title,
                 String imageUrl,
                 Long amount
@@ -32,6 +33,7 @@ public record GetMyPageApiResponse (
         }
 
         public record RegisteredDonation (
+                Long donationId,
                 String title,
                 String imageUrl,
                 Long amount,
