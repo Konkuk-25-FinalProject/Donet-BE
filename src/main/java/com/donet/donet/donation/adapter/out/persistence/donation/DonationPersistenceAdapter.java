@@ -118,7 +118,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                         entity.getImageUrl(),
                         entity.getTargetAmount(),
                         entity.getCurrentAmount(),
-                        reviewedDonationIds.contains(entity.getId())))
+                        !reviewedDonationIds.contains(entity.getId())))
                 .toList();
         return registeredDonations;
     }
