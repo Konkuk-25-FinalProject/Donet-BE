@@ -24,10 +24,12 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     LOGOUTED_USER(HttpStatus.UNAUTHORIZED.value(), 2003, "로그아웃된 사용자입니다."),
 
     //3000 : Donation 관련 에러
-    NO_MATCH_DONATION(HttpStatus.NOT_FOUND.value(), 3000, "id에 일치하는 기부가 없습니다."),
+    NO_MATCH_DONATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), 3000, "id에 일치하는 기부가 없습니다."),
     FAIL_TO_LOAD_DONATION_DETAIL(HttpStatus.SERVICE_UNAVAILABLE.value(), 3003, "기부 상세페이지 조회 실패했습니다."),
-    NO_MATCH_PARTNER(HttpStatus.NOT_FOUND.value(), 3004, "id에 일치하는 파트너사가 없습니다."),
-    NO_MATCH_CATEGORY(HttpStatus.NOT_FOUND.value(), 3005, "없는 카테고리 이름입니다."),
+    NO_MATCH_PARTNER(HttpStatus.INTERNAL_SERVER_ERROR.value(), 3004, "id에 일치하는 파트너사가 없습니다."),
+    NO_MATCH_CATEGORY(HttpStatus.INTERNAL_SERVER_ERROR.value(), 3005, "없는 카테고리 이름입니다."),
+    NOT_FOUND_RECOMMEND_DONATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), 3006, "추천 기부를 찾을 수 없습니다."),
+    NOT_FOUND_POPULAR_DONATION(HttpStatus.INTERNAL_SERVER_ERROR.value(), 3007, "인기 기부를 찾을 수 없습니다."),
 
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),

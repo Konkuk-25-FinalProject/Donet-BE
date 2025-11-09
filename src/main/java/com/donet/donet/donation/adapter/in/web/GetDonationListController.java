@@ -8,6 +8,7 @@ import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +33,7 @@ public class GetDonationListController implements DonationController{
     )
     @CustomExceptionDescription(DEFAULT)
     @GetMapping()
-    public BaseResponse<GetFilteredDonationResponse> getDonationList(@CurrentUserId Long userId, @RequestParam("category")List<String> categories, Pageable pageable) {
+    public BaseResponse<GetFilteredDonationResponse> getDonationList(@CurrentUserId Long userId, @RequestParam("category")List<String> categories, @ParameterObject Pageable pageable) {
         GetFilteredDonationCommand command = new GetFilteredDonationCommand(userId, categories, pageable);
 
         return new BaseResponse<>(getFilteredDonationUsecase.getFilteredDonation(command));
