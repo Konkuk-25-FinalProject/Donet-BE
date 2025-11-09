@@ -22,10 +22,10 @@ public class GetMainPageInfoService implements GetMainPageInfoUsecase {
 
     @Override
     public GetMainPageInfoResponse getMainPageInfo(Long userId) {
-        List<Donation> topDonations = findDonationPort.findPopularDonations();
+        List<Donation> topDonations = findDonationPort.findPopularDonations(3);
         List<Category> donatedCategories = (userId == null) ? List.of() : findCategoriesPort.findDonatedCategories(userId);
-        List<Donation> recommendDonations = findDonationPort.findRecommendedDonations(donatedCategories);
-        List<DonationReview> recentReviews = loadDonationReviewPort.loadRecentReviews();
+        List<Donation> recommendDonations = findDonationPort.findRecommendedDonations(donatedCategories, 2);
+        List<DonationReview> recentReviews = loadDonationReviewPort.loadRecentReviews(2);
 
         return GetMainPageInfoResponse.from(topDonations, recommendDonations, recentReviews);
     }

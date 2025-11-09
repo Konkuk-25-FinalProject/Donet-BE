@@ -18,15 +18,15 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
                     "WHERE dc.category_id IN (:categoryIds) " +
                     "GROUP BY d.id " +
                     "HAVING COUNT(DISTINCT dc.category_id) = :size " +
-                    "LIMIT 1",
+                    "LIMIT :donationSize",
             nativeQuery = true)
-    Optional<DonationJpaEntity> findDonationWithAllCategories(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size);
+    List<DonationJpaEntity> findDonationWithAllCategories(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, @Param("donationSize") Integer donationSize);
 
     @Query(value = "SELECT * FROM donation LIMIT 1", nativeQuery = true)
     DonationJpaEntity findAnyDonation();
 
-    @Query(value = "SELECT * FROM donation d ORDER BY d.views DESC LIMIT 1", nativeQuery = true)
-    DonationJpaEntity findPopularDonation();
+    @Query(value = "SELECT * FROM donation d ORDER BY d.views DESC LIMIT :size", nativeQuery = true)
+    List<DonationJpaEntity> findPopularDonations(@Param("size") Integer size);
 
     @Query(value =
             "SELECT * FROM donation d " +
@@ -47,4 +47,10 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, Pageable pageable);
 
     Optional<DonationJpaEntity> findDonationById(Long id);
+
+    @Query(value =
+            "SELECT dr.donation_id FROM donation_record dr " +
+                    "WHERE dr.user_id = :userId ",
+            nativeQuery = true)
+    List<Long> getDonationIdsUserDonated(@Param("userId") Long userId);
 }

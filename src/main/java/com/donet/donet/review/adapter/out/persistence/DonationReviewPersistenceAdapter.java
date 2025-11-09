@@ -19,7 +19,10 @@ public class DonationReviewPersistenceAdapter implements SaveDonationReviewPort,
     }
 
     @Override
-    public List<DonationReview> loadRecentReviews() {
-        return List.of();
+    public List<DonationReview> loadRecentReviews(Integer limit) {
+        return donationReviewRepository.findRecentReviews(limit)
+                .stream()
+                .map(DonationReviewEntityMapper::mapToDomainEntity)
+                .toList();
     }
 }

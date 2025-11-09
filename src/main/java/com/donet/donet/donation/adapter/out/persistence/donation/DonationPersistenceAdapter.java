@@ -53,25 +53,23 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     }
 
     @Override
-    public Donation findPopularDonation() {
-        return donationMapper.mapToDomainEntity(donationRepository.findPopularDonation());
+    public List<Donation> findPopularDonations(Integer size) {
+        List<DonationJpaEntity> popularDonations = donationRepository.findPopularDonations(size);
+        return popularDonations.stream()
+                .map(donationMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override
-    public Donation findRecommendedDonation(List<Category> categories) {
+    public List<Donation> findRecommendedDonations(List<Category> categories, Integer donationSize) {
         List<Long> categoryIds = categories.stream()
                 .map(Category::getId)
                 .toList();
 
-        DonationJpaEntity donationJpaEntity = donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size())
-                .orElse(donationRepository.findAnyDonation());
-
-        return donationMapper.mapToDomainEntity(donationJpaEntity);
-    }
-
-    @Override
-    public List<Donation> findRecommendedDonations(List<Category> categories) {
-        return List.of();
+        return donationRepository.findDonationWithAllCategories(categoryIds, categoryIds.size(), donationSize)
+                .stream()
+                .map(donationMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override
@@ -80,11 +78,6 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                 .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
 
         return donationMapper.mapToDomainEntity(donationJpaEntity);
-    }
-
-    @Override
-    public List<Donation> findPopularDonations() {
-        return List.of();
     }
 
     @Override
