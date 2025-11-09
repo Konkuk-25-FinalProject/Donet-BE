@@ -101,7 +101,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         UserJpaEntity userJpaEntity = userRepository.findById(user.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         List<JoinedDonationProjection> projections = donationRepository.findJoinedDonations(userJpaEntity, PageRequest.of(0, size));
         List<JoinedDonation> joinedDonations = projections.stream()
-                .map(proj -> new JoinedDonation(proj.getTitle(), proj.getImageUrl(), proj.getDonatedAmount()))
+                .map(proj -> new JoinedDonation(proj.getDonationId(), proj.getTitle(), proj.getImageUrl(), proj.getDonatedAmount()))
                 .toList();
         return joinedDonations;
     }
@@ -114,7 +114,8 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
         List<Long> reviewedDonationIds = donationReviewRepository.findAllDonationIdHavingReview(donationIds);
         List<RegisteredDonation> registeredDonations = donationJpaEntities.stream()
                 .map(donationMapper::mapToDomainEntity)
-                .map(entity -> RegisteredDonation.of(entity.getTitle(),
+                .map(entity -> RegisteredDonation.of(entity.getId(),
+                        entity.getTitle(),
                         entity.getImageUrl(),
                         entity.getTargetAmount(),
                         entity.getCurrentAmount(),

@@ -62,7 +62,9 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
 
     @Query("""
-         select record.donationJpaEntity.title AS title,
+         select 
+             record.donationJpaEntity.id AS donationId,
+             record.donationJpaEntity.title AS title,
              (select di from DonationImageJpaEntity di where di.donationJpaEntity = record.donationJpaEntity order by di.id desc limit 1) AS imageUrl,
              record.donationAmount AS donatedAmount
              from DonationRecordJpaEntity record 
