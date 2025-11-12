@@ -98,7 +98,7 @@ public class TestDataFactory {
                 donationJpaEntity.getEndDate(),
                 donationJpaEntity.getDescription(),
                 donationJpaEntity.getTargetAmount(),
-                donationJpaEntity.getCurrentAmount(),
+                donationJpaEntity.getCurrentAmount() + amount,
                 donationJpaEntity.getViews(),
                 donationJpaEntity.getUserJpaEntity(),
                 donationJpaEntity.getPartnerJpaEntity(),
