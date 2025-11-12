@@ -90,7 +90,6 @@ public class TestDataFactory {
         }
         UserJpaEntity userJpaEntity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException(INVALID_PARAMETERS));
         DonationJpaEntity donationJpaEntity = donationRepository.findById(donationId).orElseThrow(() -> new IllegalArgumentException(INVALID_PARAMETERS));
-        System.out.println(donationJpaEntity.getEndDate());
         DonationJpaEntity newDonationJpaEntity = new DonationJpaEntity(donationJpaEntity.getId(),
                 donationJpaEntity.getTitle(),
                 donationJpaEntity.isAnonymous(),
