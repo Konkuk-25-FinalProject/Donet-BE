@@ -13,8 +13,8 @@ public record GetMyPageApiResponse (
 ){
     public static GetMyPageApiResponse from(GetMyPageResponse resp) {
         return new GetMyPageApiResponse(resp.nickname(),
-                resp.profileImageUrl(),
                 resp.walletAddress(),
+                resp.profileImageUrl(),
                 resp.joinedDonations().stream()
                         .map(j -> new JoinedDonation(j.donationId(), j.title(), j.imageUrl(), j.amount()))
                         .toList(),
