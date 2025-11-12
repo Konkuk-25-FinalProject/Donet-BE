@@ -2,7 +2,6 @@ package com.donet.donet.user.application;
 
 import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.global.exception.CustomException;
-import com.donet.donet.review.application.port.out.LoadDonationReviewPort;
 import com.donet.donet.user.application.port.in.GetMyPageUsecase;
 import com.donet.donet.user.application.port.in.dto.GetMyPageResponse;
 import com.donet.donet.user.application.port.out.FindUserPort;
@@ -26,7 +25,7 @@ public class GetMyPageService implements GetMyPageUsecase {
     public GetMyPageResponse getPage(Long userId) {
         User user = findUserPort.findById(userId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         List<JoinedDonation> joined = findDonationPort.findJoinedDonations(user, 20);
-        List<RegisteredDonation> registered = findDonationPort.findRegistertedDonations(user, 20);
+        List<RegisteredDonation> registered = findDonationPort.findRegisteredDonations(user, 20);
         return new GetMyPageResponse(user.getNickname(),
                 user.getProfileImage(),
                 user.getWalletAddress(),

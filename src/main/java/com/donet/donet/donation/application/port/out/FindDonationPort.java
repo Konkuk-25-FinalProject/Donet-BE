@@ -17,5 +17,5 @@ public interface FindDonationPort {
     Donation findDonationById(long id);
 
     List<JoinedDonation> findJoinedDonations(User user, int size);
-    List<RegisteredDonation> findRegistertedDonations(User user, int size);
+    List<RegisteredDonation> findRegisteredDonations(User user, int size);
 }
