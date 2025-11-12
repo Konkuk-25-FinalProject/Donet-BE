@@ -61,17 +61,20 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     )
     List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
 
-    @Query("""
-         select 
-             record.donationJpaEntity.id AS donationId,
-             record.donationJpaEntity.title AS title,
-             (select di from DonationImageJpaEntity di where di.donationJpaEntity = record.donationJpaEntity order by di.id desc limit 1) AS imageUrl,
-             record.donationAmount AS donatedAmount
-             from DonationRecordJpaEntity record 
-             where record.userJpaEntity = :user
-                 order by record.id desc
-    """)
-    List<JoinedDonationProjection> findJoinedDonations(@Param("user") UserJpaEntity userJpaEntity, Pageable pageable);
+    @Query(value = """
+        SELECT 
+            record.donation_id AS donationId,
+            d.title AS title,
+            (SELECT di.image_url FROM donation_image di 
+             WHERE di.donation_id = record.donation_id 
+             ORDER BY di.id DESC LIMIT 1) AS imageUrl,
+            record.donation_amount AS donatedAmount
+        FROM donation_record record
+        JOIN donation d ON record.donation_id = d.id
+        WHERE record.user_id = :userId
+        ORDER BY record.id DESC
+    """, nativeQuery = true)
+    List<JoinedDonationProjection> findJoinedDonations(@Param("userId") Long userId, Pageable pageable);
 
     List<DonationJpaEntity> findAllByUserJpaEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
 }
