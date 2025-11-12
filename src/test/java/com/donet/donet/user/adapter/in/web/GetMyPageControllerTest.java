@@ -55,8 +55,8 @@ class GetMyPageControllerTest {
 
         UserJpaEntity another = testDataFactory.createUser("KAKAO", "kakaoid2");
         DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
-        long doationAmount = 2000L;
-        testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), doationAmount);
+        long donationAmount = 2000L;
+        testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), donationAmount);
 
         GetMyPageApiResponse response = given()
                 .header("Authorization", "Bearer " + accessToken)
@@ -78,7 +78,7 @@ class GetMyPageControllerTest {
         assertThat(response.registeredDonations().get(0).donationId()).isEqualTo(donation.getId());
         assertThat(response.registeredDonations().get(1).reviewable()).isTrue();
         assertThat(response.joinedDonations()).hasSize(1);
-        assertThat(response.joinedDonations().get(0).amount()).isEqualTo(doationAmount);
+        assertThat(response.joinedDonations().get(0).amount()).isEqualTo(donationAmount);
         assertThat(response.joinedDonations().get(0).donationId()).isEqualTo(anothersDonation.getId());
     }
 
