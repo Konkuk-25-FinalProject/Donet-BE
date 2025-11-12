@@ -27,8 +27,8 @@ public class GetMyPageService implements GetMyPageUsecase {
         List<JoinedDonation> joined = findDonationPort.findJoinedDonations(user, 20);
         List<RegisteredDonation> registered = findDonationPort.findRegisteredDonations(user, 20);
         return new GetMyPageResponse(user.getNickname(),
-                user.getProfileImage(),
                 user.getWalletAddress(),
+                user.getProfileImage(),
                 joined,
                 registered);
     }
