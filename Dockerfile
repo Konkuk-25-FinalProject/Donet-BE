@@ -3,5 +3,7 @@ WORKDIR /app
 
 COPY build/libs/*.jar app.jar
 
+ENV SPRING_PROFILE prod
+
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=${SPRING_PROFILE}", "-jar", "/app/app.jar"]
