@@ -99,7 +99,8 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     @Override
     public List<JoinedDonation> findJoinedDonations(User user, int size) {
         UserJpaEntity userJpaEntity = userRepository.findById(user.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
-        List<JoinedDonationProjection> projections = donationRepository.findJoinedDonations(userJpaEntity.getId(), PageRequest.of(0, size));
+        Page<JoinedDonationProjection> page = donationRepository.findJoinedDonations(userJpaEntity.getId(), PageRequest.of(0, size));
+        List<JoinedDonationProjection> projections = page.getContent();
         List<JoinedDonation> joinedDonations = projections.stream()
                 .map(proj -> new JoinedDonation(proj.getDonationId(), proj.getTitle(), proj.getImageUrl(), proj.getDonatedAmount()))
                 .toList();

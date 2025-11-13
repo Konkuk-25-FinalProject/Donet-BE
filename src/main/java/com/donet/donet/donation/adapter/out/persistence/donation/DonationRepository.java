@@ -73,8 +73,14 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
         JOIN donation d ON record.donation_id = d.id
         WHERE record.user_id = :userId
         ORDER BY record.id DESC
-    """, nativeQuery = true)
-    List<JoinedDonationProjection> findJoinedDonations(@Param("userId") Long userId, Pageable pageable);
+    """,
+        countQuery = """
+        SELECT COUNT(*)
+        FROM donation_record record
+        WHERE record.user_id = :userId
+    """,
+        nativeQuery = true)
+    Page<JoinedDonationProjection> findJoinedDonations(@Param("userId") Long userId, Pageable pageable);
 
     List<DonationJpaEntity> findAllByUserJpaEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
 }
