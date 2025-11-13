@@ -53,9 +53,13 @@ class GetMyPageControllerTest {
         DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
         testDataFactory.createDonationReview("제목", List.of("태그1", "태그2"), "내용", user.getId(), donation.getId());
 
-        UserJpaEntity another = testDataFactory.createUser("KAKAO", "kakaoid2");
-        DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
         long donationAmount = 2000L;
+        UserJpaEntity another = testDataFactory.createUser("KAKAO", "kakaoid2");
+        IntStream.rangeClosed(1, 30).forEach(i -> {
+            DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
+            testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), donationAmount);
+        });
+        DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
         testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), donationAmount);
 
         GetMyPageApiResponse response = given()
@@ -77,7 +81,7 @@ class GetMyPageControllerTest {
         assertThat(response.registeredDonations().get(0).reviewable()).isFalse();
         assertThat(response.registeredDonations().get(0).donationId()).isEqualTo(donation.getId());
         assertThat(response.registeredDonations().get(1).reviewable()).isTrue();
-        assertThat(response.joinedDonations()).hasSize(1);
+        assertThat(response.joinedDonations()).hasSize(20);
         assertThat(response.joinedDonations().get(0).amount()).isEqualTo(donationAmount);
         assertThat(response.joinedDonations().get(0).donationId()).isEqualTo(anothersDonation.getId());
     }
