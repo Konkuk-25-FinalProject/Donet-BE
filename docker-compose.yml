@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  redis:
+    image: redis:latest
+    container_name: donet-redis
+    ports:
+      - "6379:6379"
+    restart: always
+    networks:
+      - donet-net
+
   blue-server:
     image: jangikhwan/donet-be
     container_name: blue-server
@@ -8,6 +17,10 @@ services:
       - "8081:8080"
     env_file:
       - .env
+    depends_on:
+      - redis
+    networks:
+      - donet-net
 
   green-server:
     image: jangikhwan/donet-be
@@ -16,6 +29,13 @@ services:
       - "8082:8080"
     env_file:
       - .env
+    depends_on:
+      - redis
+    networks:
+      - donet-net
 
 volumes:
   dbdata:
+
+networks:
+  donet-net: {}
