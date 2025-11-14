@@ -7,10 +7,7 @@ import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.persistence.BaseEntity;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,7 +18,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @Table(name = "donation")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 @Entity
 @Builder
 public class DonationJpaEntity extends BaseEntity {
