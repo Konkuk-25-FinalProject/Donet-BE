@@ -79,6 +79,9 @@ public class DonationJpaEntity extends BaseEntity {
         if(this.currentAmount >= this.targetAmount || endDate.isBefore(LocalDate.now())) {
             throw new DonationException(EXPIRED_DONATION);
         }
+        if(this.currentAmount + amount > this.targetAmount) {
+            throw new DonationException(EXPIRED_DONATION);
+        }
         this.currentAmount = this.currentAmount + amount;
     }
 
