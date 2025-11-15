@@ -34,7 +34,7 @@ public class CreateDonationController implements DonationController{
                                              @RequestPart(required = false) List<MultipartFile> images,
                                              @RequestPart CreateDonationRequest request
     ){
-        CreateDonationCommand command = new CreateDonationCommand(
+        CreateDonationCommand command = CreateDonationCommand.from(
                 userId,
                 images,
                 request.title(),

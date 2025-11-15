@@ -11,16 +11,24 @@ import com.donet.donet.donation.application.port.out.FindDonationPort;
 import com.donet.donet.donation.application.port.out.UpdateDonationPort;
 import com.donet.donet.donation.domain.Category;
 import com.donet.donet.donation.domain.Donation;
+import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.exception.UserException;
+import com.donet.donet.review.adapter.out.persistence.DonationReviewRepository;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import com.donet.donet.user.adapter.out.persistence.UserRepository;
+import com.donet.donet.user.domain.JoinedDonation;
+import com.donet.donet.user.domain.RegisteredDonation;
+import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.*;
 
@@ -31,6 +39,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
     private final UserRepository userRepository;
     private final PartnerRepository partnerRepository;
     private final CategoriesRepository categoriesRepository;
+    private final DonationReviewRepository donationReviewRepository;
 
     private final DonationMapper donationMapper;
 
@@ -85,6 +94,35 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                 .orElseThrow(() -> new DonationException(NO_MATCH_DONATION));
 
         return donationMapper.mapToDomainEntity(donationJpaEntity);
+    }
+
+    @Override
+    public List<JoinedDonation> findJoinedDonations(User user, int size) {
+        UserJpaEntity userJpaEntity = userRepository.findById(user.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Page<JoinedDonationProjection> page = donationRepository.findJoinedDonations(userJpaEntity.getId(), PageRequest.of(0, size));
+        List<JoinedDonationProjection> projections = page.getContent();
+        List<JoinedDonation> joinedDonations = projections.stream()
+                .map(proj -> new JoinedDonation(proj.getDonationId(), proj.getTitle(), proj.getImageUrl(), proj.getDonatedAmount()))
+                .toList();
+        return joinedDonations;
+    }
+
+    @Override
+    public List<RegisteredDonation> findRegisteredDonations(User user, int size) {
+        UserJpaEntity userJpaEntity = userRepository.findById(user.getId()).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        List<DonationJpaEntity> donationJpaEntities = donationRepository.findAllByUserJpaEntityOrderByIdDesc(userJpaEntity, PageRequest.of(0, size));
+        Set<Long> donationIds = donationJpaEntities.stream().map(DonationJpaEntity::getId).collect(Collectors.toSet());
+        List<Long> reviewedDonationIds = donationReviewRepository.findAllDonationIdHavingReview(donationIds);
+        List<RegisteredDonation> registeredDonations = donationJpaEntities.stream()
+                .map(donationMapper::mapToDomainEntity)
+                .map(entity -> RegisteredDonation.of(entity.getId(),
+                        entity.getTitle(),
+                        entity.getImageUrl(),
+                        entity.getTargetAmount(),
+                        entity.getCurrentAmount(),
+                        !reviewedDonationIds.contains(entity.getId())))
+                .toList();
+        return registeredDonations;
     }
 
     @Override

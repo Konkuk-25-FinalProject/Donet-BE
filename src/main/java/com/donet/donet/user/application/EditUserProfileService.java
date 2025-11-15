@@ -4,8 +4,9 @@ import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.infra.aws.FileUploadingFailedException;
 import com.donet.donet.user.application.port.in.EditUserProfileUsecase;
 import com.donet.donet.user.application.port.in.dto.EditUserProfileCommand;
+import com.donet.donet.user.application.port.out.CreateUserPort;
+import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
-import com.donet.donet.user.application.port.out.UserRepositoryPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +20,15 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @RequiredArgsConstructor
 @Service
 public class EditUserProfileService implements EditUserProfileUsecase {
-    private final UserRepositoryPort userRepositoryPort;
+    private final FindUserPort findUserPort;
+    private final CreateUserPort createUserPort;
     private final ImageUploaderPort imageUploaderPort;
 
     @Override
     public void editProfile(EditUserProfileCommand command) {
         log.info("[editProfile] userId = {}", command.getUserId());
 
-        User user = userRepositoryPort.findById(command.getUserId())
+        User user = findUserPort.findById(command.getUserId())
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         if(command.getProfileImage() != null){
@@ -42,14 +44,14 @@ public class EditUserProfileService implements EditUserProfileUsecase {
         user.editNickname(command.getNickname());
         user.editWalletAddress(command.getWalletAddress());
 
-        userRepositoryPort.save(user);
+        createUserPort.save(user);
     }
 
     @Override
     public void editProfileImage(Long userId, MultipartFile profileImage) {
         log.info("[editProfileImage] userId = {}", userId);
 
-        User user = userRepositoryPort.findById(userId)
+        User user = findUserPort.findById(userId)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         try{
@@ -60,30 +62,30 @@ public class EditUserProfileService implements EditUserProfileUsecase {
             throw new CustomException(PROFILE_IMG_UPLOADING_FAILED);
         }
 
-        userRepositoryPort.save(user);
+        createUserPort.save(user);
     }
 
     @Override
     public void editNickname(Long userId, String nickname) {
         log.info("[editNickname] userId = {}", userId);
 
-        User user = userRepositoryPort.findById(userId)
+        User user = findUserPort.findById(userId)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         user.editNickname(nickname);
 
-        userRepositoryPort.save(user);
+        createUserPort.save(user);
     }
 
     @Override
     public void editWalletAddress(Long userId, String walletAddress) {
         log.info("[editWalletAddress] userId = {}", userId);
 
-        User user = userRepositoryPort.findById(userId)
+        User user = findUserPort.findById(userId)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         user.editWalletAddress(walletAddress);
 
-        userRepositoryPort.save(user);
+        createUserPort.save(user);
     }
 }

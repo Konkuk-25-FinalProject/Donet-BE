@@ -5,8 +5,8 @@ import com.donet.donet.donation.domain.Donation;
 import com.donet.donet.review.application.port.in.dto.CreateDonationReviewCommand;
 import com.donet.donet.review.application.port.out.SaveDonationReviewPort;
 import com.donet.donet.review.domain.DonationReview;
+import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.application.port.out.ImageUploaderPort;
-import com.donet.donet.user.application.port.out.UserRepositoryPort;
 import com.donet.donet.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class CreateDonationReviewServiceTest {
     private CreateDonationReviewService service;
 
     @Mock
-    private UserRepositoryPort userRepositoryPort;
+    private FindUserPort findUserPort;
 
     @Mock
     private FindDonationPort findDonationPort;
@@ -51,7 +51,7 @@ class CreateDonationReviewServiceTest {
         Donation mockDonation = mock(Donation.class);
         given(mockDonation.isWriter(mockUser)).willReturn(true);
 
-        given(userRepositoryPort.findById(anyLong())).willReturn(Optional.of(mockUser));
+        given(findUserPort.findById(anyLong())).willReturn(Optional.of(mockUser));
         given(findDonationPort.findDonationById(anyLong())).willReturn(mockDonation);
         given(saveDonationReviewPort.save(any())).willReturn(returnedReview);
 

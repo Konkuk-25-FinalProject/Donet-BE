@@ -1,6 +1,7 @@
 package com.donet.donet.user.adapter.out.persistence;
 
-import com.donet.donet.user.application.port.out.UserRepositoryPort;
+import com.donet.donet.user.application.port.out.CreateUserPort;
+import com.donet.donet.user.application.port.out.FindUserPort;
 import com.donet.donet.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Repository
-public class UserPersistenceAdapter implements UserRepositoryPort {
+public class UserPersistenceAdapter implements FindUserPort, CreateUserPort {
     private final UserRepository userRepository;
     private final UserEntityMapper userEntityMapper;
 
