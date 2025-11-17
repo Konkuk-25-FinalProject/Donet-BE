@@ -60,7 +60,7 @@ class CreateDonationControllerTest {
                 .then()
                 .log().all()
                 .statusCode(400)
-                .body("code", equalTo(3008))
+                .body("code", equalTo(3009))
                 .body("message", equalTo(TARGET_AMOUNT_LOWER_BOUND_LIMIT.getMessage()));
     }
 
