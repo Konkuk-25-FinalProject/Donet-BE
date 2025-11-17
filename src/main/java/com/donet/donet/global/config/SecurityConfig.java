@@ -65,6 +65,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:3000", "https://donet-fe.vercel.app"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*")); // 모든 헤더 허용
+        configuration.setMaxAge(3600L); // preflight 요청 캐싱 (1시간)
         configuration.setAllowCredentials(true); // 자격 증명 허용
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
