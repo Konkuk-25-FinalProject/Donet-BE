@@ -125,8 +125,8 @@ jobs:
         if: always()
         run: |
           aws ec2 revoke-security-group-ingress \
-            --region ap-southeast-2 \
+            --region ${{ secrets.AWS_REGION }}\
             --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} \
             --protocol tcp \
-            --port 22 \
+            --port ${{ secrets.EC2_PORT }} \
             --cidr ${{ steps.ip.outputs.ipv4 }}/32
