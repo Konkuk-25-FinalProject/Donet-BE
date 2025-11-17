@@ -1,5 +1,6 @@
 package com.donet.donet.review.adapter.in.web;
 
+import com.donet.donet.donation.adapter.out.persistence.donation.DonationJpaEntity;
 import com.donet.donet.global.jwt.JwtUtil;
 import com.donet.donet.global.util.DatabaseClearExtension;
 import com.donet.donet.global.util.TestDataFactory;
@@ -50,8 +51,10 @@ class CreateDonationReviewControllerTest {
     @DisplayName("이미지를 포함한 요청은 성공한다")
     @Test
     void shouldSucceedWhenRequestWithImage(){
-        UserJpaEntity userJpaEntity = testDataFactory.createUserWhoWroteDonation();
-        String accessToken = jwtUtil.createAccessToken(userJpaEntity.getId());
+
+        UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
+        testDataFactory.createDonation(user.getId());
+        String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"), "내용");
         byte[] fakeImage = "fake image data".getBytes(StandardCharsets.UTF_8);
@@ -76,8 +79,9 @@ class CreateDonationReviewControllerTest {
     @DisplayName("이미지가 없는 요청도 성공한다")
     @Test
     void shouldSucceedWhenRequestWithoutImage(){
-        UserJpaEntity userJpaEntity = testDataFactory.createUserWhoWroteDonation();
-        String accessToken = jwtUtil.createAccessToken(userJpaEntity.getId());
+        UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
+        testDataFactory.createDonation(user.getId());
+        String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"),"내용");
 

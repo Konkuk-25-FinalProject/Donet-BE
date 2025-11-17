@@ -13,6 +13,14 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 public enum SwaggerResponseDescription {
     DEFAULT(new LinkedHashSet<>()),
 
+    GET_MY_PAGE(new LinkedHashSet<>(Set.of(
+            USER_NOT_FOUND
+    ))),
+
+    GET_DONATION_REVIEW(new LinkedHashSet<>(Set.of(
+            DONATION_REVIEW_NOT_FOUND
+    ))),
+
     CREATE_DONATION_REVIEW(new LinkedHashSet<>(Set.of(
         REVIEW_IMAGE_UPLOAD_FAILED
     ))),

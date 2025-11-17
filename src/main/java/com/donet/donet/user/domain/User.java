@@ -36,4 +36,6 @@ public class User {
         }
         this.walletAddress = walletAddress;
     }
+
+
 }

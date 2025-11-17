@@ -31,6 +31,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     NOT_FOUND_RECOMMEND_DONATION(HttpStatus.BAD_REQUEST.value(), 3006, "추천 기부를 찾을 수 없습니다."),
     NOT_FOUND_POPULAR_DONATION(HttpStatus.BAD_REQUEST.value(), 3007, "인기 기부를 찾을 수 없습니다."),
     EXPIRED_DONATION(HttpStatus.BAD_REQUEST.value(), 3008, "해당 기부는 만료되었습니다."),
+    TARGET_AMOUNT_LOWER_BOUND_LIMIT(HttpStatus.BAD_REQUEST.value(), 3009, "기부 목표 금액은 0 이하일 수 없습니다."),
 
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),
@@ -38,7 +39,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     PROFILE_IMG_UPLOADING_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 4003, "일시적 오류로 사용자 프로필 이미지 업로드에 실패했습니다."),
 
     // 6000 : Review 관련 에러
-    REVIEW_IMAGE_UPLOAD_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 6000, "일시적 오류로 리뷰 이미지 업로드에 실패했습니다.");
+    REVIEW_IMAGE_UPLOAD_FAILED(HttpStatus.SERVICE_UNAVAILABLE.value(), 6000, "일시적 오류로 리뷰 이미지 업로드에 실패했습니다."),
+    DONATION_REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 6001, "존재하지 않는 기부후기입니다.");
 
     private final int status;
     private final int code;
