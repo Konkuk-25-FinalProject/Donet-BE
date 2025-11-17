@@ -51,7 +51,7 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
 
     @Query(value =
             "SELECT dr.donation_id FROM donation_record dr " +
-                    "WHERE dr.user_id = :userId ",
+                    "WHERE dr.users_id = :userId ",
             nativeQuery = true)
     List<Long> getDonationIdsUserDonated(@Param("userId") Long userId);
 

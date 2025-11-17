@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CategoriesRepository extends JpaRepository<CategoryJpaEntity, Long> {
     @Query(
-            value = "SELECT * FROM category c WHERE c.id IN (SELECT ic.category_id FROM interested_category ic WHERE ic.user_id = :userId)",
+            value = "SELECT * FROM category c WHERE c.id IN (SELECT ic.category_id FROM interested_category ic WHERE ic.users_id = :userId)",
             nativeQuery = true
     )
     List<CategoryJpaEntity> findInterestedCategories(@Param("userId") Long userId);
