@@ -24,7 +24,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     LOGOUTED_USER(HttpStatus.UNAUTHORIZED.value(), 2003, "로그아웃된 사용자입니다."),
 
     //3000 : Donation 관련 에러
-    NO_MATCH_DONATION(HttpStatus.BAD_REQUEST.value(), 3000, "id에 일치하는 기부가 없습니다."),
+    NO_MATCH_DONATION(HttpStatus.NOT_FOUND.value(), 3000, "id에 일치하는 기부가 없습니다."),
     FAIL_TO_LOAD_DONATION_DETAIL(HttpStatus.SERVICE_UNAVAILABLE.value(), 3003, "기부 상세페이지 조회 실패했습니다."),
     NO_MATCH_PARTNER(HttpStatus.BAD_REQUEST.value(), 3004, "id에 일치하는 파트너사가 없습니다."),
     NO_MATCH_CATEGORY(HttpStatus.BAD_REQUEST.value(), 3005, "없는 카테고리 이름입니다."),
