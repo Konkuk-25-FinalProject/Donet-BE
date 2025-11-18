@@ -38,13 +38,24 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     )
     DonationJpaEntity findImminentDonation();
 
-    @Query(value =
-            "SELECT d.* FROM donation d " +
-                    "JOIN donation_category dc ON d.id = dc.donation_id " +
-                    "WHERE dc.category_id IN (:categoryIds) " +
-                    "GROUP BY d.id " +
-                    "HAVING COUNT(DISTINCT dc.category_id) = :size ",
-            nativeQuery = true)
+    @Query(
+            value =
+                    "SELECT d.* FROM donation d " +
+                            "JOIN donation_category dc ON d.id = dc.donation_id " +
+                            "WHERE dc.category_id IN (:categoryIds) " +
+                            "GROUP BY d.id " +
+                            "HAVING COUNT(DISTINCT dc.category_id) = :size ",
+
+            countQuery =
+                    "SELECT COUNT(*) FROM ( " +
+                            "SELECT d.id FROM donation d " +
+                            "JOIN donation_category dc ON d.id = dc.donation_id " +
+                            "WHERE dc.category_id IN (:categoryIds) " +
+                            "GROUP BY d.id " +
+                            "HAVING COUNT(DISTINCT dc.category_id) = :size " +
+                            ") cnt",
+            nativeQuery = true
+    )
     Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, Pageable pageable);
 
     Optional<DonationJpaEntity> findDonationById(Long id);
