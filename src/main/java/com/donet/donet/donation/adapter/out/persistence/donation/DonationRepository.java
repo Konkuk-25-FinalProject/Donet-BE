@@ -31,8 +31,8 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
 
     @Query(value =
             "SELECT * FROM donation d " +
-                    "WHERE d.targetAmount != d.currentAmount " +
-                    "ORDER BY (d.targetAmount - d.currentAmount) ASC " +
+                    "WHERE d.target_amount != d.current_amount " +
+                    "ORDER BY (d.target_amount - d.current_amount) ASC " +
                     "LIMIT 1",
             nativeQuery = true
     )
