@@ -45,7 +45,7 @@ class CreateDonationControllerTest {
     @Test
     void shouldReturn400CodeWhenTargetAmountIsLessThan1(){
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        testDataFactory.createDonation(user.getId());
+        testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         String accessToken = jwtUtil.createAccessToken(user.getId());
         Long targetAmount = 0L;
         CreateDonationRequest donationRequest = getDonationRequest(targetAmount);
