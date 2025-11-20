@@ -30,6 +30,6 @@ public class DonationRecordJpaEntity {
     @JoinColumn(name = "donation_id")
     private DonationJpaEntity donationJpaEntity;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private WalletJpaEntity walletJpaEntity;
+    @Column(nullable = false)
+    private String walletAddress;
 }
