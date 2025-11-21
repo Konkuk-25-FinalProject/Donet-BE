@@ -54,14 +54,14 @@ public class TestDataFactory {
     }
 
     @Transactional
-    public DonationJpaEntity createDonation(Long userId) {
+    public DonationJpaEntity createDonation(Long userId, Long targetAmount, LocalDate startAt, LocalDate endAt) {
         UserJpaEntity user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException(INVALID_PARAMETERS));
         PartnerJpaEntity partner = partnerRepository.save(new PartnerJpaEntity(null, "파트너사", "지갑주소"));
         DonationItemJpaEntity donationItem = new DonationItemJpaEntity(null, "삼다수", 1L, 5000L, null);
 
         DonationJpaEntity donation = donationRepository.save(new DonationJpaEntity(null, "제목", true,
-                LocalDate.now(), LocalDate.now(),
-                "설명", 1000L, 1000L, 0L,
+                startAt, endAt,
+                "설명", targetAmount, 0L, 0L,
                 user,
                 partner,
                 new ArrayList<>(List.of(donationItem)),
@@ -105,6 +105,6 @@ public class TestDataFactory {
                 donationJpaEntity.getDonationImageJpaEntities(),
                 donationJpaEntity.getDonationCategories());
         donationRepository.save(newDonationJpaEntity);
-        donationRecordRepository.save(new DonationRecordJpaEntity(null, amount, userJpaEntity, newDonationJpaEntity));
+        donationRecordRepository.save(new DonationRecordJpaEntity(null, amount, userJpaEntity, newDonationJpaEntity, "wallet-address"));
     }
 }

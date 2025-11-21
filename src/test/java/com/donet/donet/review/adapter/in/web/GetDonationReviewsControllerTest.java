@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -51,7 +52,7 @@ class GetDonationReviewsControllerTest {
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
         IntStream.rangeClosed(1, size + 1).forEach(i->{
-            DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+            DonationJpaEntity donation = testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
             testDataFactory.createDonationReview(title + i, tags, content, user.getId(), donation.getId());
         });
 
@@ -91,7 +92,7 @@ class GetDonationReviewsControllerTest {
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
         IntStream.rangeClosed(1, size + 1).forEach(i->{
-            DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+            DonationJpaEntity donation = testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
             testDataFactory.createDonationReview(title + i, tags, content, user.getId(), donation.getId());
         });
 
