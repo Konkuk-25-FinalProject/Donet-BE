@@ -34,8 +34,8 @@ public class SwaggerConfig {
     public OpenAPI openAPI() {
         Info info = new Info()
                 .version("1.0")
-                .title("찾아유 V2 API 명세서")
-                .description("Springdoc을 이용한 Swagger API 문서입니다.");
+                .title("Donet API 명세서")
+                .description("Donet API 명세입니다.");
 
         String jwtSchemeName = "JWT Authentication";
 

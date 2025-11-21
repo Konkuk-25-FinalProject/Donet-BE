@@ -8,7 +8,11 @@ import com.donet.donet.global.response.BaseResponse;
 import com.donet.donet.global.swagger.CustomExceptionDescription;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Encoding;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +26,8 @@ import static com.donet.donet.global.swagger.SwaggerResponseDescription.DEFAULT;
 public class CreateDonationController implements DonationController{
     private final CreateDonationUsecase createDonationUsecase;
 
+    @RequestBody(content = @Content(
+            encoding = @Encoding(name = "request", contentType = MediaType.APPLICATION_JSON_VALUE)))
     @Operation(
             summary = "새로운 기부 생성 API",
             description = """
@@ -29,10 +35,10 @@ public class CreateDonationController implements DonationController{
                     """
     )
     @CustomExceptionDescription(DEFAULT)
-    @PostMapping("/register")
+    @PostMapping(path = "/register" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseResponse<Void> createDonation(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                             @RequestPart(required = false) List<MultipartFile> images,
-                                             @RequestPart CreateDonationRequest request
+                                             @Parameter @RequestPart(required = false) List<MultipartFile> images,
+                                             @Parameter @RequestPart CreateDonationRequest request
     ){
         CreateDonationCommand command = CreateDonationCommand.from(
                 userId,
