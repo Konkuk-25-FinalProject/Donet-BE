@@ -9,6 +9,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.EXCEED_DONATE_AMOUNT;
 import static com.donet.donet.global.response.status.BaseExceptionResponseStatus.EXPIRED_DONATION;
 
 @Getter
@@ -39,7 +40,7 @@ public class Donation {
             throw new DonationException(EXPIRED_DONATION);
         }
         if(currentAmount + amount > targetAmount) {
-            throw new DonationException(EXPIRED_DONATION);
+            throw new DonationException(EXCEED_DONATE_AMOUNT);
         }
         currentAmount = currentAmount + amount;
     }
