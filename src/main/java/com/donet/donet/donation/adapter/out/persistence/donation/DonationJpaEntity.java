@@ -5,6 +5,7 @@ import com.donet.donet.donation.adapter.out.persistence.donationItem.DonationIte
 import com.donet.donet.donation.adapter.out.persistence.partner.PartnerJpaEntity;
 import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.persistence.BaseEntity;
+import com.donet.donet.global.persistence.BaseStatus;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,7 @@ import static com.donet.donet.global.response.status.BaseExceptionResponseStatus
 @Table(name = "donation")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
 @Entity
 @Builder
 public class DonationJpaEntity extends BaseEntity {
@@ -102,5 +103,12 @@ public class DonationJpaEntity extends BaseEntity {
         }
         donationCategories.add(donationCategory);
         donationCategory.setDonationJpaEntity(this);
+    }
+
+    public void setCurrentAmount(Long currentAmount) {
+        this.currentAmount = currentAmount;
+        if(this.currentAmount.equals(targetAmount)){
+            setStatus(BaseStatus.EXPIRED);
+        }
     }
 }
