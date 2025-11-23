@@ -30,6 +30,7 @@ public class Donation {
     private Long partnerId;
     private List<DonationItem> donationItems;
     private List<Category> categories;
+    private String status;
 
     public boolean isWriter(User user) {
         return userId == user.getId();
@@ -43,5 +44,8 @@ public class Donation {
             throw new DonationException(EXCEED_DONATE_AMOUNT);
         }
         currentAmount = currentAmount + amount;
+        if(currentAmount.equals(targetAmount)){
+            status = "EXPIRED";
+        }
     }
 }
