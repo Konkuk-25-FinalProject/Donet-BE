@@ -21,7 +21,7 @@ public record GetFilteredDonationResponse(
             return new DonationSummary(
                     donation.getId(),
                     donation.getTitle(),
-                    donation.getImageUrl().get(0),
+                    donation.getImageUrl().isEmpty() ? "null" : donation.getImageUrl().get(0),
                     donation.getDescription(),
                     donation.getCurrentAmount().toString()
             );
