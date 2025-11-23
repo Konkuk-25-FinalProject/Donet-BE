@@ -16,7 +16,7 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     @Query(value =
             "SELECT d.* FROM donation d " +
                     "JOIN donation_category dc ON d.id = dc.donation_id " +
-                    "WHERE dc.category_id IN (:categoryIds) " +
+                    "WHERE dc.category_id IN (:categoryIds) AND d.end_date >= CURRENT_DATE AND d.status = 'ACTIVE' " +
                     "GROUP BY d.id " +
                     "HAVING COUNT(DISTINCT dc.category_id) = :size " +
                     "LIMIT :donationSize",
@@ -26,12 +26,12 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     @Query(value = "SELECT * FROM donation LIMIT 1", nativeQuery = true)
     DonationJpaEntity findAnyDonation();
 
-    @Query(value = "SELECT * FROM donation d ORDER BY d.views DESC LIMIT :size", nativeQuery = true)
+    @Query(value = "SELECT * FROM donation d WHERE d.end_date >= CURRENT_DATE AND d.status = 'ACTIVE' ORDER BY d.views DESC LIMIT :size", nativeQuery = true)
     List<DonationJpaEntity> findPopularDonations(@Param("size") Integer size);
 
     @Query(value =
             "SELECT * FROM donation d " +
-                    "WHERE d.target_amount != d.current_amount " +
+                    "WHERE d.target_amount != d.current_amount AND d.end_date >= CURRENT_DATE AND d.status = 'ACTIVE'" +
                     "ORDER BY (d.target_amount - d.current_amount) ASC " +
                     "LIMIT 1",
             nativeQuery = true
@@ -42,7 +42,7 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
             value =
                     "SELECT d.* FROM donation d " +
                             "JOIN donation_category dc ON d.id = dc.donation_id " +
-                            "WHERE dc.category_id IN (:categoryIds) " +
+                            "WHERE dc.category_id IN (:categoryIds) AND d.end_date >= CURRENT_DATE AND d.status = 'ACTIVE' " +
                             "GROUP BY d.id",
             countQuery =
                     "SELECT COUNT(DISTINCT d.id) FROM donation d " +
@@ -64,7 +64,7 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     List<Long> getDonationIdsUserDonated(@Param("userId") Long userId);
 
     @Query(
-            value = "SELECT * FROM donation LIMIT :size",
+            value = "SELECT * FROM donation d WHERE d.end_date >= CURRENT_DATE AND d.status = 'ACTIVE' LIMIT :size",
             nativeQuery = true
     )
     List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
