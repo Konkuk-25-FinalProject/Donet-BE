@@ -26,8 +26,6 @@ import static com.donet.donet.global.swagger.SwaggerResponseDescription.DEFAULT;
 public class CreateDonationController implements DonationController{
     private final CreateDonationUsecase createDonationUsecase;
 
-    @RequestBody(content = @Content(
-            encoding = @Encoding(name = "request", contentType = MediaType.APPLICATION_JSON_VALUE)))
     @Operation(
             summary = "새로운 기부 생성 API",
             description = """
