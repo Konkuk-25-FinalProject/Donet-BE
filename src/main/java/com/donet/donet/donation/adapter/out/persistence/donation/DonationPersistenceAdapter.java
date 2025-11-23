@@ -49,7 +49,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                 .map(Category::getId)
                 .toList();
 
-        Page<DonationJpaEntity> filteredDonations = donationRepository.findDonationWithCategoriesAndPagination(categoryIds, categoryIds.size(), pageable);
+        Page<DonationJpaEntity> filteredDonations = donationRepository.findDonationWithCategoriesAndPagination(categoryIds, pageable);
 
         return filteredDonations.getContent().stream()
                 .map(donationMapper::mapToDomainEntity)
