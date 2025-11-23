@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -48,18 +49,18 @@ class GetMyPageControllerTest {
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoid1");
         String accessToken = jwtUtil.createAccessToken(user.getId());
         IntStream.rangeClosed(1, 20).forEach(i -> {
-            testDataFactory.createDonation(user.getId());
+            testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         });
-        DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+        DonationJpaEntity donation = testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         testDataFactory.createDonationReview("제목", List.of("태그1", "태그2"), "내용", user.getId(), donation.getId());
 
         long donationAmount = 2000L;
         UserJpaEntity another = testDataFactory.createUser("KAKAO", "kakaoid2");
         IntStream.rangeClosed(1, 30).forEach(i -> {
-            DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
+            DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
             testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), donationAmount);
         });
-        DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId());
+        DonationJpaEntity anothersDonation = testDataFactory.createDonation(another.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         testDataFactory.createDonationRecord(user.getId(), anothersDonation.getId(), donationAmount);
 
         GetMyPageApiResponse response = given()

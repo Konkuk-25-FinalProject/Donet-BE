@@ -22,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -53,7 +54,7 @@ class CreateDonationReviewControllerTest {
     void shouldSucceedWhenRequestWithImage(){
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        testDataFactory.createDonation(user.getId());
+        testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"), "내용");
@@ -80,7 +81,7 @@ class CreateDonationReviewControllerTest {
     @Test
     void shouldSucceedWhenRequestWithoutImage(){
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        testDataFactory.createDonation(user.getId());
+        testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         String accessToken = jwtUtil.createAccessToken(user.getId());
 
         CreateDonationReviewRequest reviewRequest = new CreateDonationReviewRequest(1L, "제목", "요약", List.of("태그"),"내용");

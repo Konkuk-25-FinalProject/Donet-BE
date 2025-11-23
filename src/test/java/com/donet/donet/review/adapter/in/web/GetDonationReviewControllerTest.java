@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -49,7 +50,7 @@ class GetDonationReviewControllerTest {
         String content = "내용";
 
         UserJpaEntity user = testDataFactory.createUser("KAKAO", "kakaoId1");
-        DonationJpaEntity donation = testDataFactory.createDonation(user.getId());
+        DonationJpaEntity donation = testDataFactory.createDonation(user.getId(), 2000L, LocalDate.now(), LocalDate.now().plusDays(3));
         DonationReviewJpaEntity donationReview = testDataFactory.createDonationReview(title, tags, content, user.getId(), donation.getId() );
 
         UserJpaEntity anotherUser = testDataFactory.createUser("KAKAO", "kakaoId2");
