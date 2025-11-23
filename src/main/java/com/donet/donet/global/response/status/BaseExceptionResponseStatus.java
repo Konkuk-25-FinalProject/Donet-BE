@@ -32,6 +32,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus{
     NOT_FOUND_POPULAR_DONATION(HttpStatus.BAD_REQUEST.value(), 3007, "인기 기부를 찾을 수 없습니다."),
     EXPIRED_DONATION(HttpStatus.BAD_REQUEST.value(), 3008, "해당 기부는 만료되었습니다."),
     TARGET_AMOUNT_LOWER_BOUND_LIMIT(HttpStatus.BAD_REQUEST.value(), 3009, "기부 목표 금액은 0 이하일 수 없습니다."),
+    EXCEED_DONATE_AMOUNT(HttpStatus.BAD_REQUEST.value(), 3010, "기부 목표 금액을 넘는 금액으로 기부할 수 없습니다."),
 
     // 4000 : User 관련 에러
     USER_NOT_FOUND(HttpStatus.NOT_FOUND.value(), 4001, "존재하지 않는 유저입니다."),

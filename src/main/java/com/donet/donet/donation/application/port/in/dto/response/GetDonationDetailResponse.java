@@ -11,6 +11,7 @@ public record GetDonationDetailResponse(
         String content,
         List<String> imgUrls,
         Long targetAmount,
+        Long remainAmount,
         LocalDate startDate,
         LocalDate endDate,
         Long progressPercentage,
@@ -33,6 +34,7 @@ public record GetDonationDetailResponse(
                 donation.getDescription(),
                 donation.getImageUrl(),
                 donation.getTargetAmount(),
+                donation.getTargetAmount() - donation.getCurrentAmount(),
                 donation.getStartDate(),
                 donation.getEndDate(),
                 donation.getTargetAmount() == 0 ? 0L :
