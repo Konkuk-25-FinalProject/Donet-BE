@@ -15,7 +15,8 @@ public record GetFilteredDonationResponse(
             String title,
             String imageUrl,
             String description,
-            String raised
+            String raised,
+            Long amount
     ) {
         public static DonationSummary from(Donation donation) {
             return new DonationSummary(
@@ -23,7 +24,8 @@ public record GetFilteredDonationResponse(
                     donation.getTitle(),
                     donation.getImageUrl().isEmpty() ? "null" : donation.getImageUrl().get(0),
                     donation.getDescription(),
-                    donation.getCurrentAmount().toString()
+                    donation.getCurrentAmount().toString(),
+                    donation.getTargetAmount()
             );
         }
     }
