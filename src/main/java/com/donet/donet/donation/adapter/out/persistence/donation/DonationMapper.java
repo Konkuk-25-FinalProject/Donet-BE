@@ -46,7 +46,8 @@ public class DonationMapper {
                 donationJpaEntity.getUserJpaEntity().getId(),
                 donationJpaEntity.getPartnerJpaEntity().getId(),
                 donationItems,
-                categories
+                categories,
+                donationJpaEntity.getStatus().name()
         );
     }
 
