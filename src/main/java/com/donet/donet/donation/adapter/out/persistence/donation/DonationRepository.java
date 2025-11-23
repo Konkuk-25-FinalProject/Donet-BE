@@ -43,20 +43,17 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
                     "SELECT d.* FROM donation d " +
                             "JOIN donation_category dc ON d.id = dc.donation_id " +
                             "WHERE dc.category_id IN (:categoryIds) " +
-                            "GROUP BY d.id " +
-                            "HAVING COUNT(DISTINCT dc.category_id) = :size ",
-
+                            "GROUP BY d.id",
             countQuery =
-                    "SELECT COUNT(*) FROM ( " +
-                            "SELECT d.id FROM donation d " +
+                    "SELECT COUNT(DISTINCT d.id) FROM donation d " +
                             "JOIN donation_category dc ON d.id = dc.donation_id " +
-                            "WHERE dc.category_id IN (:categoryIds) " +
-                            "GROUP BY d.id " +
-                            "HAVING COUNT(DISTINCT dc.category_id) = :size " +
-                            ") cnt",
+                            "WHERE dc.category_id IN (:categoryIds)",
             nativeQuery = true
     )
-    Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(@Param("categoryIds") List<Long> categoryIds, @Param("size") int size, Pageable pageable);
+    Page<DonationJpaEntity> findDonationWithCategoriesAndPagination(
+            @Param("categoryIds") List<Long> categoryIds,
+            Pageable pageable
+    );
 
     Optional<DonationJpaEntity> findDonationById(Long id);
 
@@ -72,25 +69,24 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     )
     List<DonationJpaEntity> findDonationsLimit(@Param("size") Integer size);
 
-    @Query(value = """
-        SELECT 
-            record.donation_id AS donationId,
-            d.title AS title,
-            (SELECT di.image_url FROM donation_image di 
-             WHERE di.donation_id = record.donation_id 
-             ORDER BY di.id DESC LIMIT 1) AS imageUrl,
-            record.donation_amount AS donatedAmount
-        FROM donation_record record
-        JOIN donation d ON record.donation_id = d.id
-        WHERE record.user_id = :userId
-        ORDER BY record.id DESC
-    """,
-        countQuery = """
-        SELECT COUNT(*)
-        FROM donation_record record
-        WHERE record.user_id = :userId
-    """,
-        nativeQuery = true)
+    @Query(
+            value = """
+                    SELECT 
+                        record.donation_id AS donationId,
+                        d.title AS title,
+                        (SELECT di.image_url FROM donation_image di 
+                         WHERE di.donation_id = record.donation_id 
+                         ORDER BY di.id DESC LIMIT 1) AS imageUrl,
+                        record.donation_amount AS donatedAmount
+                    FROM donation_record record
+                    JOIN donation d ON record.donation_id = d.id
+                    WHERE record.user_id = :userId
+                    ORDER BY record.id DESC""",
+            countQuery = """
+                    SELECT COUNT(*)
+                    FROM donation_record record
+                    WHERE record.user_id = :userId""",
+            nativeQuery = true)
     Page<JoinedDonationProjection> findJoinedDonations(@Param("userId") Long userId, Pageable pageable);
 
     List<DonationJpaEntity> findAllByUserJpaEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
