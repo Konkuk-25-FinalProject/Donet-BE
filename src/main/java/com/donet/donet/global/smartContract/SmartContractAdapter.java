@@ -15,10 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SmartContractAdapter implements SmartContractPort {
 
-    private final CampaignFactory campaignFactory;   // 컨트랙트 주소 조회용
-    private final Web3j web3j;                       // Web3 네트워크 연동
-    private final Credentials credentials;           // 서버 지갑
-    private final ContractGasProvider gasProvider;           // 가스 설정
+    private final CampaignFactory campaignFactory;
+    private final Web3j web3j;
+    private final Credentials credentials;
+    private final ContractGasProvider gasProvider;
 
     @Override
     public boolean refundDonations(List<Long> donationIds) {
@@ -27,9 +27,11 @@ public class SmartContractAdapter implements SmartContractPort {
             for (Long donationId : donationIds) {
 
                 // 1. Factory에서 donationId로 캠페인 주소 조회
-                String campaignAddress = String.valueOf(campaignFactory.getCampaignAddress(BigInteger.valueOf(donationId)));
+                String campaignAddress = campaignFactory
+                        .getCampaignAddress(BigInteger.valueOf(donationId))
+                        .send();
 
-                if (campaignAddress == null) {
+                if (campaignAddress == null || campaignAddress.isBlank() || "0x0000000000000000000000000000000000000000".equalsIgnoreCase(campaignAddress)) {
                     throw new IllegalStateException("Campaign address not found for donationId=" + donationId);
                 }
 
@@ -52,7 +54,6 @@ public class SmartContractAdapter implements SmartContractPort {
                 System.out.println("Refund success for donationId=" + donationId +
                         " / tx=" + tx.getTransactionHash());
             }
-
             return true;
 
         } catch (Exception e) {
