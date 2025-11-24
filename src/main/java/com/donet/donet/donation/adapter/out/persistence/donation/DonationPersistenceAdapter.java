@@ -14,6 +14,7 @@ import com.donet.donet.donation.domain.Donation;
 import com.donet.donet.global.exception.CustomException;
 import com.donet.donet.global.exception.DonationException;
 import com.donet.donet.global.exception.UserException;
+import com.donet.donet.global.persistence.BaseStatus;
 import com.donet.donet.review.adapter.out.persistence.DonationReviewRepository;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import com.donet.donet.user.adapter.out.persistence.UserRepository;
@@ -128,7 +129,7 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
 
     @Override
     public List<Donation> findRefundableDonation() {
-        return donationRepository.findRefundableDonations(LocalDate.now())
+        return donationRepository.findRefundableDonations(LocalDate.now(), BaseStatus.ACTIVE)
                 .stream()
                 .map(donationMapper::mapToDomainEntity)
                 .toList();

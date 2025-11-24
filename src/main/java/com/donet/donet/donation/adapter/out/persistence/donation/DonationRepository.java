@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.global.persistence.BaseStatus;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -96,7 +97,7 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
         SELECT d FROM DonationJpaEntity d
         WHERE d.endDate < :today
           AND d.currentAmount < d.targetAmount
-          AND d.status = 'ACTIVE'
+          AND d.status = :status
     """)
-    List<DonationJpaEntity> findRefundableDonations(LocalDate today);
+    List<DonationJpaEntity> findRefundableDonations(LocalDate today, BaseStatus status);
 }
