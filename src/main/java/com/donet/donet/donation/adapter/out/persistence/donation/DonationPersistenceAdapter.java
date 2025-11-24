@@ -26,6 +26,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -123,6 +124,14 @@ public class DonationPersistenceAdapter implements FindDonationPort, UpdateDonat
                         !reviewedDonationIds.contains(entity.getId())))
                 .toList();
         return registeredDonations;
+    }
+
+    @Override
+    public List<Donation> findRefundableDonation() {
+        return donationRepository.findRefundableDonations(LocalDate.now())
+                .stream()
+                .map(donationMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override
