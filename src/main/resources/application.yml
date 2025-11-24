@@ -94,3 +94,12 @@ management:
       show-details: "always"  # 상세 정보 포함
   server:
     port: 8080
+
+web3:
+  rpcUrl: ${RPC_URL}
+  privateKey: ${CONTRACT_PRIVATE_KEY}
+  gasPrice: ${GAS_PRICE}
+  gasLimit: ${GAS_LIMIT}
+
+contracts:
+  campaignFactoryAddress: ${CONTRACT_ADDRESS}
