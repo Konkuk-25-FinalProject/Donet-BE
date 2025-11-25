@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
@@ -12,6 +13,7 @@ import org.web3j.tx.gas.StaticGasProvider;
 
 import java.math.BigInteger;
 
+@Profile("!test")
 @Configuration
 @RequiredArgsConstructor
 public class Web3jConfig {
