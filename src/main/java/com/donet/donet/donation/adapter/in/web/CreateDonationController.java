@@ -1,6 +1,7 @@
 package com.donet.donet.donation.adapter.in.web;
 
 import com.donet.donet.donation.adapter.in.web.dto.CreateDonationRequest;
+import com.donet.donet.donation.adapter.in.web.dto.CreateDonationResponse;
 import com.donet.donet.donation.application.port.in.CreateDonationUsecase;
 import com.donet.donet.donation.application.port.in.dto.command.CreateDonationCommand;
 import com.donet.donet.global.annotation.CurrentUserId;
@@ -34,9 +35,9 @@ public class CreateDonationController implements DonationController{
     )
     @CustomExceptionDescription(DEFAULT)
     @PostMapping(path = "/register" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BaseResponse<Void> createDonation(@Parameter(hidden = true) @CurrentUserId Long userId,
-                                             @Parameter @RequestPart(required = false) List<MultipartFile> images,
-                                             @Parameter @RequestPart CreateDonationRequest request
+    public BaseResponse<CreateDonationResponse> createDonation(@Parameter(hidden = true) @CurrentUserId Long userId,
+                                                               @Parameter @RequestPart(required = false) List<MultipartFile> images,
+                                                               @Parameter @RequestPart CreateDonationRequest request
     ){
         CreateDonationCommand command = CreateDonationCommand.from(
                 userId,
@@ -52,7 +53,6 @@ public class CreateDonationController implements DonationController{
                 request.content()
         );
 
-        createDonationUsecase.createDonation(command);
-        return new BaseResponse<>(null);
+        return new BaseResponse<>(createDonationUsecase.createDonation(command));
     }
 }
