@@ -1,5 +1,6 @@
 package com.donet.donet.donation.application;
 
+import com.donet.donet.donation.adapter.in.web.dto.CreateDonationResponse;
 import com.donet.donet.donation.application.port.in.CreateDonationUsecase;
 import com.donet.donet.donation.application.port.in.dto.command.CreateDonationCommand;
 import com.donet.donet.donation.application.port.out.CreateDonationPort;
@@ -20,7 +21,7 @@ public class CreateDonationService implements CreateDonationUsecase {
     private final ImageUploaderPort imageUploaderPort;
 
     @Override
-    public void createDonation(CreateDonationCommand command) {
+    public CreateDonationResponse createDonation(CreateDonationCommand command) {
         List<String> imagesUrls = Optional.ofNullable(command.images())
                 .orElseGet(List::of)
                 .stream()
@@ -61,6 +62,7 @@ public class CreateDonationService implements CreateDonationUsecase {
                 .categories(categories)
                 .build();
 
-        createDonationPort.createDonation(donation);
+        Long donationId = createDonationPort.createDonation(donation);
+        return new CreateDonationResponse(donationId);
     }
 }
