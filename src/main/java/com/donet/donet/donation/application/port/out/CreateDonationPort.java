@@ -3,5 +3,5 @@ package com.donet.donet.donation.application.port.out;
 import com.donet.donet.donation.domain.Donation;
 
 public interface CreateDonationPort {
-    void createDonation(Donation donation);
+    Long createDonation(Donation donation);
 }
