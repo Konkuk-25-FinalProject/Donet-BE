@@ -1,5 +1,6 @@
 package com.donet.donet.donation.adapter.out.persistence.donation;
 
+import com.donet.donet.global.persistence.BaseStatus;
 import com.donet.donet.user.adapter.out.persistence.UserJpaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,4 +92,12 @@ public interface DonationRepository extends JpaRepository<DonationJpaEntity, Lon
     Page<JoinedDonationProjection> findJoinedDonations(@Param("userId") Long userId, Pageable pageable);
 
     List<DonationJpaEntity> findAllByUserJpaEntityOrderByIdDesc(UserJpaEntity userJpaEntity, Pageable pageable);
+
+    @Query("""
+        SELECT d FROM DonationJpaEntity d
+        WHERE d.endDate < :today
+          AND d.currentAmount < d.targetAmount
+          AND d.status = :status
+    """)
+    List<DonationJpaEntity> findRefundableDonations(LocalDate today, BaseStatus status);
 }

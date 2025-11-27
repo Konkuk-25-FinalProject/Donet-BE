@@ -18,4 +18,6 @@ public interface FindDonationPort {
 
     List<JoinedDonation> findJoinedDonations(User user, int size);
     List<RegisteredDonation> findRegisteredDonations(User user, int size);
+
+    List<Donation> findRefundableDonation();
 }

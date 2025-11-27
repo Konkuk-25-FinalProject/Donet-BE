@@ -74,7 +74,8 @@ dependencies {
     implementation 'software.amazon.awssdk:s3'
 
 	// Smart Contract
-	implementation 'org.web3j:core:4.9.4'
+	implementation 'org.web3j:core:4.12.0'
+	implementation 'org.web3j:contracts:4.12.0'
 }
 
 tasks.named('test') {
